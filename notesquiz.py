@@ -309,7 +309,7 @@ class NotesQuiz(Scene):
         self._images["correct"] = pygame.image.load(CORRECT_IMG).convert()
         self._images["wrong"]   = pygame.image.load(WRONG_IMG).convert()
         font = pygame.font.Font(NOTES_FONT, 20)
-        self._images["instructions"] = font.render("Use keys C, D, E, F, G, A and B", True, colors.BLACK)
+        self._images["instructions"] = font.render("Use keys up, down, C, D, E, F, G, A, B and Enter", True, colors.BLACK)
         font = pygame.font.Font(MAIN_MENU_FONT, 30)
         self._images["pressKey"]     = font.render("Press any key to continue", True, colors.RED)
 
