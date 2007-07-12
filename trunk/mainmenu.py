@@ -24,11 +24,11 @@ class MainMenu(Scene):
                  centered = True
                  )
         sounds.play('bach_846_prelude1')
-        #self._overlay = pygame.image.load(OVERLAY_IMG).convert_alpha()
+        self._overlay = pygame.image.load(MAIN_OVERLAY_IMG).convert_alpha()
         
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
-        #self.game.screen.blit(self._overlay, (0,0))
+        self.game.screen.blit(self._overlay, (0,0))
         self._menu.blit(self.game.screen, (400,180))
         
     def event(self, evt):

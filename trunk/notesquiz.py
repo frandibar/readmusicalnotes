@@ -164,16 +164,17 @@ class Timer:
         fullHeight = 300
         width = 20
         height = max(self._timeLeft * fullHeight / self.getTotalTime(), 0)
-        pygame.draw.rect(surface, colors.BLACK, Rect(x-1, y-1, width+3, fullHeight+2))
+        pygame.draw.rect(surface, colors.BLACK, Rect(x-1, y-1, width+2, fullHeight+2))
         pygame.draw.rect(surface, colors.YELLOW, Rect(x, y + fullHeight - height, width, height))
         
 
 class Setup(Scene):
-    COL1 = 100                  
-    COL2 = 250                  
-    COL3 = 400                  
+    COL1 = 200                  
+    COL2 = 350                  
+    COL3 = 500                  
     def init(self, game):
         self._background = pygame.image.load(MAIN_MENU_IMG).convert()
+        self._overlay = pygame.image.load(SETUP_OVERLAY_IMG).convert_alpha()
         self._fontTitle = pygame.font.Font(MAIN_MENU_FONT, 70)
         self._fontText = pygame.font.Font(MAIN_MENU_FONT, 50)
 
@@ -191,6 +192,7 @@ class Setup(Scene):
 
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
+        self.game.screen.blit(self._overlay, (50,0))
         setup = hollow.textOutline(self._fontTitle, "Setup", colors.RED, colors.BLACK)
         clefs = hollow.textOutline(self._fontText, "Clefs", colors.RED, colors.BLACK)
         treble = hollow.textOutline(self._fontText, "treble:", colors.RED, colors.BLACK)
@@ -308,10 +310,11 @@ class NotesQuiz(Scene):
         self._images["quiz"]    = pygame.image.load(quiz).convert()
         self._images["correct"] = pygame.image.load(CORRECT_IMG).convert()
         self._images["wrong"]   = pygame.image.load(WRONG_IMG).convert()
-        font = pygame.font.Font(NOTES_FONT, 20)
+        font = pygame.font.Font(NOTES_FONT, 15)
         self._images["instructions"] = font.render("Use keys up, down, C, D, E, F, G, A, B and Enter", True, colors.BLACK)
         font = pygame.font.Font(MAIN_MENU_FONT, 30)
-        self._images["pressKey"]     = font.render("Press any key to continue", True, colors.RED)
+        self._images["pressKey"] = font.render("Press any key to continue", True, colors.RED)
+        self._images["overlay"] = pygame.image.load(QUIZ_OVERLAY_IMG).convert_alpha()
 
         self._showInstructions = True
         self._showPressKeyMsg  = False
@@ -342,7 +345,7 @@ class NotesQuiz(Scene):
         self._imgCoords = (xpos, ypos)
 
         # menu coordinates
-        self._menuCoords = (100, 100)
+        self._menuCoords = (50, 100)
 
         self._status = self.WAITING
 
@@ -351,10 +354,11 @@ class NotesQuiz(Scene):
 
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
+        self.game.screen.blit(self._images["overlay"], (0,0))
         # show score
-        font = pygame.font.Font(MAIN_MENU_FONT, 20)
-        score = font.render("Score: " + str(self.game.score) + " / " + str(self.game.level), True, colors.BLACK)
-        self.game.screen.blit(score, (10,10))
+        font = pygame.font.Font(MAIN_MENU_FONT, 40)
+        score = font.render("Score:   " + str(self.game.score) + " / " + str(self.game.level), True, colors.BLACK)
+        self.game.screen.blit(score, (self.game.screen.get_width() - score.get_width() - 20, 10))
 
         self.game.screen.blit(self._images["quiz"], self._imgCoords)
         self._menu.blit(self.game.screen, self._menuCoords)
@@ -364,7 +368,7 @@ class NotesQuiz(Scene):
         if self._showPressKeyMsg:
             self.game.screen.blit(self._images["pressKey"], ((self.game.screen.get_width() - self._images["pressKey"].get_width())/2, 400))
         if self._showInstructions:                    
-            self.game.screen.blit(self._images["instructions"], ((self.game.screen.get_width() - self._images["instructions"].get_width())/2, 450))                                 
+            self.game.screen.blit(self._images["instructions"], ((self.game.screen.get_width() - self._images["instructions"].get_width())/2, 480))                                 
 
         
     def event(self, evt):                
@@ -381,6 +385,7 @@ class NotesQuiz(Scene):
             y -= self._menuCoords[1]
             if evt.type == pygame.MOUSEMOTION:
                 if self._menu.setItem((x,y)):
+                    self._menu.setItem((x,y))
                     sounds.play(menuSounds[self._menu.selected])
                     self.paint()
             else:                                
@@ -456,7 +461,7 @@ class NotesQuiz(Scene):
             self.game.screen.blit(self._images["correct"], (xpos, y))
 
     def update(self):
-        self._timer.blit(self.game.screen, (770, 50))
+        self._timer.blit(self.game.screen, (770, 100))
         self._timer.alarm.blit(self.game.screen)
         pass
 
