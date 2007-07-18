@@ -3,37 +3,54 @@ import colors
 
 import pygame
 
-class Silence:
+class Rest:
     def blit(self, surface, (x,y)):
-        surface.blit(self._img, (x, y))
+        surface.blit(self._image, (x, y))
+
+    def blit(self, surface, x, staff, clef):
+        '''blits note to staff on surface'''
+        # clef parameter is not needed, added so call for note.blit has same signature           
+        ypos = self._calculateYCoord(staff.getCoords())
+        surface.blit(self._image, (x, ypos))
 
     def getDuration(self):
         return self._duration
 
+    def _calculateYCoord(self, staffCoords):
+        return staffCoords[4]
 
-class FullSilence(Silence):
+class WholeRest(Rest):
     def __init__(self):
-        self._img = pygame.image.load(FULL_SILENCE_IMG).convert_alpha()    
+        self._image = pygame.image.load(WHOLE_REST_IMG).convert_alpha()    
         self._duration = 1
 
-class HalfSilence(Silence):
+    def _calculateYCoord(self, staffCoords):
+        return staffCoords[3]
+
+class HalfRest(Rest):
     def __init__(self):
-        self._img = pygame.image.load(HALF_SILENCE_IMG).convert_alpha()    
+        self._image = pygame.image.load(HALF_REST_IMG).convert_alpha()    
         self._duration = 0.5
 
-class QuarterSilence(Silence):
+    def _calculateYCoord(self, staffCoords):
+        return staffCoords[3] + (staffCoords[0] - staffCoords[1]) / 2
+
+class QuarterRest(Rest):
     def __init__(self):
-        self._img = pygame.image.load(QUARTER_SILENCE_IMG).convert_alpha()    
+        self._image = pygame.image.load(QUARTER_REST_IMG).convert_alpha()    
         self._duration = 0.25
 
-class EightSilence(Silence):
+class EighthRest(Rest):
     def __init__(self):
-        self._img = pygame.image.load(EIGHT_SILENCE_IMG).convert_alpha()    
+        self._image = pygame.image.load(EIGHTH_REST_IMG).convert_alpha()    
         self._duration = 0.125
 
-class SixteenthSilence(Silence):
+    def _calculateYCoord(self, staffCoords):
+        return staffCoords[3]
+
+class SixteenthRest(Rest):
     def __init__(self):
-        self._img = pygame.image.load(SIXTEENTH_SILENCE_IMG).convert_alpha()    
+        self._image = pygame.image.load(SIXTEENTH_REST_IMG).convert_alpha()    
         self._duration = 0.0625
 
 
@@ -48,7 +65,7 @@ class Note:
         else:
             self._accident = 'n'             
         self._octave = octave                         
-        self.useHiStem = False                                                                                 
+        self.useStemUp = False                                                                                 
 
     def getNote(self):
         return self._note + self._accident
@@ -81,21 +98,21 @@ class Note:
 
     def blit(self, surface, (x,y)):
         '''blits note to surface on (x,y)'''
-        if self.useHiStem:
-            surface.blit(self._hiStemImg, (x, y))
+        if self.useStemUp:
+            surface.blit(self._stemUpImg, (x, y))
         else:                                                 
-            surface.blit(self._loStemImg, (x, y))
+            surface.blit(self._stemDownImg, (x, y))
 
     def blit(self, surface, x, staff, clef):
         '''blits note to staff on surface'''
         ypos = self._calculateYCoord(staff.getCoords(), clef)
 
-        self.useHiStem = ypos > staff.getCoords()[3]         
+        self.useStemUp = ypos > staff.getCoords()[3]         
 
-        if self.useHiStem:
-            surface.blit(self._hiStemImg, (x, ypos - 63))
+        if self.useStemUp:
+            surface.blit(self._stemUpImg, (x, ypos - 63))
         else:                                                 
-            surface.blit(self._loStemImg, (x, ypos - 9))
+            surface.blit(self._stemDownImg, (x, ypos - 9))
 
         self._blitGuides(surface, x, ypos, staff)                                                        
 
@@ -173,43 +190,40 @@ class Note:
                 y += step
 
 
-
-
-
-class FullNote(Note):
+class WholeNote(Note):
     def __init__(self, note, octave):
         Note.__init__(self, note, octave)
-        self._hiStemImg = pygame.image.load(FULL_IMG).convert_alpha()
-        self._loStemImg = self._hiStemImg
+        self._stemUpImg = pygame.image.load(WHOLE_IMG).convert_alpha()
+        self._stemDownImg = self._stemUpImg
         self._duration = 1                                                               
-        self.useHiStem = True                                                                                         
+        self.useStemUp = True                                                                                         
 
 class HalfNote(Note):
     def __init__(self, note, octave):
         Note.__init__(self, note, octave)
-        self._hiStemImg = pygame.image.load(HALF_HI_STEM_IMG).convert_alpha()
-        self._loStemImg = pygame.image.load(HALF_LO_STEM_IMG).convert_alpha()
+        self._stemUpImg = pygame.image.load(HALF_STEM_UP_IMG).convert_alpha()
+        self._stemDownImg = pygame.image.load(HALF_STEM_DOWN_IMG).convert_alpha()
         self._duration = 0.5                                                               
 
 class QuarterNote(Note):
     def __init__(self, note, octave):
         Note.__init__(self, note, octave)
-        self._hiStemImg = pygame.image.load(QUARTER_HI_STEM_IMG).convert_alpha()
-        self._loStemImg = pygame.image.load(QUARTER_LO_STEM_IMG).convert_alpha()
+        self._stemUpImg = pygame.image.load(QUARTER_STEM_UP_IMG).convert_alpha()
+        self._stemDownImg = pygame.image.load(QUARTER_STEM_DOWN_IMG).convert_alpha()
         self._duration = 0.25                                                               
 
-class EightNote(Note):
+class EighthNote(Note):
     def __init__(self, note, octave):
         Note.__init__(self, note, octave)
-        self._hiStemImg = pygame.image.load(EIGHT_HI_STEM_IMG).convert_alpha()
-        self._loStemImg = pygame.image.load(EIGHT_LO_STEM_IMG).convert_alpha()
+        self._stemUpImg = pygame.image.load(EIGHTH_STEM_UP_IMG).convert_alpha()
+        self._stemDownImg = pygame.image.load(EIGHTH_STEM_DOWN_IMG).convert_alpha()
         self._duration = 0.125                                                               
 
 class SixteenthNote(Note):
     def __init__(self, note, octave):
         Note.__init__(self, note, octave)
-        self._hiStemImg = pygame.image.load(SIXTEENTH_HI_STEM_IMG).convert_alpha()
-        self._loStemImg = pygame.image.load(SIXTEENTH_LO_STEM_IMG).convert_alpha()
+        self._stemUpImg = pygame.image.load(SIXTEENTH_STEM_UP_IMG).convert_alpha()
+        self._stemDownImg = pygame.image.load(SIXTEENTH_STEM_DOWN_IMG).convert_alpha()
         self._duration = 0.0625                                                               
 
 
@@ -217,9 +231,16 @@ class Chord:
     def __init__(self, notes = []):
         self.notes = notes
 
-    def blit(self, surface, (x,y)):
+    def blit(self, surface, x, staff, clef):
         for i in self.notes:
-            i.blit(surface, (x,y))
+            i.blit(surface, x, staff, clef)
+
+    def getDuration(self):
+        return self.notes[0].getDuration()
+
+    #def blit(self, surface, (x,y)):
+        #for i in self.notes:
+            #i.blit(surface, (x,y))
 
 
 
@@ -230,6 +251,7 @@ class Staff:
         self.width = width
         self.color = color
         self._ycoords = []   # stores each lines y coord (from bottom to top)
+        self._calculateYCoords(0)
                                                                                                     
     def blit(self, surface, (x,y)):
         self._calculateYCoords(y)                                                  
@@ -238,6 +260,9 @@ class Staff:
 
     def getCoords(self):
         return self._ycoords
+
+    def getHeight(self):
+        return self._ycoords[0] - self._ycoords[4]
 
     def _calculateYCoords(self, y):                                                  
         self._ycoords = [y]
@@ -248,14 +273,14 @@ class Staff:
 
 class TimeSignature:
     def __init__(self, beats = 4, noteValue = 4, color = colors.BLACK):    
-        self._beats = beats
-        self._noteValue = noteValue
-        self._color = color                                   
+        self.beats = beats
+        self.noteValue = noteValue
+        self.color = color                                   
 
     def blit(self, surface, (x,y)):
         font = pygame.font.Font(MAIN_MENU_FONT, 40)
-        beats = font.render(str(self._beats), True, self._color)
-        value = font.render(str(self._noteValue), True, self._color)
+        beats = font.render(str(self.beats), True, self.color)
+        value = font.render(str(self.noteValue), True, self.color)
         surface.blit(beats, (x, y))
         surface.blit(value, (x, y + beats.get_height() - 20))
 
@@ -279,21 +304,21 @@ class BassClef(Clef):
 
 class BarLine:
     def __init__(self, height, width = 3, color = colors.BLACK):
-        self._height = height
-        self._width = width
-        self._color = color
+        self.height = height
+        self.width = width
+        self.color = color
 
     def blit(self, surface, (x,y)):
         pass
 
 class OrdinaryBarline(BarLine):
     def blit(self, surface, (x,y)):
-        pygame.draw.rect(surface, self._color, pygame.locals.Rect(x, y, self._width, self._height))
+        pygame.draw.rect(surface, self.color, pygame.locals.Rect(x, y, self.width, self.height))
 
 class DoubleBarLine(BarLine):
     def blit(self, surface, (x,y)):
-        pygame.draw.rect(surface, self._color, pygame.locals.Rect(x, y, self._width, self._height))
-        pygame.draw.rect(surface, self._color, pygame.locals.Rect(x + 2*self._width, y, self._width, self._height))
+        pygame.draw.rect(surface, self.color, pygame.locals.Rect(x, y, self.width, self.height))
+        pygame.draw.rect(surface, self.color, pygame.locals.Rect(x + 2*self.width, y, self.width, self.height))
 
 class EndBarLine(BarLine):
     def blit(self, surface, (x,y)):
@@ -334,6 +359,7 @@ class KeySignature:
         # TODO: add more valid keys                                                                
 
 class ScoreBuilder:
+    STAFF_Y_OFFSET = 113                                                           
     def __init__(self, clef, staffLength, keySignature, beats = 4, noteValue = 4, notesList = [], color = colors.BLACK):
         self.notes = notesList
         self.clef = clef
@@ -342,14 +368,23 @@ class ScoreBuilder:
         self._staff = Staff(staffLength)                                                                                                   
 
     def blit(self, surface, (x,y)):
-        self.clef.blit(surface, (x,y))
-        self.timeSignature.blit(surface, (x + 100, y + 40))
-        self._staff.blit(surface, (x, y + 113))
+        barline = OrdinaryBarline(self._staff.getHeight())
+        self._staff.blit(surface, (x + 10, y + self.STAFF_Y_OFFSET))
+        barline.blit(surface, (x + 10, y + self.STAFF_Y_OFFSET - self._staff.getHeight()))
+        self.clef.blit(surface, (x + 20, y))
+        self.timeSignature.blit(surface, (x + 80, y + 40))
         XOFFSET = 35
-        x += 150                    
-        # TODO: add barlines, count durations                    
+        x += 110                    
+        time = 0                                    
         for i in self.notes:
             i.blit(surface, x, self._staff, self.clef)
             x += XOFFSET
+            time += i.getDuration()
+            if time == self.timeSignature.beats:
+                time = 0
+                x += XOFFSET / 2
+                barline.blit(surface, (x, y + self.STAFF_Y_OFFSET - self._staff.getHeight()))
+                x += XOFFSET / 2
+
 
 
