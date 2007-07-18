@@ -41,14 +41,13 @@ class Note:
     validNotes = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
     validOctaves = range(1,6)  # 1 to 5
     validAccidents = [ 'b', 'n', '#' ]                                       
-    def __init__(self, note, octave, staff = None):
+    def __init__(self, note, octave):
         self._note = note[0]
         if len(note) == 2:
             self._accident = note[-1]                         
         else:
             self._accident = 'n'             
         self._octave = octave                         
-        self._staff = staff                                                      
         self.useHiStem = False                                                                                 
 
     def getNote(self):
@@ -68,11 +67,40 @@ class Note:
                and self._octave in validOctaves \
                and self._accident in validAccidents                                                 
 
+    def next(self):
+        if self._note == 'B': 
+            self._octave += 1                
+        self._note = self.validNotes[(self.validNotes.index(self._note) + 1) % len(self.validNotes)]
+        return self
+
+    def previous(self):
+        if self._note == 'C': 
+            self._octave -= 1                
+        self._note = self.validNotes[(self.validNotes.index(self._note) - 1) % len(self.validNotes)]
+        return self
+
     def blit(self, surface, (x,y)):
+        '''blits note to surface on (x,y)'''
         if self.useHiStem:
             surface.blit(self._hiStemImg, (x, y))
         else:                                                 
             surface.blit(self._loStemImg, (x, y))
+
+    def blit(self, surface, x, staff, clef):
+        '''blits note to staff on surface'''
+        ypos = self._calculateYCoord(staff.getCoords(), clef)
+
+        self.useHiStem = ypos > staff.getCoords()[3]         
+
+        if self.useHiStem:
+            surface.blit(self._hiStemImg, (x, ypos - 63))
+        else:                                                 
+            surface.blit(self._loStemImg, (x, ypos - 9))
+
+        self._blitGuides(surface, x, ypos, staff)                                                        
+
+    def equals(self, note):
+        return self.getNote() == note.getNote() and self._octave == note.getOctave()
 
     def isHigherThan(self, note):
         if self._octave != note.getOctave():
@@ -96,62 +124,127 @@ class Note:
                 i += 1                                              
             return ind1 > ind2
 
+    def _calculateYCoord(self, staffYCoords, clef):                                                  
+
+        if clef.__class__ == TrebleClef:
+            dist = self._calculateNotesBetween(Note('E', 3))
+        elif clef.__class__ == BassClef:
+            dist = self._calculateNotesBetween(Note('G', 1))
+        
+        y = staffYCoords[0]            
+        if dist != 0:
+            if dist % 2 == 0:
+                y -= dist * (staffYCoords[0] - staffYCoords[1]) / 2
+            else:                
+                y -= (dist - 1) * (staffYCoords[0] - staffYCoords[1]) / 2
+                y -= (staffYCoords[0] - staffYCoords[1]) / 2
+        return y                
                                                                 
+
+    def _calculateNotesBetween(self, note):
+        '''returns the number of notes between self and note'''
+        ret = 0   
+        aux = note                                       
+        if self.isHigherThan(note):           
+            while not self.equals(aux):
+                ret += 1
+                aux = aux.next()
+        else:
+            while not self.equals(aux):
+                ret -= 1
+                aux = aux.previous()
+        return ret                            
+
+    def _blitGuides(self, surface, x, y, staff):
+        coords = staff.getCoords()
+        step = coords[0] - coords[1]
+        if y > coords[0]:
+            if (y - coords[0]) % step != 0:
+                y -= step / 2 + 1
+            while y > coords[0]:                                                                  
+                pygame.draw.rect(surface, staff.color, pygame.locals.Rect(x, y, staff.GUIDE_LENGTH, staff.width))
+                y -= step
+
+        elif y < coords[4]:
+            if (coords[4] - y) % step != 0:
+                y += step / 2                                           
+            while y < coords[4]:                                                                  
+                pygame.draw.rect(surface, staff.color, pygame.locals.Rect(x, y, staff.GUIDE_LENGTH, staff.width))
+                y += step
+
+
+
+
+
 class FullNote(Note):
-    def __init__(self, note, octave, staff):
-        base.__init__(self, note, octave, staff)
+    def __init__(self, note, octave):
+        Note.__init__(self, note, octave)
         self._hiStemImg = pygame.image.load(FULL_IMG).convert_alpha()
         self._loStemImg = self._hiStemImg
         self._duration = 1                                                               
         self.useHiStem = True                                                                                         
 
 class HalfNote(Note):
-    def __init__(self, note, octave, staff):
-        base.__init__(self, note, octave, staff)
+    def __init__(self, note, octave):
+        Note.__init__(self, note, octave)
         self._hiStemImg = pygame.image.load(HALF_HI_STEM_IMG).convert_alpha()
         self._loStemImg = pygame.image.load(HALF_LO_STEM_IMG).convert_alpha()
         self._duration = 0.5                                                               
 
 class QuarterNote(Note):
-    def __init__(self, note, octave, staff):
-        base.__init__(self, note, octave, staff)
+    def __init__(self, note, octave):
+        Note.__init__(self, note, octave)
         self._hiStemImg = pygame.image.load(QUARTER_HI_STEM_IMG).convert_alpha()
         self._loStemImg = pygame.image.load(QUARTER_LO_STEM_IMG).convert_alpha()
         self._duration = 0.25                                                               
 
 class EightNote(Note):
-    def __init__(self, note, octave, staff):
-        base.__init__(self, note, octave, staff)
+    def __init__(self, note, octave):
+        Note.__init__(self, note, octave)
         self._hiStemImg = pygame.image.load(EIGHT_HI_STEM_IMG).convert_alpha()
         self._loStemImg = pygame.image.load(EIGHT_LO_STEM_IMG).convert_alpha()
         self._duration = 0.125                                                               
 
 class SixteenthNote(Note):
-    def __init__(self, note, octave, staff):
-        base.__init__(self, note, octave, staff)
+    def __init__(self, note, octave):
+        Note.__init__(self, note, octave)
         self._hiStemImg = pygame.image.load(SIXTEENTH_HI_STEM_IMG).convert_alpha()
         self._loStemImg = pygame.image.load(SIXTEENTH_LO_STEM_IMG).convert_alpha()
         self._duration = 0.0625                                                               
 
 
+class Chord:
+    def __init__(self, notes = []):
+        self.notes = notes
+
+    def blit(self, surface, (x,y)):
+        for i in self.notes:
+            i.blit(surface, (x,y))
+
+
+
 class Staff:
     GUIDE_LENGTH = 35
     def __init__(self, length, width = 3, color = colors.BLACK):
-        self._length = length
-        self._width = width
-        self._color = color
+        self.length = length
+        self.width = width
+        self.color = color
         self._ycoords = []   # stores each lines y coord (from bottom to top)
                                                                                                     
     def blit(self, surface, (x,y)):
         self._calculateYCoords(y)                                                  
         for i in range(5):
-            pygame.draw.rect(surface, self._color, pygame.locals.Rect(x, self._ycoords[i], self._length, self._width))
+            pygame.draw.rect(surface, self.color, pygame.locals.Rect(x, self._ycoords[i], self.length, self.width))
+
+    def getCoords(self):
+        return self._ycoords
 
     def _calculateYCoords(self, y):                                                  
         self._ycoords = [y]
-        for i in range(5):
+        for i in range(4):
             y -= 19
             self._ycoords.append(y)
+
 
 class TimeSignature:
     def __init__(self, beats = 4, noteValue = 4, color = colors.BLACK):    
@@ -251,11 +344,12 @@ class ScoreBuilder:
     def blit(self, surface, (x,y)):
         self.clef.blit(surface, (x,y))
         self.timeSignature.blit(surface, (x + 100, y + 40))
-        self._staff.blit(surface, (x,y + 113))
-        XOFFSET = 20
+        self._staff.blit(surface, (x, y + 113))
+        XOFFSET = 35
+        x += 150                    
         # TODO: add barlines, count durations                    
         for i in self.notes:
-            i.blit(surface, (x,y))
+            i.blit(surface, x, self._staff, self.clef)
             x += XOFFSET
 
 
