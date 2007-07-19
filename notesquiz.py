@@ -1,4 +1,4 @@
-from config import Setup, SetupOptions, setupOptions
+from config import setupOptions
 from data import *
 from engine import Game, Scene
 from menu import Menu
@@ -24,22 +24,25 @@ class NotesQuiz(Scene):
         
     WAITING, WRONG, CORRECT, FINISH, TIMEISUP = range(5)   # status values
     CLOCK_TICK = pygame.USEREVENT
+
     def init(self):
-        # select a random image
+        # select a random note
+        # start choosing a clef
         clefs = []
         if setupOptions.useTrebleClef == setupOptions.YES: clefs.append(score.TrebleClef())
         if setupOptions.useBassClef == setupOptions.YES: clefs.append(score.BassClef())
         clef = random.choice(clefs)
+        # select the octaves according to the clef
         if clef.__class__ == score.TrebleClef:
             octave = random.choice(range(3,5))
         else:
             octave = random.choice(range(1,3))
+        # this stores the letter the user must input
         self._answer = random.choice(score.Note.validNotes)
         note = score.QuarterNote(self._answer, octave)
-
         self._quiz = score.ScoreBuilder(clef, 200, showTimeSignature = False, notesList = [note])
 
-        self._answerIndex = self.notesIndexMenu.index(self._answer)
+        # load images
         self._images = {}
         self._images["correct"] = pygame.image.load(CORRECT_IMG).convert()
         self._images["wrong"]   = pygame.image.load(WRONG_IMG).convert()
@@ -51,7 +54,6 @@ class NotesQuiz(Scene):
 
         self._showInstructions = True
         self._showPressKeyMsg  = False
-
 
         # menu
         self._menu = Menu(
@@ -67,15 +69,14 @@ class NotesQuiz(Scene):
                  )
 
         pygame.time.set_timer(self.CLOCK_TICK, 1000)        
-        useTimer = setupOptions.getTimerIndex() != setupOptions.OFF
+        useTimer = setupOptions.timerIndex != setupOptions.OFF
         self._timer = Timer(setupOptions.getTimerSec(), useTimer)
         if useTimer:
             self._timer.start()
 
-        self._imgCoords = (300, 200)
-
-        # menu coordinates
+        # set coordinates
         self._menuCoords = (50, 100)
+        self._imgCoords = (300, 200)
 
         self._status = self.WAITING
 
@@ -139,15 +140,15 @@ class NotesQuiz(Scene):
                 sounds.play(self.menuSounds[sel])
                 self.do_action(sel)
             else:                                   
-                try:
+                #try:
                     keypressed = string.upper(chr(evt.key))
-                    if keypressed not in setupOptions.notes:
+                    if keypressed not in score.Note.validNotes:
                         print "Invalid key!", chr(evt.key)
                         return
                     else:
                         self.evaluate(keypressed)                    
-                except:
-                    pass   # ignore keys such as ALT, CTRL, SHIFT, etc
+                #except:
+                    #pass   # ignore keys such as ALT, CTRL, SHIFT, etc
 
         elif evt.type == self.CLOCK_TICK:
             if self._timer.isRunning():
@@ -161,12 +162,12 @@ class NotesQuiz(Scene):
         self._menu.selected  = self.notesIndexMenu.index(guess)
         self._menu.alternate = self.notesIndexMenu.index(guess)
 
-        answer = setupOptions.notes[self._answerIndex]
         if guess == self._answer:
             self.game.score += 1
             self._status = self.CORRECT
         else:
             self._status = self.WRONG
+
         self._showPressKeyMsg = True
         self._timer.stop()
         self.paint()

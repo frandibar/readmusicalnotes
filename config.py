@@ -51,7 +51,7 @@ class Setup(Scene):
         self.game.screen.blit(self._yesnoImg[setupOptions.useBassClef], (self.COL3, ypos))
         ypos += rowheight                                               
         self.game.screen.blit(timer, (self.COL1, ypos))
-        self.game.screen.blit(self._timesImg[setupOptions.getTimerIndex()], (self.COL3, ypos))
+        self.game.screen.blit(self._timesImg[setupOptions.timerIndex], (self.COL3, ypos))
         self.game.screen.blit(back, (self.COL3, ypos + 100))
 
     def event(self, evt):
@@ -66,14 +66,14 @@ class Setup(Scene):
                     if DEBUG: print 'changing treble', (setupOptions.useTrebleClef + 1) % len(self._yesnoImg)                                   
                     # disallow treble and bass both set to no                                                                                                                                                
                     if not (setupOptions.useTrebleClef == setupOptions.YES and setupOptions.useBassClef == setupOptions.NO):
-                        setupOptions.setUseTrebleClef((setupOptions.useTrebleClef + 1) % len(self._yesnoImg))
+                        setupOptions.useTrebleClef = (setupOptions.useTrebleClef + 1) % len(self._yesnoImg)
                 elif 250 < y <= 300:
                     if DEBUG: print 'changing bass', (setupOptions.useBassClef + 1) % len(self._yesnoImg)                                   
                     if not (setupOptions.useTrebleClef == setupOptions.NO and setupOptions.useBassClef == setupOptions.YES):
-                        setupOptions.setUseBassClef((setupOptions.useBassClef + 1) % len(self._yesnoImg))
+                        setupOptions.useBassClef = (setupOptions.useBassClef + 1) % len(self._yesnoImg)
                 elif 300 < y <= 350:
-                    if DEBUG: print 'changing timer', (setupOptions.getTimerIndex() + 1) % len(self._timesImg)                                   
-                    setupOptions.setTimer((setupOptions.getTimerIndex() + 1) % len(self._timesImg))
+                    if DEBUG: print 'changing timer', (setupOptions.timerIndex + 1) % len(self._timesImg)                                   
+                    setupOptions.timerIndex = (setupOptions.timerIndex + 1) % len(self._timesImg)
                 elif 400 < y <= 450:
                     self.end()                                    
                 self.paint()                                                                          
@@ -85,56 +85,11 @@ class SetupOptions:
     YES, NO = range(2)
     OFF, SEC5, SEC10, SEC15, SEC20 = range(5)
     def __init__(self, timerIndex, useTrebleClef, useBassClef):
-        self._timerIndex = timerIndex
-        self._useTrebleClef = useTrebleClef
-        self._useBassClef = useBassClef
-        self._update()                                       
-
-    def setUseTrebleClef(self, yesno):
-        '''possible values: YES, NO'''
-        self._useTrebleClef = yesno
-        self._update()
-
-    @property
-    def useTrebleClef(self):
-        return self._useTrebleClef
-
-    @property
-    def useBassClef(self):
-        return self._useBassClef
-
-    def setUseBassClef(self, yesno):
-        '''possible values: YES, NO'''
-        self._useBassClef = yesno
-        self._update()
-
-    def setTimer(self, timeIndex):
-        '''possible values: OFF, SEC5, ...SEC20'''
-        self._timerIndex = timeIndex
-
-    def getTimerIndex(self):
-        return self._timerIndex
+        self.timerIndex    = timerIndex      # values: OFF, SEC5, ...SEC20
+        self.useTrebleClef = useTrebleClef   # values: YES or NO
+        self.useBassClef   = useBassClef
 
     def getTimerSec(self):
-        return self._timerIndex * 5
-
-    @property        
-    def images(self):
-        return self._images
-
-    @property        
-    def notes(self):
-        return self._notes
-
-    def _update(self):        
-        self._images = []
-        self._notes  = []
-
-        if self._useTrebleClef == self.YES: 
-            self._images += trebleClefImages
-            self._notes  += trebleNotes
-        if self._useBassClef == self.YES:
-            self._images += bassClefImages
-            self._notes  += bassNotes
+        return self.timerIndex * 5
 
 setupOptions = SetupOptions(SetupOptions.SEC5, SetupOptions.YES, SetupOptions.YES)
