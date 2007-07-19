@@ -200,6 +200,12 @@ class WholeNote(Note):
         self._duration = 1                                                               
         self.useStemUp = True                                                                                         
 
+    def blit(self, surface, x, staff, clef):
+        '''blits note to staff on surface'''
+        ypos = self._calculateYCoord(staff.getCoords(), clef)
+        surface.blit(self._stemUpImg, (x, ypos - 63))
+        self._blitGuides(surface, x, ypos, staff)                                                        
+
 class HalfNote(Note):
     def __init__(self, note, octave):
         Note.__init__(self, note, octave)
@@ -243,7 +249,7 @@ class Chord:
 
 
 class Staff:
-    GUIDE_LENGTH = 35
+    GUIDE_LENGTH = 38
     def __init__(self, length, width = 3, color = colors.BLACK):
         self.length = length
         self.width = width
@@ -401,12 +407,13 @@ class KeySignature:
 
 class ScoreBuilder:
     STAFF_Y_OFFSET = 113                                                           
-    def __init__(self, clef, staffLength, keySignature = KeySignature('CM'), beats = 4, noteValue = 4, notesList = [], color = colors.BLACK):
+    def __init__(self, clef, staffLength, keySignature = KeySignature('CM'), showTimeSignature = True, beats = 4, noteValue = 4, notesList = [], color = colors.BLACK):
         self.notes = notesList
         self.clef = clef
         self.color = color                                                                                            
         self.keySignature = keySignature                                                                                                                      
         self.timeSignature = TimeSignature(beats, noteValue, color)                               
+        self.showTimeSignature = showTimeSignature                                                                                                  
         self._staff = Staff(staffLength)                                                                                                   
 
     def blit(self, surface, (x,y)):
@@ -415,7 +422,8 @@ class ScoreBuilder:
         barline.blit(surface, (x + 10, y + self.STAFF_Y_OFFSET - self._staff.getHeight()))
         self.clef.blit(surface, (x + 20, y))
         self.keySignature.blit(surface, (x + 80, y), self._staff, self.clef)                                            
-        self.timeSignature.blit(surface, (x + 120, y + 40))
+        if self.showTimeSignature:
+            self.timeSignature.blit(surface, (x + 120, y + 40))
         XOFFSET = 35
         x += 140                    
         time = 0                                    

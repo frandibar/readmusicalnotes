@@ -43,26 +43,3 @@ MAIN_MENU_FONT = join(FONTS_PATH, "ajile.ttf")
 NOTES_FONT     = join(FONTS_PATH, "VeraMono.ttf")
 
 
-bassClefImages = [
-    "fa1.png", "fa2.png", "fb1.png", "fb2.png", "fc1.png", "fc2.png", "fc3.png",
-    "fd1.png", "fd2.png", "fe1.png", "fe2.png", "ff1.png", "ff2.png", "fg1.png",
-    "fg2.png"
-]
-
-trebleClefImages = [
-    "ga3.png", "ga4.png", "gb3.png", "gb4.png", "gc4.png", "gc5.png", "gd3.png", 
-    "gd4.png", "ge3.png", "ge4.png", "gf3.png", "gf4.png", "gg3.png", "gg4.png"
-]
-
-# these are the notes corresponding to the bassClefImages
-bassNotes = [
-    'A', 'A', 'B', 'B', 'C', 'C', 'C',
-    'D', 'D', 'E', 'E', 'F', 'F', 'G', 'G'
-]
-
-# these are the notes corresponding to the trebleClefImages
-trebleNotes = [
-    'A', 'A', 'B', 'B', 'C', 'C', 'D',
-    'D', 'E', 'E', 'F', 'F', 'G', 'G'
-]
-
