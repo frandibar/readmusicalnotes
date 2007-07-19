@@ -1,7 +1,9 @@
 from data import *
 from engine import Game, Scene
 from menu import Menu
-from notesquiz import NotesQuiz, Setup
+from config import Setup
+from notesquiz import NotesQuiz
+from rythmquiz import RythmQuiz
 from sounds import sounds
 import colors
 
@@ -9,6 +11,7 @@ import pygame
 
 
 class MainMenu(Scene):
+    NOTES_QUIZ, RYTHM_QUIZ, SETUP, QUIT = range(4)
     def init(self):
         self._background = pygame.image.load(MAIN_MENU_IMG).convert()
         self._font = pygame.font.Font(MAIN_MENU_FONT, 90)
@@ -16,7 +19,7 @@ class MainMenu(Scene):
                  pygame.font.Font(MAIN_MENU_FONT, 50),
                  pygame.font.Font(MAIN_MENU_FONT, 50),
                  pygame.font.Font(MAIN_MENU_FONT, 70),
-                 ["Notes Quiz", "Setup", "Quit"],
+                 ["Notes Quiz", "Rythm Quiz", "Setup", "Quit"],
                  margin = -40,
                  normalColor    = colors.GRAY,
                  selectedColor  = colors.RED,
@@ -64,13 +67,20 @@ class MainMenu(Scene):
                 sounds.play('bach_846_prelude1')
                 
     def do_action(self, sel):
-        if sel == 0: # notes quiz
+        if sel == self.NOTES_QUIZ:
+            self.game.level = 0                                                                                                   
             while True:
                 if self.runScene(NotesQuiz(self.game)) not in [NotesQuiz.CORRECT, NotesQuiz.WRONG, NotesQuiz.TIMEISUP]:
                     break                                                                          
                 self.game.level += 1                                                                                                   
-        elif sel == 1: # setup
+        elif sel == self.RYTHM_QUIZ:
+            self.game.level = 0                                                                                                   
+            while True:
+                if self.runScene(RythmQuiz(self.game)) not in [RythmQuiz.CORRECT, RythmQuiz.WRONG, RythmQuiz.TIMEISUP]:
+                    break                                                                          
+                self.game.level += 1                                                                                                   
+        elif sel == self.SETUP:
             self.runScene(Setup(self.game, 0))
-        elif sel == 2: #quit            
+        elif sel == self.QUIT:
             self.end()
                         
