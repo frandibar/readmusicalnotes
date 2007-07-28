@@ -1,9 +1,8 @@
 import colors
-import hollow
 
 class Menu:
     '''Implements a menu with highlighting options'''
-    def __init__(self, normalFont, alternateFont, selectedFont, options, margin = 0, normalColor = colors.WHITE, selectedColor = colors.WHITE, alternateColor = colors.YELLOW, normalBorderColor = colors.BLACK, selectedBorderColor = colors.BLACK, alternateBorderColor = colors.BLACK, centered = True):
+    def __init__(self, normalFont, alternateFont, selectedFont, options, margin = 0, normalColor = colors.WHITE, selectedColor = colors.WHITE, alternateColor = colors.YELLOW, centered = True):
         self.selected = 0
         self.alternate = -1                         
 
@@ -15,15 +14,23 @@ class Menu:
         self._alternateImages = []
         
         self._lineStep = 0      # stores the height of an item
+        self._width = 0
         # generate images of text items and fill _selectedImages, _normalImages and _alternateImages lists
         for text in self.options:
-            sel = hollow.textOutline(selectedFont, text, selectedColor, selectedBorderColor)
-            normal = hollow.textOutline(normalFont, text, normalColor, normalBorderColor)
-            altern = hollow.textOutline(alternateFont, text, alternateColor, alternateBorderColor)
+            sel = selectedFont.render(text, True, selectedColor)
+            normal = normalFont.render(text, True, normalColor)
+            altern = alternateFont.render(text, True, alternateColor)
             self._selectedImages.append(sel)
             self._normalImages.append(normal)
             self._alternateImages.append(altern)
             self._lineStep = max(max(max(sel.get_height(), normal.get_height()), altern.get_height()) + margin, self._lineStep)
+            self._width = max(max(max(sel.get_width(), normal.get_width()), altern.get_width()), self._width)
+
+    def get_height(self):
+      return self._lineStep * len(self._options)
+
+    def get_width(self):
+      return self._width
 
     @property
     def options(self):

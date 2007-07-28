@@ -31,6 +31,10 @@ class Sounds:
         for s in ["tic.wav", "tac.wav"]:
             self._channelSounds(s, self._channels["tictac"])
 
+        for s in ["ticking.wav"]:
+            self._channelSounds(s, self._channels["tictac"])
+
+
         for s in ["enter.wav", "pasa.wav", "timeisup.wav", "b3.ogg", "a3.ogg", "g3.ogg", "f3.ogg", "e3.ogg", "d3.ogg", "c3.ogg"]:
             self._looseSounds(s)
 
@@ -71,7 +75,3 @@ class Sounds:
 
 sounds = Sounds(mute = False)
 
-if __name__ == "__main__":
-    pygame.init()
-    sounds.init()
-    print dir(sounds)

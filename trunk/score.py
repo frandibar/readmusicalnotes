@@ -110,13 +110,13 @@ class Note:
         ypos = self._calculateYCoord(staff.getCoords(), clef)
 
         self.useStemUp = ypos > staff.getCoords()[3]         
+        self._blitGuides(surface, x, ypos, staff)                                                        
 
         if self.useStemUp:
             surface.blit(self._stemUpImg, (x, ypos - 63))
         else:                                                 
             surface.blit(self._stemDownImg, (x, ypos - 9))
 
-        self._blitGuides(surface, x, ypos, staff)                                                        
 
     def equals(self, note):
         return self.getNote() == note.getNote() and self._octave == note.getOctave()
@@ -250,7 +250,7 @@ class Chord:
 
 class Staff:
     GUIDE_LENGTH = 38
-    def __init__(self, length, width = 3, color = colors.BLACK):
+    def __init__(self, length, width = 2, color = colors.DARK_RED):
         self.length = length
         self.width = width
         self.color = color
@@ -282,7 +282,7 @@ class TimeSignature:
         self.color = color                                   
 
     def blit(self, surface, (x,y)):
-        font = pygame.font.Font(MAIN_MENU_FONT, 40)
+        font = pygame.font.Font(SCORE_FONT, 40)
         beats = font.render(str(self.beats), True, self.color)
         value = font.render(str(self.noteValue), True, self.color)
         surface.blit(beats, (x, y))
@@ -416,10 +416,15 @@ class ScoreBuilder:
         self.showTimeSignature = showTimeSignature                                                                                                  
         self._staff = Staff(staffLength)                                                                                                   
 
+    def getImage(self, (x,y)):
+        s = pygame.Surface((x,y), pygame.SRCALPHA, 32)
+        self.blit(s, (0,0))
+        return s                           
+
     def blit(self, surface, (x,y)):
         barline = OrdinaryBarline(self._staff.getHeight())
         self._staff.blit(surface, (x + 10, y + self.STAFF_Y_OFFSET))
-        barline.blit(surface, (x + 10, y + self.STAFF_Y_OFFSET - self._staff.getHeight()))
+        #barline.blit(surface, (x + 10, y + self.STAFF_Y_OFFSET - self._staff.getHeight()))
         self.clef.blit(surface, (x + 20, y))
         self.keySignature.blit(surface, (x + 80, y), self._staff, self.clef)                                            
         if self.showTimeSignature:
