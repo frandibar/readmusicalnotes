@@ -1,6 +1,5 @@
 from data import *
 import colors
-import hollow
 from sounds import sounds
 
 import pygame
@@ -8,9 +7,9 @@ import time
 
 class BlinkingText:
     '''displays a blinking text message'''
-    def __init__(self, text = "", (xpos, ypos) = (0,0), soundToPlay = None, centered = True, fontColor = colors.RED, fontBorderColor = colors.BLACK, delay = 0, blinkTime = 0.5, soundTime = 3):
-        font = pygame.font.Font(MAIN_MENU_FONT, 50)
-        self._text = hollow.textOutline(font, text, fontColor, fontBorderColor)
+    def __init__(self, text = "", (xpos, ypos) = (0,0), soundToPlay = None, centered = True, fontColor = colors.DARK_RED, fontBorderColor = colors.BLACK, delay = 0, blinkTime = 0.5, soundTime = 3):
+        font = pygame.font.Font(LEGEND_FONT, 50)
+        self._text = font.render(text, True, fontColor)
         self._delay = delay
         self._blinkTime = blinkTime
         self._soundTime = soundTime
@@ -65,13 +64,15 @@ class BlinkingText:
 
 class Timer:
     def __init__(self, totalTime, enabled = True):
-        self.alarm = BlinkingText("Time is up!", (400, 100), "timeisup")                                                                                      
+        self.alarm = BlinkingText("Time is up!", (400, 350), "timeisup")                                                                                      
 
         self._totalTime = totalTime
         self._enabled = enabled
         self._isRunning = False
         self._timeLeft  = totalTime
         self._tic = True                                                                                                                               
+        #self._fullImg = pygame.image.load(TIMER_FULL_IMG).convert_alpha()
+        #self._emptyImg = pygame.image.load(TIMER_EMPTY_IMG).convert_alpha()
         
     @property
     def enabled(self):
@@ -121,6 +122,10 @@ class Timer:
         fullHeight = 300
         width = 20
         height = max(self._timeLeft * fullHeight / self.getTotalTime(), 0)
-        pygame.draw.rect(surface, colors.BLACK, pygame.locals.Rect(x-1, y-1, width+2, fullHeight+2))
-        pygame.draw.rect(surface, colors.YELLOW, pygame.locals.Rect(x, y + fullHeight - height, width, height))
+        #x = surface.get_width() - self._fullImg.get_width() - 10
+        #y = 50                                                    
+        #surface.blit(self._emptyImg, (x,y))
+        #surface.blit(self._fullImg, (x,y))
+        #pygame.draw.rect(surface, colors.BLACK, pygame.locals.Rect(x-1, y-1, width+2, fullHeight+2))
+        #pygame.draw.rect(surface, colors.YELLOW, pygame.locals.Rect(x, y + fullHeight - height, width, height))
         

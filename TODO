@@ -7,3 +7,5 @@ readMusic To Do list:
 - agregar bemoles y sostenidos, notas extendidas con puntitos
 - agregar sonido midi
 - agregar entrada midi
+- separar codigo como modelo MVC
+- agregar estadisticas de aciertos

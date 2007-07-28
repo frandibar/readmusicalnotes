@@ -7,7 +7,7 @@ import sys
 DEBUG = False
 
 class Game:
-    def __init__(self, xySize, framerate = 30, title = None, icon = None):
+    def __init__(self, framerate = 30, title = None, icon = None):
         pygame.init()
         try:
             sounds.init()
@@ -21,15 +21,25 @@ class Game:
 
         if icon:
             icon = pygame.image.load(icon)
-            icon.set_colorkey(colors.MAGENTA)
             pygame.display.set_icon(icon) 
 
-        self.screen = pygame.display.set_mode(xySize)
+        #self._xySize = pygame.display.list_modes()[1]
+        xySize = pygame.display.list_modes()[1]
+        #self.screen = pygame.display.set_mode(self._xySize)
+        self.screen = pygame.display.set_mode(xySize, pygame.FULLSCREEN)
+        #self.fullscreen = False
         self.clock = pygame.time.Clock()
 
         self.score = 0
         self.level = 1
         
+    #def toggle_fullscreen(self):
+        #if self.fullscreen:
+            #self.screen = pygame.display.set_mode(self._xySize)
+        #else:                                                                                  
+            #self.screen = pygame.display.set_mode(self._xySize, pygame.FULLSCREEN)
+        #self.fullscreen = not self.fullscreen                                                                                  
+
     def run(self, scene):
         scene.run()
         if DEBUG: print "FPS:", self.clock.get_fps()
