@@ -18,7 +18,7 @@ class MainMenu(Scene):
         cursorSize = (len(CURSOR_DATA), len(CURSOR_DATA[0]))
         hotspot = (0, len(CURSOR_DATA)-1)            
         pygame.mouse.set_cursor(cursorSize, hotspot, *cur)
-
+        self._decorationImg = pygame.image.load(DECORATION_IMG).convert_alpha()
         self._background = pygame.image.load(BACKGROUND_IMG).convert()
         self._menu = Menu(
                  pygame.font.Font(MAIN_MENU_FONT, 50),
@@ -37,6 +37,7 @@ class MainMenu(Scene):
 
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
+        self.game.screen.blit(self._decorationImg, (10,20))
         x = self.game.screen.get_width() / 2
         y = (self.game.screen.get_height() - self._menu.get_height()) / 2
         self._menu.blit(self.game.screen, (x,y))

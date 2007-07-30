@@ -306,7 +306,7 @@ class BassClef(Clef):
 
 
 
-class BarLine:
+class Barline:
     def __init__(self, height, width = 3, color = colors.BLACK):
         self.height = height
         self.width = width
@@ -315,28 +315,29 @@ class BarLine:
     def blit(self, surface, (x,y)):
         pass
 
-class OrdinaryBarline(BarLine):
+class OrdinaryBarline(Barline):
     def blit(self, surface, (x,y)):
         pygame.draw.rect(surface, self.color, pygame.locals.Rect(x, y, self.width, self.height))
 
-class DoubleBarLine(BarLine):
+class DoubleBarline(Barline):
     def blit(self, surface, (x,y)):
         pygame.draw.rect(surface, self.color, pygame.locals.Rect(x, y, self.width, self.height))
         pygame.draw.rect(surface, self.color, pygame.locals.Rect(x + 2*self.width, y, self.width, self.height))
 
-class EndBarLine(BarLine):
+class EndBarline(Barline):
+    def blit(self, surface, (x,y)):
+        pygame.draw.rect(surface, self.color, pygame.locals.Rect(x, y, self.width, self.height))
+        pygame.draw.rect(surface, self.color, pygame.locals.Rect(x + 2*self.width, y, 2*self.width, self.height))
+
+class OpenRepeatBarline(Barline):
     def blit(self, surface, (x,y)):
         pass
 
-class OpenRepeatBarLine(BarLine):
+class CloseRepeatBarline(Barline):
     def blit(self, surface, (x,y)):
         pass
 
-class CloseRepeatBarLine(BarLine):
-    def blit(self, surface, (x,y)):
-        pass
-
-class OpenCloseRepeatBarLine(BarLine):
+class OpenCloseRepeatBarline(Barline):
     def blit(self, surface, (x,y)):
         pass
 
@@ -422,9 +423,13 @@ class ScoreBuilder:
         return s                           
 
     def blit(self, surface, (x,y)):
-        barline = OrdinaryBarline(self._staff.getHeight())
         self._staff.blit(surface, (x + 10, y + self.STAFF_Y_OFFSET))
+        # starting barline
+        #barline = OrdinaryBarline(self._staff.getHeight())
         #barline.blit(surface, (x + 10, y + self.STAFF_Y_OFFSET - self._staff.getHeight()))
+        # ending barline
+        #barline = EndBarline(self._staff.getHeight(), color = self._staff.color)
+        #barline.blit(surface, (x + self._staff.length, y + self.STAFF_Y_OFFSET - self._staff.getHeight()))
         self.clef.blit(surface, (x + 20, y))
         self.keySignature.blit(surface, (x + 80, y), self._staff, self.clef)                                            
         if self.showTimeSignature:

@@ -31,7 +31,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.score = 0
-        self.level = 1
+        self.level = 0
         
     #def toggle_fullscreen(self):
         #if self.fullscreen:
