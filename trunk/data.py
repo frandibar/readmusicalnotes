@@ -40,15 +40,14 @@ SOUND_ON_IMG  = join(IMAGES_PATH, "sound_on.png")
 SOUND_OFF_IMG = join(IMAGES_PATH, "sound_off.png")
 
 BACKGROUND_IMG  = join(IMAGES_PATH, "background.png")
-TIMER_IMG       = EIGHTH_STEM_UP_IMG
-#TIMER_FULL_IMG  = join(IMAGES_PATH, "timer_full.png")
-#TIMER_EMPTY_IMG = join(IMAGES_PATH, "timer_empty.png")
+DECORATION_IMG  = join(IMAGES_PATH, "curl.png")
+TIMER_IMG       = join(IMAGES_PATH, "flare.png")
 
 # fonts
 MAIN_MENU_FONT = join(FONTS_PATH, "ajile.ttf")
 NOTES_FONT     = join(FONTS_PATH, "goodfish.ttf")
 SCORE_FONT     = join(FONTS_PATH, "SCRIPTIN.ttf")
-LEGEND_FONT    = MAIN_MENU_FONT
+LEGEND_FONT    = SCORE_FONT
 
 CURSOR_DATA = (                  # sized 24x24
 "          XXXX          ", 

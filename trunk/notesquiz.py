@@ -55,8 +55,10 @@ class NotesQuiz(Scene):
         self._images["overlay"] = pygame.Surface((self.game.screen.get_width(), OVERLAY_HEIGHT)).convert()
         self._images["overlay"].fill(colors.DARK_RED)
         self._images["overlay"].set_alpha(85)
-        self._images["soundOn"]  = pygame.image.load(SOUND_ON_IMG).convert_alpha()
-        self._images["soundOff"] = pygame.image.load(SOUND_OFF_IMG).convert_alpha()
+        img = pygame.image.load(SOUND_ON_IMG).convert_alpha()
+        self._images["soundOn"]  = pygame.transform.scale(img, (img.get_width()/2 , img.get_height()/2))
+        img = pygame.image.load(SOUND_OFF_IMG).convert_alpha()
+        self._images["soundOff"]  = pygame.transform.scale(img, (img.get_width()/2 , img.get_height()/2))
 
         self._showInstructions = False
         self._showPressKeyMsg  = False
@@ -76,19 +78,20 @@ class NotesQuiz(Scene):
                  centered = False
                  )
 
-        pygame.time.set_timer(self.CLOCK_TICK, 1000)        
-        useTimer = self._setupOptions.timerIndex != self._setupOptions.OFF
-        self._timer = Timer(self._setupOptions.getTimerSec(), useTimer)
-        self._ticks = 0
-        notetimer = NoteTimer()
-        notetimer.setYpos(400)
-        self._timerSprite = pygame.sprite.RenderClear(notetimer)
-        if useTimer:
-            self._timer.start()
-
         # set coordinates
+        self._timerCoords = (70, 400)
         self._menuCoords = (700, 100)
         self._imgCoords = (50, 50)
+
+        pygame.time.set_timer(self.CLOCK_TICK, 1000)        
+        self._useTimer = self._setupOptions.timerIndex != self._setupOptions.OFF
+        self._timer = Timer(self._setupOptions.getTimerSec(), self._useTimer)
+        self._ticks = 0
+        self._flareTimer = FlareTimer()
+        self._flareTimer.setPos(self._timerCoords)
+        self._timerSprite = pygame.sprite.RenderClear(self._flareTimer)
+        if self._useTimer:
+            self._timer.start()
 
         self._status = self.WAITING
 
@@ -98,17 +101,28 @@ class NotesQuiz(Scene):
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
 
-        # show timer
-        self._timerSprite.clear(self.game.screen, self.background)
-        self._timerSprite.draw(self.game.screen)
+        if self._useTimer: 
+            # show timer
+            self._timerSprite.clear(self.game.screen, self.background)
+            x0 = self._timerCoords[0] + self._flareTimer.image.get_width()/2
+            p0 = self._flareTimer.rect.center
+            y = self._timerCoords[1] + self._flareTimer.image.get_height()/2
+            x1 = self._timerCoords[0] + self._flareTimer.rect.left
+            pygame.draw.line(self.game.screen, colors.BROWN, (x0, y), (x1, y), 4)
+            #pygame.draw.line(self.game.screen, colors.BROWN, (x0, y), self._flareTimer.rect.center, 4)
+            pygame.draw.circle(self.game.screen, colors.BROWN, (x0,y), 5)
+            xf = self._timerCoords[0] + FlareTimer.DISTANCE
+            pygame.draw.circle(self.game.screen, colors.BROWN, (xf,y), 5)
+            self._timerSprite.draw(self.game.screen)
+            print y, x0, x1, xf
         
         self.game.screen.blit(self._quizImg, self._imgCoords)
         # show score
-        font = pygame.font.Font(SCORE_FONT, 30)
+        font = pygame.font.Font(SCORE_FONT, 40)
         ok = font.render(str(self.game.score), True, colors.OLIVE_GREEN)
         total = font.render(" - " + str(self.game.level), True, colors.BLACK)
-        self.game.screen.blit(ok, (self.game.screen.get_width() - ok.get_width() - total.get_width() - 50, self.game.screen.get_height() - ok.get_height()))
-        self.game.screen.blit(total, (self.game.screen.get_width() - total.get_width() - 50, self.game.screen.get_height() - total.get_height()))
+        self.game.screen.blit(ok, (self.game.screen.get_width() - ok.get_width() - total.get_width() - 50, self.game.screen.get_height() - ok.get_height()*0.8))
+        self.game.screen.blit(total, (self.game.screen.get_width() - total.get_width() - 50, self.game.screen.get_height() - total.get_height()*0.8))
 
         self._menu.blit(self.game.screen, self._menuCoords)
         # show messages
@@ -122,7 +136,7 @@ class NotesQuiz(Scene):
 
         # show statusbar                                                                                                                                                                                                                                                           
         self.game.screen.blit(self._images["overlay"], (0, self.game.screen.get_height() - self._images["overlay"].get_height()))                                 
-        self.game.screen.blit(self._images["soundOn"], (50, self.game.screen.get_height() - self._images["soundOn"].get_height()))                                 
+        self.game.screen.blit(self._images["soundOn"], (40, self.game.screen.get_height() - self._images["soundOn"].get_height() - 10))
         
     def event(self, evt):                
         if self._status in [self.CORRECT, self.WRONG, self.TIMEISUP]:
@@ -226,21 +240,21 @@ class NotesQuiz(Scene):
         self._lastUpdate = self._startTime = time.time()
 
 
-class NoteTimer(pygame.sprite.Sprite):
-    DISTANCE = 400
+class FlareTimer(pygame.sprite.Sprite):
+    DISTANCE = 600
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self) #call Sprite initalizer
+        pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(TIMER_IMG)
+        self.image = pygame.transform.scale(self.image, (self.image.get_width()/2, self.image.get_height()/2))
         self.rect = self.image.get_rect()                                                 
         self.rect.center = (self.image.get_width() / 2, self.image.get_height() / 2)
         self.xSpeed = self.DISTANCE / (options.SetupOptions().getTimerSec() * 10)
-        self.ySpeed = 1
+        self.ySpeed = 0
 
-    def setYpos(self, ypos):
-        self.rect.top = ypos
+    def setPos(self, (x,y)):
+        self.rect.left = x
+        self.rect.top = y
 
     def update(self):
         self.rect.move_ip((self.xSpeed, self.ySpeed))
-        if self.rect.top % 10 == 0:
-            self.ySpeed = -1 * self.ySpeed                                  
 
