@@ -2,7 +2,7 @@ from data import *
 from engine import Game, Scene
 from menu import Menu
 from sounds import sounds
-from timer import Timer, BlinkingText
+import timer
 import colors
 import options
 import score
@@ -13,13 +13,15 @@ import random
 import string
 import time
 
+from pygame.color import Color
+
 DEBUG = False
 
 
 class NotesQuiz(Scene):
     notesIndexMenu = ['B', 'A', 'G', 'F', 'E', 'D', 'C'] 
     # these are the sounds to play when an item from the menu is selected
-    menuSounds = ['b3', 'a3', 'g3', 'f3', 'e3', 'd3', 'c3', 'pasa'] 
+    menuSounds = ['b3', 'a3', 'g3', 'f3', 'e3', 'd3', 'c3'] 
         
     WAITING, WRONG, CORRECT, FINISH, TIMEISUP = range(5)   # status values
     CLOCK_TICK = pygame.USEREVENT
@@ -48,12 +50,12 @@ class NotesQuiz(Scene):
         self._images["correct"] = pygame.image.load(CORRECT_IMG).convert_alpha()
         self._images["wrong"]   = pygame.image.load(WRONG_IMG).convert_alpha()
         font = pygame.font.Font(NOTES_FONT, 15)
-        self._images["instructions"] = font.render("Use keys up, down, C, D, E, F, G, A, B and Enter", True, colors.BLACK)
+        self._images["instructions"] = font.render("Use keys up, down, C, D, E, F, G, A, B and Enter", True, Color('black'))
         font = pygame.font.Font(LEGEND_FONT, 30)
-        self._images["pressKey"] = font.render("Press any key to continue", True, colors.BLACK)
-        OVERLAY_HEIGHT = 60
+        self._images["pressKey"] = font.render("Press any key to continue", True, Color('black'))
+        OVERLAY_HEIGHT = 70
         self._images["overlay"] = pygame.Surface((self.game.screen.get_width(), OVERLAY_HEIGHT)).convert()
-        self._images["overlay"].fill(colors.DARK_RED)
+        self._images["overlay"].fill(Color('dark red'))
         self._images["overlay"].set_alpha(85)
         img = pygame.image.load(SOUND_ON_IMG).convert_alpha()
         self._images["soundOn"]  = pygame.transform.scale(img, (img.get_width()/2 , img.get_height()/2))
@@ -72,65 +74,50 @@ class NotesQuiz(Scene):
                  pygame.font.Font(NOTES_FONT, 30),
                  ["B si", "A la", "G sol", "F fa", "E mi", "D re", "C do"],
                  margin = 0,
-                 normalColor    = colors.BLACK,
-                 selectedColor  = colors.DARK_RED,
+                 normalColor    = Color('black'),
+                 selectedColor  = Color('dark red'),
                  alternateColor = colors.BROWN,
                  centered = False
                  )
 
         # set coordinates
-        self._timerCoords = (70, 400)
         self._menuCoords = (700, 100)
         self._imgCoords = (50, 50)
 
-        pygame.time.set_timer(self.CLOCK_TICK, 1000)        
+        sounds.muteSound()
+
         self._useTimer = self._setupOptions.timerIndex != self._setupOptions.OFF
-        self._timer = Timer(self._setupOptions.getTimerSec(), self._useTimer)
-        self._ticks = 0
-        self._flareTimer = FlareTimer()
-        self._flareTimer.setPos(self._timerCoords)
-        self._timerSprite = pygame.sprite.RenderClear(self._flareTimer)
         if self._useTimer:
+            self._timerCoords = (50, 400)
+            pygame.time.set_timer(self.CLOCK_TICK, 100)        
+            font = pygame.font.Font(LEGEND_FONT, 50) 
+            alarm = timer.BlinkingText("Time is up!", font, (400, 400), "timeisup")                                                                                      
+            self._timer = timer.FlareTimer(self._setupOptions.getTimerSec(), alarm, self._timerCoords, 600)
             self._timer.start()
 
         self._status = self.WAITING
 
-        sounds.muteSound()
         self.start()
 
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
 
-        if self._useTimer: 
-            # show timer
-            self._timerSprite.clear(self.game.screen, self.background)
-            x0 = self._timerCoords[0] + self._flareTimer.image.get_width()/2
-            p0 = self._flareTimer.rect.center
-            y = self._timerCoords[1] + self._flareTimer.image.get_height()/2
-            x1 = self._timerCoords[0] + self._flareTimer.rect.left
-            pygame.draw.line(self.game.screen, colors.BROWN, (x0, y), (x1, y), 4)
-            #pygame.draw.line(self.game.screen, colors.BROWN, (x0, y), self._flareTimer.rect.center, 4)
-            pygame.draw.circle(self.game.screen, colors.BROWN, (x0,y), 5)
-            xf = self._timerCoords[0] + FlareTimer.DISTANCE
-            pygame.draw.circle(self.game.screen, colors.BROWN, (xf,y), 5)
-            self._timerSprite.draw(self.game.screen)
-            print y, x0, x1, xf
         
         self.game.screen.blit(self._quizImg, self._imgCoords)
         # show score
         font = pygame.font.Font(SCORE_FONT, 40)
         ok = font.render(str(self.game.score), True, colors.OLIVE_GREEN)
-        total = font.render(" - " + str(self.game.level), True, colors.BLACK)
+        total = font.render(" - " + str(self.game.level), True, Color('black'))
         self.game.screen.blit(ok, (self.game.screen.get_width() - ok.get_width() - total.get_width() - 50, self.game.screen.get_height() - ok.get_height()*0.8))
         self.game.screen.blit(total, (self.game.screen.get_width() - total.get_width() - 50, self.game.screen.get_height() - total.get_height()*0.8))
 
         self._menu.blit(self.game.screen, self._menuCoords)
         # show messages
-        if self._timer.timeIsUp():
-            self._showPressKeyMsg = True
-            self._status = self.TIMEISUP
+        if self._useTimer and self._timer.timeIsUp():
+                self._showPressKeyMsg = True
+                self._status = self.TIMEISUP
         if self._showPressKeyMsg:
-            self.game.screen.blit(self._images["pressKey"], ((self.game.screen.get_width() - self._images["pressKey"].get_width())/2, self.game.screen.get_height() - self._images["pressKey"].get_height() - 10))
+            self.game.screen.blit(self._images["pressKey"], ((self.game.screen.get_width() - self._images["pressKey"].get_width())/2, self.game.screen.get_height() - self._images["pressKey"].get_height()))
         if self._showInstructions:                    
             self.game.screen.blit(self._images["instructions"], ((self.game.screen.get_width() - self._images["instructions"].get_width())/2, self.game.screen.get_height() - self._images["pressKey"].get_height() - 10))                                 
 
@@ -141,6 +128,7 @@ class NotesQuiz(Scene):
     def event(self, evt):                
         if self._status in [self.CORRECT, self.WRONG, self.TIMEISUP]:
             if (evt.type == pygame.KEYDOWN and evt.key != pygame.K_ESCAPE) or evt.type == pygame.MOUSEBUTTONUP:
+                sounds.muteSound()                                                                                                               
                 self.end(self._status)
                 return                                    
 
@@ -162,6 +150,7 @@ class NotesQuiz(Scene):
                     self.do_action(sel)
         elif evt.type == pygame.KEYDOWN:
             if evt.key == pygame.K_ESCAPE:
+                sounds.muteSound()                                                                                                               
                 self.end(self.FINISH)
             elif evt.key == pygame.K_DOWN:
                 self._menu.next()
@@ -176,23 +165,21 @@ class NotesQuiz(Scene):
                 sounds.play(self.menuSounds[sel])
                 self.do_action(sel)
             else:                                   
-                #try:
+                try:
                     keypressed = string.upper(chr(evt.key))
                     if keypressed not in score.Note.validNotes:
-                        print "Invalid key!", chr(evt.key)
+                        #print "Invalid key!", chr(evt.key)
                         return
                     else:
                         self.evaluate(keypressed)                    
-                #except:
-                    #pass   # ignore keys such as ALT, CTRL, SHIFT, etc
+                except:
+                    pass   # ignore keys such as ALT, CTRL, SHIFT, etc
 
         elif evt.type == self.CLOCK_TICK:
+            print pygame.NUMEVENTS
             if self._timer.isRunning():
-                if self._ticks % 10 == 0:
-                    self._timer.tick()
-                self._ticks += 1                                      
+                self._timer.update(100)
                 pygame.time.set_timer(self.CLOCK_TICK, 100)
-                self._timerSprite.update()
                 
 
     def evaluate(self, guess):
@@ -208,15 +195,12 @@ class NotesQuiz(Scene):
             self._status = self.WRONG
 
         self._showPressKeyMsg = True
-        self._timer.stop()
+        if self._useTimer:
+            self._timer.stop()
         self.paint()
 
 
     def do_action(self, sel):
-        if sel == 7:   # quit            
-            self.end(self.FINISH)
-            return
-
         self._menu.alternate = sel
         self.evaluate(self._menu.options[sel][0])
 
@@ -232,29 +216,10 @@ class NotesQuiz(Scene):
             self.game.screen.blit(self._images["correct"], (x, y))
 
     def update(self):
-        #self._timer.blit(self.game.screen, (770, 100))
-        self._timer.alarm.blit(self.game.screen)
-        pass
+        if self._useTimer: 
+            self._timer.blit(self.game.screen, self.background, self._timerCoords)
 
     def start(self):
         self._lastUpdate = self._startTime = time.time()
 
-
-class FlareTimer(pygame.sprite.Sprite):
-    DISTANCE = 600
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(TIMER_IMG)
-        self.image = pygame.transform.scale(self.image, (self.image.get_width()/2, self.image.get_height()/2))
-        self.rect = self.image.get_rect()                                                 
-        self.rect.center = (self.image.get_width() / 2, self.image.get_height() / 2)
-        self.xSpeed = self.DISTANCE / (options.SetupOptions().getTimerSec() * 10)
-        self.ySpeed = 0
-
-    def setPos(self, (x,y)):
-        self.rect.left = x
-        self.rect.top = y
-
-    def update(self):
-        self.rect.move_ip((self.xSpeed, self.ySpeed))
 

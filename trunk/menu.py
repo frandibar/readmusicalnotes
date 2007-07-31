@@ -1,8 +1,8 @@
-import colors
+from pygame.color import Color
 
 class Menu:
     '''Implements a menu with highlighting options'''
-    def __init__(self, normalFont, alternateFont, selectedFont, options, margin = 0, normalColor = colors.WHITE, selectedColor = colors.WHITE, alternateColor = colors.YELLOW, centered = True):
+    def __init__(self, normalFont, alternateFont, selectedFont, options, margin = 0, normalColor = Color('white'), selectedColor = Color('white'), alternateColor = Color('yellow'), centered = True):
         self.selected = 0
         self.alternate = -1                         
 

@@ -1,14 +1,14 @@
 from data import *
-import colors
 from sounds import sounds
+import colors
 
+from pygame.color import Color
 import pygame
 import time
 
 class BlinkingText:
     '''displays a blinking text message'''
-    def __init__(self, text = "", (xpos, ypos) = (0,0), soundToPlay = None, centered = True, fontColor = colors.DARK_RED, fontBorderColor = colors.BLACK, delay = 0, blinkTime = 0.5, soundTime = 3):
-        font = pygame.font.Font(LEGEND_FONT, 50)
+    def __init__(self, text, font, (xpos, ypos) = (0,0), soundToPlay = None, centered = True, fontColor = Color('dark red'), fontBorderColor = Color('black'), delay = 0, blinkTime = 0.5, soundTime = 3):
         self._text = font.render(text, True, fontColor)
         self._delay = delay
         self._blinkTime = blinkTime
@@ -22,10 +22,10 @@ class BlinkingText:
         self._xpos = xpos
         self._ypos = ypos
         self._centered = centered
-        self._played = False
         self._soundToPlay = soundToPlay
 
     def turnOn(self):
+        sounds.play(self._soundToPlay)
         self._start = time.time()
         self._isOn = True
 
@@ -33,99 +33,101 @@ class BlinkingText:
         self._isOn = False
         
     def blit(self, screen):
-        if self._isOn:
-            now = time.time()
-            if now - self._start > self._delay:
-                self.play()
-                if self._lastBlinkTime is None:
-                    self._lastBlinkTime = time.time()
-                    
-                if now - self._lastBlinkTime > self._blinkTime:
-                    self._blinkOn = not self._blinkOn
-                    self._lastBlinkTime = time.time()
-                    
-                if self._blinkOn:
-                    if self._centered:
-                        screen.blit(self._text, (self._xpos - self._text.get_width()/2, self._ypos))
-                    else:
-                        screen.blit(self._text, (self._xpos, self._ypos))
+        if not self._isOn:
+            return
 
-                if self._lastSoundTime is None:
-                    self._lastSoundTime = time.time()
-                    
-                if now - self._lastSoundTime > self._soundTime:
-                    self._lastSoundTime = now
+        now = time.time()
+        if now - self._start > self._delay:
+            if self._lastBlinkTime is None:
+                self._lastBlinkTime = time.time()
+                
+            if now - self._lastBlinkTime > self._blinkTime:
+                self._blinkOn = not self._blinkOn
+                self._lastBlinkTime = time.time()
+                
+            if self._blinkOn:
+                if self._centered:
+                    screen.blit(self._text, (self._xpos - self._text.get_width()/2, self._ypos))
+                else:
+                    screen.blit(self._text, (self._xpos, self._ypos))
 
-    def play(self):                    
-        if self._played == False:
-            sounds.play(self._soundToPlay)
-            self._played = True
+            if self._lastSoundTime is None:
+                self._lastSoundTime = time.time()
+                
+            if now - self._lastSoundTime > self._soundTime:
+                self._lastSoundTime = now
 
 
 class Timer:
-    def __init__(self, totalTime, enabled = True):
-        self.alarm = BlinkingText("Time is up!", (400, 350), "timeisup")                                                                                      
+    def __init__(self, totalTime, alarm = None):
+        self.alarm = alarm
 
         self._totalTime = totalTime
-        self._enabled = enabled
         self._isRunning = False
         self._timeLeft  = totalTime
         self._tic = True                                                                                                                               
-        #self._fullImg = pygame.image.load(TIMER_FULL_IMG).convert_alpha()
-        #self._emptyImg = pygame.image.load(TIMER_EMPTY_IMG).convert_alpha()
-        
-    @property
-    def enabled(self):
-        return self._enabled
-
-    def disable(self):
-        self._enabled = false
 
     def getTotalTime(self):
-        if not self._enabled: return
         return self._totalTime
 
     def timeIsUp(self):
-        if not self._enabled: return
         if self._timeLeft <= 0:
             self.stop(True)
             return True                       
         return False
 
     def start(self):
-        if not self._enabled: return
         self._isRunning = True        
         self._timeLeft = self._totalTime
+        sounds.play("ticking")
 
     def isRunning(self):
         return self._isRunning
 
     def stop(self, playAlarm = False):
-        if not self._enabled: return
         self._isRunning = False        
         if playAlarm:
             self.alarm.turnOn()
         sounds.muteChannel("tictac")
 
-    def tick(self):                                    
-        if not self._enabled: return
-        self._timeLeft -= 1
-        if self._tic:
-            sounds.play("tic")
-        else:
-            sounds.play("tac")
-        self._tic = not self._tic
 
-    def blit(self, surface, (x, y)):
-        '''draw the timer as a vertical column decrementing in height'''
-        if not self._enabled: return
-        fullHeight = 300
-        width = 20
-        height = max(self._timeLeft * fullHeight / self.getTotalTime(), 0)
-        #x = surface.get_width() - self._fullImg.get_width() - 10
-        #y = 50                                                    
-        #surface.blit(self._emptyImg, (x,y))
-        #surface.blit(self._fullImg, (x,y))
-        #pygame.draw.rect(surface, colors.BLACK, pygame.locals.Rect(x-1, y-1, width+2, fullHeight+2))
-        #pygame.draw.rect(surface, colors.YELLOW, pygame.locals.Rect(x, y + fullHeight - height, width, height))
+class FlareTimer(pygame.sprite.Sprite, Timer):
+    def __init__(self, totalTime, alarm, (x,y), length):
+        # call base class constructors
+        Timer.__init__(self, totalTime, alarm)
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = pygame.image.load(FLARE_IMG)
+        self.rect = self.image.get_rect()                                                 
+        #self.rect.center = (self.image.get_width() / 2, self.image.get_height() / 2)
+        self.length = length - (length % totalTime)
+
+        self.setPos((x,y))
+        self._render = pygame.sprite.RenderClear(self)
         
+    def setPos(self, (x,y)):
+        self.rect.left = x
+        self.rect.top = y
+
+    def update(self, ms):
+        if not self.timeIsUp():
+            step = ms / 1000.0
+            inc = self.length / self._totalTime * step
+            self._timeLeft -= step
+            self.rect.move_ip((inc, 0))
+        elif self.alarm is not None:
+            self.alarm.turnOn()                                        
+
+
+    def blit(self, surface, background, (x, y)):
+        self._render.clear(surface, background)
+        x0 = x + self.image.get_width() / 2
+        y0 = y + self.image.get_height() / 2
+        x1 = self.rect.center[0]
+        xf = x + self.length
+        pygame.draw.line(surface, Color('gray55'), (x0, y0), (xf, y0), 3)
+        pygame.draw.line(surface, colors.BROWN, (x0, y0), (x1, y0), 3)
+        self._render.draw(surface)
+        self.alarm.blit(surface)
+        print x0, x1, xf                                  
+

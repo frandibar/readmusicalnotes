@@ -1,5 +1,4 @@
 import cfg
-import colors
 from engine import Scene
 from data import *
 from sounds import sounds
@@ -19,7 +18,7 @@ class Setup(Scene):
         self._fontText = pygame.font.Font(MAIN_MENU_FONT, 50)
 
         # render text options                                                                                            
-        color = colors.DARK_RED
+        color = pygame.color.Color('dark red')
         yes = self._fontText.render("yes", True, color)
         no  = self._fontText.render("no", True, color)
         off = self._fontText.render("off", True, color)
@@ -33,7 +32,7 @@ class Setup(Scene):
 
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
-        color = colors.DARK_RED
+        color = pygame.color.Color('dark red')
         setup  = self._fontTitle.render("Options", True, color)
         clefs  = self._fontText.render("Clefs", True, color)
         treble = self._fontText.render("treble:", True, color)
@@ -63,7 +62,7 @@ class Setup(Scene):
             x, y = pygame.mouse.get_pos()
             if DEBUG: print x, y                                         
             if self.COL3 <= x <= self.COL3 + 100:
-                sounds.play("pasa")                                       
+                sounds.play("menu")                                       
                 if 200 <= y <= 250:
                     # disallow treble and bass both set to no                                                                                                                                                
                     if not (self.setupOptions.useTrebleClef == self.setupOptions.YES and self.setupOptions.useBassClef == self.setupOptions.NO):

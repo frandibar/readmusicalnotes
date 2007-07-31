@@ -28,14 +28,10 @@ class Sounds:
         for s in ["bach_846_prelude1"]:
             self._channelSounds(s, self._channels["ambient"], -1)
 
-        for s in ["tic.wav", "tac.wav"]:
-            self._channelSounds(s, self._channels["tictac"])
-
         for s in ["ticking.wav"]:
-            self._channelSounds(s, self._channels["tictac"])
+            self._channelSounds(s, self._channels["tictac"], -1)
 
-
-        for s in ["enter.wav", "pasa.wav", "timeisup.wav", "b3.ogg", "a3.ogg", "g3.ogg", "f3.ogg", "e3.ogg", "d3.ogg", "c3.ogg"]:
+        for s in ["enter.wav", "menu.wav", "timeisup.wav", "b3.ogg", "a3.ogg", "g3.ogg", "f3.ogg", "e3.ogg", "d3.ogg", "c3.ogg"]:
             self._looseSounds(s)
 
     def play(self, sound):
