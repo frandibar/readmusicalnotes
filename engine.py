@@ -1,5 +1,4 @@
 from sounds import sounds
-import colors
 
 import pygame
 import sys
@@ -53,7 +52,7 @@ class SceneExit(Exception):
     pass
     
 class Scene:
-    BG_COLOR = colors.WHITE
+    BG_COLOR = pygame.color.Color('white')
     
     @property 
     def background(self):

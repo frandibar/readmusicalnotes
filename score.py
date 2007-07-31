@@ -1,6 +1,6 @@
 from data import *
-import colors
 
+from pygame.color import Color
 import pygame
 
 
@@ -250,7 +250,7 @@ class Chord:
 
 class Staff:
     GUIDE_LENGTH = 38
-    def __init__(self, length, width = 2, color = colors.DARK_RED):
+    def __init__(self, length, width = 2, color = Color('dark red')):
         self.length = length
         self.width = width
         self.color = color
@@ -276,7 +276,7 @@ class Staff:
 
 
 class TimeSignature:
-    def __init__(self, beats = 4, noteValue = 4, color = colors.BLACK):    
+    def __init__(self, beats = 4, noteValue = 4, color = Color('black')):    
         self.beats = beats
         self.noteValue = noteValue
         self.color = color                                   
@@ -307,7 +307,7 @@ class BassClef(Clef):
 
 
 class Barline:
-    def __init__(self, height, width = 3, color = colors.BLACK):
+    def __init__(self, height, width = 3, color = Color('black')):
         self.height = height
         self.width = width
         self.color = color
@@ -408,7 +408,7 @@ class KeySignature:
 
 class ScoreBuilder:
     STAFF_Y_OFFSET = 113                                                           
-    def __init__(self, clef, staffLength, keySignature = KeySignature('CM'), showTimeSignature = True, beats = 4, noteValue = 4, notesList = [], color = colors.BLACK):
+    def __init__(self, clef, staffLength, keySignature = KeySignature('CM'), showTimeSignature = True, beats = 4, noteValue = 4, notesList = [], color = Color('black')):
         self.notes = notesList
         self.clef = clef
         self.color = color                                                                                            

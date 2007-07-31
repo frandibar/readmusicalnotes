@@ -41,7 +41,7 @@ SOUND_OFF_IMG = join(IMAGES_PATH, "sound_off.png")
 
 BACKGROUND_IMG  = join(IMAGES_PATH, "background.png")
 DECORATION_IMG  = join(IMAGES_PATH, "curl.png")
-TIMER_IMG       = join(IMAGES_PATH, "flare.png")
+FLARE_IMG       = join(IMAGES_PATH, "flare.png")
 
 # fonts
 MAIN_MENU_FONT = join(FONTS_PATH, "ajile.ttf")

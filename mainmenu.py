@@ -5,8 +5,8 @@ from options import Setup
 from notesquiz import NotesQuiz
 from rythmquiz import RythmQuiz
 from sounds import sounds
-import colors
 
+from pygame.color import Color
 import pygame
 
 
@@ -27,9 +27,9 @@ class MainMenu(Scene):
 #["Notes Quiz", "Rythm Quiz", "Options", "Quit"],
                  ["Notes Quiz", "Options", "Quit"],
                  margin = -40,
-                 normalColor    = colors.BLACK,
-                 selectedColor  = colors.DARK_RED,
-                 alternateColor = colors.BLACK,
+                 normalColor    = Color('black'),
+                 selectedColor  = Color('dark red'),
+                 alternateColor = Color('black'),
                  centered = True
                  )
         sounds.play('bach_846_prelude1')
@@ -49,7 +49,7 @@ class MainMenu(Scene):
             y -= (self.game.screen.get_height() - self._menu.get_height()) / 2
             if evt.type == pygame.MOUSEMOTION:
                 if self._menu.setItem((x,y)):
-                    sounds.play('pasa')
+                    sounds.play('menu')
                     self.paint()
             else:
                 # MOUSEBUTTONUP, user clicked on menu
@@ -62,11 +62,11 @@ class MainMenu(Scene):
                 self.end()
             elif evt.key == pygame.K_DOWN:
                 self._menu.next()
-                sounds.play('pasa')
+                sounds.play('menu')
                 self.paint()
             elif evt.key == pygame.K_UP:
                 self._menu.prev()
-                sounds.play('pasa')
+                sounds.play('menu')
                 self.paint()
             elif evt.key in [pygame.K_RETURN, pygame.K_SPACE]:
                 sel = self._menu.selected
