@@ -37,7 +37,7 @@ SHARP_IMG   = join(IMAGES_PATH, "sharp.png")
 NATURAL_IMG = join(IMAGES_PATH, "natural.png")
 
 SOUND_ON_IMG  = join(IMAGES_PATH, "sound_on.png")
-SOUND_OFF_IMG = join(IMAGES_PATH, "sound_off.png")
+SOUND_OFF_IMG = join(IMAGES_PATH, "prohibited.png")
 
 BACKGROUND_IMG  = join(IMAGES_PATH, "background.png")
 DECORATION_IMG  = join(IMAGES_PATH, "curl.png")
@@ -48,6 +48,22 @@ MAIN_MENU_FONT = join(FONTS_PATH, "ajile.ttf")
 NOTES_FONT     = join(FONTS_PATH, "goodfish.ttf")
 SCORE_FONT     = join(FONTS_PATH, "SCRIPTIN.ttf")
 LEGEND_FONT    = SCORE_FONT
+
+# sounds
+INTRO_SND    = join(SOUNDS_PATH, "bach_846_prelude1.ogg")
+TICTAC_SND   = join(SOUNDS_PATH, "ticking.wav")
+TIMEISUP_SND = join(SOUNDS_PATH, "timeisup.wav")
+MENU_SND     = join(SOUNDS_PATH, "menu.wav")
+ENTER_SND    = join(SOUNDS_PATH, "enter.wav")
+
+noteSounds = { "b3": join(SOUNDS_PATH, "b3.ogg"), 
+               "a3": join(SOUNDS_PATH, "a3.ogg"),
+               "g3": join(SOUNDS_PATH, "g3.ogg"),
+               "f3": join(SOUNDS_PATH, "f3.ogg"),
+               "e3": join(SOUNDS_PATH, "e3.ogg"),
+               "d3": join(SOUNDS_PATH, "d3.ogg"),
+               "c3": join(SOUNDS_PATH, "c3.ogg")
+}
 
 CURSOR_DATA = (                  # sized 24x24
 "          XXXX          ", 

@@ -1,4 +1,5 @@
 from data import *
+from setupoptions import SetupOptions
 
 import os
 import pygame
@@ -8,16 +9,14 @@ DEBUG = False
 
 class Sounds:
     AMBIENT_VOLUME = 0.5
-    TICTAC_VOLUME  = 0.6
-
-    def __init__(self, mute):
-        self.mute = mute
+    TICTAC_VOLUME  = 0.3
 
     def init(self):
+        self.mute = SetupOptions().sounds == SetupOptions().NO
         NCHANNELS = 2
+        pygame.mixer.init()
         pygame.mixer.set_reserved(NCHANNELS)
         pygame.mixer.pre_init(44100, -16, False)
-        pygame.mixer.init()
 
         self._channels = {}
         self._channels["ambient"] = pygame.mixer.Channel(1)
@@ -25,49 +24,49 @@ class Sounds:
         self._channels["ambient"].set_volume(self.AMBIENT_VOLUME)
         self._channels["tictac"].set_volume(self.TICTAC_VOLUME)
 
-        for s in ["bach_846_prelude1"]:
-            self._channelSounds(s, self._channels["ambient"], -1)
+        for s in [INTRO_SND]:
+            self._channelSounds(s, self._channels["ambient"], -1)  # -1 to loop forever
 
-        for s in ["ticking.wav"]:
+        for s in [TICTAC_SND]:
             self._channelSounds(s, self._channels["tictac"], -1)
 
-        for s in ["enter.wav", "menu.wav", "timeisup.wav", "b3.ogg", "a3.ogg", "g3.ogg", "f3.ogg", "e3.ogg", "d3.ogg", "c3.ogg"]:
+        for s in [ENTER_SND, MENU_SND, TIMEISUP_SND]:
             self._looseSounds(s)
+
+        for s in noteSounds.values():
+            self._looseSounds(s)
+
 
     def play(self, sound):
         if self.mute: return
         getattr(self, sound)()
 
-    def muteSound(self):
+    def fadeOut(self):
         if self.mute: return
         pygame.mixer.fadeout(250)
+
+    def turnOn(self):
+        self.init()
+
+    def muteSound(self):
+        #pygame.mixer.quit()
+        pygame.mixer.stop()
 
     def muteChannel(self, channel):
         self._channels[channel].stop()
 
-    def _buildSound(self, s):
-        if self.mute: return
-        if "." not in s:
-            s += ".ogg"
-        if DEBUG: print "Loading sound:", s
-        return pygame.mixer.Sound(os.path.join(SOUNDS_PATH, s))
-
     def _channelSounds(self, s, channel, loops = 0):
-        if self.mute: return
-        sound = self._buildSound(s)
+        sound = pygame.mixer.Sound(s)
         def play():
+            if self.mute: return
             channel.play(sound, loops)
 
-        if s.endswith(".wav"):
-            s = s[:-4]
         setattr(self, s, play)
             
     def _looseSounds(self, s):
-        if self.mute: return
-        sound = self._buildSound(s)
-        if s.endswith(".wav") or s.endswith(".ogg"):
-            s = s[:-4]
+        sound = pygame.mixer.Sound(s)
         setattr(self, s, sound.play)
 
-sounds = Sounds(mute = False)
+
+sounds = Sounds()
 
