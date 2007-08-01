@@ -79,7 +79,7 @@ class Timer:
     def start(self):
         self._isRunning = True        
         self._timeLeft = self._totalTime
-        sounds.play("ticking")
+        sounds.play(TICTAC_SND)
 
     def isRunning(self):
         return self._isRunning
@@ -129,5 +129,5 @@ class FlareTimer(pygame.sprite.Sprite, Timer):
         pygame.draw.line(surface, colors.BROWN, (x0, y0), (x1, y0), 3)
         self._render.draw(surface)
         self.alarm.blit(surface)
-        print x0, x1, xf                                  
+        #print x0, x1, xf                                  
 

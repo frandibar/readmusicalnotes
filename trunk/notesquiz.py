@@ -59,8 +59,7 @@ class NotesQuiz(Scene):
         self._images["overlay"].set_alpha(85)
         img = pygame.image.load(SOUND_ON_IMG).convert_alpha()
         self._images["soundOn"]  = pygame.transform.scale(img, (img.get_width()/2 , img.get_height()/2))
-        img = pygame.image.load(SOUND_OFF_IMG).convert_alpha()
-        self._images["soundOff"]  = pygame.transform.scale(img, (img.get_width()/2 , img.get_height()/2))
+        self._images["soundOff"]  = pygame.image.load(SOUND_OFF_IMG).convert_alpha()
 
         self._showInstructions = False
         self._showPressKeyMsg  = False
@@ -84,18 +83,19 @@ class NotesQuiz(Scene):
         self._menuCoords = (700, 100)
         self._imgCoords = (50, 50)
 
-        sounds.muteSound()
+        sounds.fadeOut()
 
         self._useTimer = self._setupOptions.timerIndex != self._setupOptions.OFF
         if self._useTimer:
             self._timerCoords = (50, 400)
             pygame.time.set_timer(self.CLOCK_TICK, 100)        
             font = pygame.font.Font(LEGEND_FONT, 50) 
-            alarm = timer.BlinkingText("Time is up!", font, (400, 400), "timeisup")                                                                                      
+            alarm = timer.BlinkingText("Time is up!", font, (400, 400), TIMEISUP_SND)                                                                                      
             self._timer = timer.FlareTimer(self._setupOptions.getTimerSec(), alarm, self._timerCoords, 600)
             self._timer.start()
 
         self._status = self.WAITING
+        self._soundOn = self._setupOptions.sounds == self._setupOptions.YES
 
         self.start()
 
@@ -123,12 +123,14 @@ class NotesQuiz(Scene):
 
         # show statusbar                                                                                                                                                                                                                                                           
         self.game.screen.blit(self._images["overlay"], (0, self.game.screen.get_height() - self._images["overlay"].get_height()))                                 
-        self.game.screen.blit(self._images["soundOn"], (40, self.game.screen.get_height() - self._images["soundOn"].get_height() - 10))
+        if not self._soundOn:
+            self.game.screen.blit(self._images["soundOn"], (40, self.game.screen.get_height() - self._images["soundOn"].get_height() - 15))
+            self.game.screen.blit(self._images["soundOff"], (25, self.game.screen.get_height() - self._images["soundOff"].get_height() - 5))
         
     def event(self, evt):                
         if self._status in [self.CORRECT, self.WRONG, self.TIMEISUP]:
             if (evt.type == pygame.KEYDOWN and evt.key != pygame.K_ESCAPE) or evt.type == pygame.MOUSEBUTTONUP:
-                sounds.muteSound()                                                                                                               
+                sounds.fadeOut()                                                                                                               
                 self.end(self._status)
                 return                                    
 
@@ -141,28 +143,38 @@ class NotesQuiz(Scene):
             if evt.type == pygame.MOUSEMOTION:
                 if self._menu.setItem((x,y)):
                     self._menu.setItem((x,y))
-                    sounds.play(self.menuSounds[self._menu.selected])
+                    if self._soundOn:
+                        sounds.play(noteSounds[self.menuSounds[self._menu.selected]])
                     self.paint()
             else:                                
                 # MOUSEBUTTONUP, user clicked on menu
                 sel = self._menu.selectItem((x,y))
                 if sel is not None:
                     self.do_action(sel)
+                #else:
+                    ## check if sound icon was clicked
+                    #x, y = pygame.mouse.get_pos()
+                    #if 25 <= x <= 75 and 570 <= y <= 615:
+                        #self._soundOn = not self._soundOn
+                        #if not self._soundOn: sounds.muteSound()
+                        #else: sounds.turnOn()
+                        #self.paint()
+                        
         elif evt.type == pygame.KEYDOWN:
             if evt.key == pygame.K_ESCAPE:
                 sounds.muteSound()                                                                                                               
                 self.end(self.FINISH)
             elif evt.key == pygame.K_DOWN:
                 self._menu.next()
-                sounds.play(self.menuSounds[self._menu.selected])
+                sounds.play(noteSounds[self.menuSounds[self._menu.selected]])
                 self.paint()
             elif evt.key == pygame.K_UP:
                 self._menu.prev()
-                sounds.play(self.menuSounds[self._menu.selected])
+                sounds.play(noteSounds[self.menuSounds[self._menu.selected]])
                 self.paint()
             elif evt.key in [pygame.K_RETURN, pygame.K_SPACE]:
                 sel = self._menu.selected
-                sounds.play(self.menuSounds[sel])
+                sounds.play(noteSounds[self.menuSounds[sel]])
                 self.do_action(sel)
             else:                                   
                 try:
@@ -176,14 +188,13 @@ class NotesQuiz(Scene):
                     pass   # ignore keys such as ALT, CTRL, SHIFT, etc
 
         elif evt.type == self.CLOCK_TICK:
-            print pygame.NUMEVENTS
             if self._timer.isRunning():
                 self._timer.update(100)
                 pygame.time.set_timer(self.CLOCK_TICK, 100)
                 
 
     def evaluate(self, guess):
-        sounds.play(self.menuSounds[self._menu.selected])
+        sounds.play(noteSounds[self.menuSounds[self._menu.selected]])
         # select option from menu
         self._menu.selected  = self.notesIndexMenu.index(guess)
         self._menu.alternate = self.notesIndexMenu.index(guess)

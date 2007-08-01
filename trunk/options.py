@@ -1,11 +1,11 @@
-import cfg
 from engine import Scene
 from data import *
+from setupoptions import SetupOptions
 from sounds import sounds
 
 import pygame
 
-DEBUG = False
+DEBUG = True
 
 class Setup(Scene):
     COL1 = 200                  
@@ -38,6 +38,7 @@ class Setup(Scene):
         treble = self._fontText.render("treble:", True, color)
         bass   = self._fontText.render("bass:", True, color)
         timer  = self._fontText.render("Timer:", True, color)
+        sound  = self._fontText.render("Sounds:", True, color)
         back   = self._fontText.render("back", True, color)
         self.game.screen.blit(setup, (self.game.screen.get_width()/2 - setup.get_width()/2, 70))
         ypos = 150
@@ -52,6 +53,9 @@ class Setup(Scene):
         ypos += rowheight                                               
         self.game.screen.blit(timer, (self.COL1, ypos))
         self.game.screen.blit(self._timesImg[self.setupOptions.timerIndex], (self.COL3, ypos))
+        ypos += rowheight                                               
+        self.game.screen.blit(sound, (self.COL1, ypos))
+        self.game.screen.blit(self._yesnoImg[self.setupOptions.sounds], (self.COL3, ypos))
         self.game.screen.blit(back, (self.COL3, ypos + 100))
 
     def event(self, evt):
@@ -62,7 +66,7 @@ class Setup(Scene):
             x, y = pygame.mouse.get_pos()
             if DEBUG: print x, y                                         
             if self.COL3 <= x <= self.COL3 + 100:
-                sounds.play("menu")                                       
+                sounds.play(MENU_SND)                                       
                 if 200 <= y <= 250:
                     # disallow treble and bass both set to no                                                                                                                                                
                     if not (self.setupOptions.useTrebleClef == self.setupOptions.YES and self.setupOptions.useBassClef == self.setupOptions.NO):
@@ -72,43 +76,13 @@ class Setup(Scene):
                         self.setupOptions.useBassClef = (self.setupOptions.useBassClef + 1) % len(self._yesnoImg)
                 elif 300 < y <= 350:
                     self.setupOptions.timerIndex = (self.setupOptions.timerIndex + 1) % len(self._timesImg)
-                elif 400 < y <= 450:
+                elif 350 < y <= 400:
+                    self.setupOptions.sounds = (self.setupOptions.sounds + 1) % len(self._yesnoImg)
+                    sounds.mute = self.setupOptions.sounds == self.setupOptions.NO
+                elif 450 < y <= 500:
                     self.setupOptions.save()
                     self.end()                                    
                 self.paint()                                                                          
 
 
-
-class SetupOptions:
-    BASS, TREBLE, TIMER, TIME = range(4)
-    NO, YES = range(2)
-    OFF, SEC5, SEC10, SEC15, SEC20 = range(5)
-    def __init__(self):
-        self.load()
-
-    def load(self):        
-        cfg.initialise(None, None, CONFIG_FILE)                                                             
-        self.timerIndex    = cfg.get_int("notesquiz/timerIndex")
-        self.useTrebleClef = cfg.get_int("notesquiz/useTrebleClef")
-        self.useBassClef   = cfg.get_int("notesquiz/useBassClef")
-        self.mute          = cfg.get_int("notesquiz/mute")
-        cfg.sync()
-
-    def setDefaults(self):
-        self.timerIndex    = self.SEC5
-        self.useTrebleClef = self.YES
-        self.useBassClef   = self.YES
-        self.mute          = self.NO
-        self.save()                                                                 
-
-    def save(self):
-        cfg.initialise(None, None, CONFIG_FILE)                                                             
-        cfg.set_int("notesquiz/timerIndex", self.timerIndex)
-        cfg.set_int("notesquiz/useTrebleClef", self.useTrebleClef)
-        cfg.set_int("notesquiz/useBassClef", self.useBassClef)
-        cfg.set_int("notesquiz/mute", self.mute)
-        cfg.sync()
-
-    def getTimerSec(self):
-        return self.timerIndex * 5
 

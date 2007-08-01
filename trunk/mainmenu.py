@@ -32,7 +32,7 @@ class MainMenu(Scene):
                  alternateColor = Color('black'),
                  centered = True
                  )
-        sounds.play('bach_846_prelude1')
+        sounds.play(INTRO_SND)
         
 
     def paint(self):
@@ -49,30 +49,30 @@ class MainMenu(Scene):
             y -= (self.game.screen.get_height() - self._menu.get_height()) / 2
             if evt.type == pygame.MOUSEMOTION:
                 if self._menu.setItem((x,y)):
-                    sounds.play('menu')
+                    sounds.play(MENU_SND)
                     self.paint()
             else:
                 # MOUSEBUTTONUP, user clicked on menu
                 sel = self._menu.selectItem((x,y))
                 if sel is not None:
-                    sounds.play('enter')
+                    sounds.play(ENTER_SND)
                     self.do_action(sel)
         elif evt.type == pygame.KEYDOWN:
             if evt.key == pygame.K_ESCAPE:
                 self.end()
             elif evt.key == pygame.K_DOWN:
                 self._menu.next()
-                sounds.play('menu')
+                sounds.play(MENU_SND)
                 self.paint()
             elif evt.key == pygame.K_UP:
                 self._menu.prev()
-                sounds.play('menu')
+                sounds.play(MENU_SND)
                 self.paint()
             elif evt.key in [pygame.K_RETURN, pygame.K_SPACE]:
                 sel = self._menu.selected
-                sounds.play('enter')
+                sounds.play(ENTER_SND)
                 self.do_action(sel)
-                sounds.play('bach_846_prelude1')
+                sounds.play(INTRO_SND)
                 
     def do_action(self, sel):
         if sel == self.NOTES_QUIZ:
