@@ -23,10 +23,15 @@ class Game:
             pygame.display.set_icon(icon) 
 
         #self._xySize = pygame.display.list_modes()[1]
-        xySize = pygame.display.list_modes()[1]
-        #self.screen = pygame.display.set_mode(self._xySize)
-        self.screen = pygame.display.set_mode(xySize, pygame.FULLSCREEN)
-        #self.fullscreen = False
+        #xySize = pygame.display.list_modes()[0]
+        #self.screen = pygame.display.set_mode((800,600))
+        self.screen = pygame.display.set_mode((800,600), pygame.FULLSCREEN)
+
+        #if pygame.display.mode_ok(1024, 768, pygame.FULLSCREEN, 32):
+            #common.mainScreen = pygame.display.set_mode(1024, 768, pygame.FULLSCREEN, 32)
+        #else:
+            #sys.exit()
+
         self.clock = pygame.time.Clock()
 
         self.score = 0
