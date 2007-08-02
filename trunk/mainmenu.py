@@ -18,7 +18,8 @@ class MainMenu(Scene):
         cursorSize = (len(CURSOR_DATA), len(CURSOR_DATA[0]))
         hotspot = (0, len(CURSOR_DATA)-1)            
         pygame.mouse.set_cursor(cursorSize, hotspot, *cur)
-        self._decorationImg = pygame.image.load(DECORATION_IMG).convert_alpha()
+        self._decorationImg1 = pygame.image.load(DECORATION1_IMG).convert_alpha()
+        self._decorationImg2 = pygame.image.load(DECORATION2_IMG).convert_alpha()
         self._background = pygame.image.load(BACKGROUND_IMG).convert()
         self._menu = Menu(
                  pygame.font.Font(MAIN_MENU_FONT, 50),
@@ -32,12 +33,27 @@ class MainMenu(Scene):
                  alternateColor = Color('black'),
                  centered = True
                  )
+        self.showAnimation()
         sounds.play(INTRO_SND)
+        
+    def showAnimation(self):
+        self.game.screen.blit(self.background, (0,0))
+        pygame.display.flip()
+        y1 = 20
+        y2 = 500               
+        self.game.screen.blit(self._decorationImg1, (10, y1))
+        self.game.screen.blit(self._decorationImg2, (10, y2))
+        for x in range(0, self._decorationImg1.get_width(), 1):
+            pygame.display.update((self.game.screen.get_width() - x, y2),(self.game.screen.get_width() - x, y2 + self._decorationImg2.get_height()))
+            pygame.display.update((x, y1),(x, self._decorationImg1.get_height() + y1))
         
 
     def paint(self):
+        y1 = 20
+        y2 = 500               
         self.game.screen.blit(self.background, (0,0))
-        self.game.screen.blit(self._decorationImg, (10,20))
+        self.game.screen.blit(self._decorationImg1, (10, y1))
+        self.game.screen.blit(self._decorationImg2, (10, y2))
         x = self.game.screen.get_width() / 2
         y = (self.game.screen.get_height() - self._menu.get_height()) / 2
         self._menu.blit(self.game.screen, (x,y))

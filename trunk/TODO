@@ -9,3 +9,10 @@ readMusic To Do list:
 - agregar entrada midi
 - separar codigo como modelo MVC
 - agregar estadisticas de aciertos
+
+
+BUGS List:
+
+#1 When setting music off, background music continues
+#2 Flare light does no begin from the beginning, and ends after the grey line
+

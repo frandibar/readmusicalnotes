@@ -14,8 +14,9 @@ class Setup(Scene):
     def init(self, game):
         self.setupOptions = SetupOptions()
         self._background = pygame.image.load(BACKGROUND_IMG).convert()
-        self._fontTitle = pygame.font.Font(MAIN_MENU_FONT, 70)
-        self._fontText = pygame.font.Font(MAIN_MENU_FONT, 50)
+        self._borderImg  = pygame.image.load(BORDER_IMG).convert_alpha()
+        self._fontTitle = pygame.font.Font(OPTIONS_FONT, 50)
+        self._fontText  = pygame.font.Font(OPTIONS_FONT, 30)
 
         # render text options                                                                                            
         color = pygame.color.Color('dark red')
@@ -32,6 +33,7 @@ class Setup(Scene):
 
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
+        #self.game.screen.blit(self._borderImg, (0,0))
         color = pygame.color.Color('dark red')
         setup  = self._fontTitle.render("Options", True, color)
         clefs  = self._fontText.render("Clefs", True, color)

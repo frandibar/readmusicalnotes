@@ -101,8 +101,6 @@ class NotesQuiz(Scene):
 
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
-
-        
         self.game.screen.blit(self._quizImg, self._imgCoords)
         # show score
         font = pygame.font.Font(SCORE_FONT, 40)
@@ -123,9 +121,9 @@ class NotesQuiz(Scene):
 
         # show statusbar                                                                                                                                                                                                                                                           
         self.game.screen.blit(self._images["overlay"], (0, self.game.screen.get_height() - self._images["overlay"].get_height()))                                 
-        if not self._soundOn:
-            self.game.screen.blit(self._images["soundOn"], (40, self.game.screen.get_height() - self._images["soundOn"].get_height() - 15))
-            self.game.screen.blit(self._images["soundOff"], (25, self.game.screen.get_height() - self._images["soundOff"].get_height() - 5))
+        #if not self._soundOn:
+            #self.game.screen.blit(self._images["soundOn"], (40, self.game.screen.get_height() - self._images["soundOn"].get_height() - 15))
+            #self.game.screen.blit(self._images["soundOff"], (25, self.game.screen.get_height() - self._images["soundOff"].get_height() - 5))
         
     def event(self, evt):                
         if self._status in [self.CORRECT, self.WRONG, self.TIMEISUP]:

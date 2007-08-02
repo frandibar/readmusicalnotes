@@ -40,20 +40,25 @@ SOUND_ON_IMG  = join(IMAGES_PATH, "sound_on.png")
 SOUND_OFF_IMG = join(IMAGES_PATH, "prohibited.png")
 
 BACKGROUND_IMG  = join(IMAGES_PATH, "background.png")
-DECORATION_IMG  = join(IMAGES_PATH, "curl.png")
+DECORATION1_IMG = join(IMAGES_PATH, "curl1.png")
+DECORATION2_IMG = join(IMAGES_PATH, "curl2.png")
+BORDER_IMG      = join(IMAGES_PATH, "border.png")
 FLARE_IMG       = join(IMAGES_PATH, "flare.png")
 
 # fonts
 MAIN_MENU_FONT = join(FONTS_PATH, "ajile.ttf")
-NOTES_FONT     = join(FONTS_PATH, "goodfish.ttf")
+NOTES_FONT     = join(FONTS_PATH, "gbsn00lp.ttf")
+OPTIONS_FONT   = join(FONTS_PATH, "batang.ttf")
 SCORE_FONT     = join(FONTS_PATH, "SCRIPTIN.ttf")
 LEGEND_FONT    = SCORE_FONT
 
 # sounds
 INTRO_SND    = join(SOUNDS_PATH, "bach_846_prelude1.ogg")
 TICTAC_SND   = join(SOUNDS_PATH, "ticking.wav")
-TIMEISUP_SND = join(SOUNDS_PATH, "timeisup.wav")
-MENU_SND     = join(SOUNDS_PATH, "menu.wav")
+#TIMEISUP_SND = join(SOUNDS_PATH, "timeisup.wav")
+TIMEISUP_SND = join(SOUNDS_PATH, "tam.wav")
+#MENU_SND     = join(SOUNDS_PATH, "menu.wav")
+MENU_SND     = join(SOUNDS_PATH, "xyloc3.wav")
 ENTER_SND    = join(SOUNDS_PATH, "enter.wav")
 
 noteSounds = { "b3": join(SOUNDS_PATH, "b3.ogg"), 
