@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2229"
+   sodipodi:version="0.32"
+   inkscape:version="0.45"
+   width="81"
+   height="120"
+   version="1.0"
+   sodipodi:docbase="/home/francisco/Desktop/svg"
+   sodipodi:docname="check.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:modified="TRUE">
+  <metadata
+     id="metadata2234">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs2232" />
+  <sodipodi:namedview
+     inkscape:window-height="619"
+     inkscape:window-width="872"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="3.3916667"
+     inkscape:cx="40.5"
+     inkscape:cy="60.000001"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:current-layer="svg2229" />
+  <path
+     style="fill:#6a8804;fill-opacity:1"
+     d="M 24.542173,117.26477 C 21.258865,113.74998 17.323596,105.98483 13.675441,95.822329 C 10.297492,86.412528 7.0897311,80.191142 3.8642071,76.793644 C -3.1970699,69.355885 5.4336301,67.544693 13.222111,74.829845 C 15.401494,76.868386 19.514284,82.939803 22.473428,88.4869 C 25.528772,94.214332 28.525102,98.613246 29.498729,98.800749 C 31.891965,99.261644 35.253218,92.191201 41.136959,74.319569 C 46.848385,56.971339 51.711151,44.977961 58.092883,32.5 C 63.684155,21.567596 76.838577,1.3890623 78.88645,0.6032194 C 81.504649,-0.40147752 81.598955,2.9060703 79.090885,7.7732108 C 58.901679,46.952219 57.514027,50.404773 45.352069,91.717183 C 42.078615,102.83663 38.968279,112.74167 38.440211,113.72837 C 36.840085,116.71823 33.836315,118.94171 30.49437,119.61009 C 27.833217,120.14232 26.878979,119.76633 24.542173,117.26477 z "
+     id="path3701"
+     inkscape:export-filename="/home/francisco/programming/python/readMusic/data/images/correct.png"
+     inkscape:export-xdpi="210.08"
+     inkscape:export-ydpi="210.08" />
+</svg>
