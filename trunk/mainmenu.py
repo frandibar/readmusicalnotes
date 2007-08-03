@@ -33,6 +33,11 @@ class MainMenu(Scene):
                  alternateColor = Color('black'),
                  centered = True
                  )
+
+        x = self.game.screen.get_width() / 2
+        y = (self.game.screen.get_height() - self._menu.get_height()) / 2
+        self._menuCoords = (x, y)
+
         self.showAnimation()
         sounds.play(INTRO_SND)
         
@@ -46,7 +51,23 @@ class MainMenu(Scene):
         for x in range(0, self._decorationImg1.get_width(), 1):
             pygame.display.update((self.game.screen.get_width() - x, y2),(self.game.screen.get_width() - x, y2 + self._decorationImg2.get_height()))
             pygame.display.update((x, y1),(x, self._decorationImg1.get_height() + y1))
-        
+
+        self.fadeMenu()
+
+
+    def fadeMenu(self, fadeIn = True):                                                                                     
+        if fadeIn:
+            s = self.game.screen.copy()
+            self._menu.blit(s, self._menuCoords)
+        else:
+            # fade to black
+            s = pygame.Surface((self.game.screen.get_width(), self.game.screen.get_height())).convert()
+            s.fill(Color('black'))
+        for i in range(0, 50, 1):
+            s.set_alpha(i)
+            self.game.screen.blit(s, (0,0))
+            pygame.display.flip()
+
 
     def paint(self):
         y1 = 20
@@ -54,9 +75,7 @@ class MainMenu(Scene):
         self.game.screen.blit(self.background, (0,0))
         self.game.screen.blit(self._decorationImg1, (10, y1))
         self.game.screen.blit(self._decorationImg2, (10, y2))
-        x = self.game.screen.get_width() / 2
-        y = (self.game.screen.get_height() - self._menu.get_height()) / 2
-        self._menu.blit(self.game.screen, (x,y))
+        self._menu.blit(self.game.screen, self._menuCoords)
         
     def event(self, evt):
         if evt.type in [pygame.MOUSEMOTION, pygame.MOUSEBUTTONUP]:
@@ -72,7 +91,7 @@ class MainMenu(Scene):
                 sel = self._menu.selectItem((x,y))
                 if sel is not None:
                     sounds.play(ENTER_SND)
-                    self.do_action(sel)
+                    self.doAction(sel)
         elif evt.type == pygame.KEYDOWN:
             if evt.key == pygame.K_ESCAPE:
                 self.end()
@@ -87,10 +106,11 @@ class MainMenu(Scene):
             elif evt.key in [pygame.K_RETURN, pygame.K_SPACE]:
                 sel = self._menu.selected
                 sounds.play(ENTER_SND)
-                self.do_action(sel)
+                self.doAction(sel)
                 sounds.play(INTRO_SND)
                 
-    def do_action(self, sel):
+    def doAction(self, sel):
+        self.fadeMenu(False)
         if sel == self.NOTES_QUIZ:
             self.game.level = 0                                                                                                   
             self.game.score = 0                                                                                                   
