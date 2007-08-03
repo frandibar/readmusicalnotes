@@ -1,4 +1,4 @@
-from data import *
+from resources import *
 
 from pygame.color import Color
 import pygame
@@ -113,9 +113,11 @@ class Note:
         self._blitGuides(surface, x, ypos, staff)                                                        
 
         if self.useStemUp:
-            surface.blit(self._stemUpImg, (x, ypos - 63))
+            #surface.blit(self._stemUpImg, (x, ypos - 63))
+            surface.blit(self._stemUpImg, (x, ypos - 126))
         else:                                                 
-            surface.blit(self._stemDownImg, (x, ypos - 9))
+            #surface.blit(self._stemDownImg, (x, ypos - 9))
+            surface.blit(self._stemDownImg, (x, ypos - 20))
 
 
     def equals(self, note):
@@ -203,7 +205,8 @@ class WholeNote(Note):
     def blit(self, surface, x, staff, clef):
         '''blits note to staff on surface'''
         ypos = self._calculateYCoord(staff.getCoords(), clef)
-        surface.blit(self._stemUpImg, (x, ypos - 63))
+        #surface.blit(self._stemUpImg, (x, ypos - 63))
+        surface.blit(self._stemUpImg, (x, ypos - 126))
         self._blitGuides(surface, x, ypos, staff)                                                        
 
 class HalfNote(Note):
@@ -249,7 +252,8 @@ class Chord:
 
 
 class Staff:
-    GUIDE_LENGTH = 38
+    #GUIDE_LENGTH = 38
+    GUIDE_LENGTH = 76
     def __init__(self, length, width = 2, color = Color('dark red')):
         self.length = length
         self.width = width
@@ -271,7 +275,8 @@ class Staff:
     def _calculateYCoords(self, y):                                                  
         self._ycoords = [y]
         for i in range(4):
-            y -= 19
+            #y -= 19
+            y -= 38
             self._ycoords.append(y)
 
 
@@ -286,7 +291,8 @@ class TimeSignature:
         beats = font.render(str(self.beats), True, self.color)
         value = font.render(str(self.noteValue), True, self.color)
         surface.blit(beats, (x, y))
-        surface.blit(value, (x, y + beats.get_height() - 20))
+        #surface.blit(value, (x, y + beats.get_height() - 20))
+        surface.blit(value, (x, y + beats.get_height() - 40))
 
 
 class Clef:                                                                                                    
@@ -307,7 +313,7 @@ class BassClef(Clef):
 
 
 class Barline:
-    def __init__(self, height, width = 3, color = Color('black')):
+    def __init__(self, height, width = 2, color = Color('black')):
         self.height = height
         self.width = width
         self.color = color
@@ -387,7 +393,8 @@ class KeySignature:
         self._flatImage  = pygame.image.load(FLAT_IMG).convert_alpha()    
         self._sharpImage = pygame.image.load(SHARP_IMG).convert_alpha()    
 
-        XOFFSET = 20
+        #XOFFSET = 20
+        XOFFSET = 40
         n, type = self._keys[self.key]
         if n == 0:
             return
@@ -407,7 +414,8 @@ class KeySignature:
         pass
 
 class ScoreBuilder:
-    STAFF_Y_OFFSET = 113                                                           
+    #STAFF_Y_OFFSET = 113                                                           
+    STAFF_Y_OFFSET = 226                                                           
     def __init__(self, clef, staffLength, keySignature = KeySignature('CM'), showTimeSignature = True, beats = 4, noteValue = 4, notesList = [], color = Color('black')):
         self.notes = notesList
         self.clef = clef
@@ -423,19 +431,25 @@ class ScoreBuilder:
         return s                           
 
     def blit(self, surface, (x,y)):
-        self._staff.blit(surface, (x + 10, y + self.STAFF_Y_OFFSET))
+        #self._staff.blit(surface, (x + 10, y + self.STAFF_Y_OFFSET))
+        self._staff.blit(surface, (x + 20, y + self.STAFF_Y_OFFSET))
         # starting barline
-        #barline = OrdinaryBarline(self._staff.getHeight())
+        barline = OrdinaryBarline(self._staff.getHeight())
         #barline.blit(surface, (x + 10, y + self.STAFF_Y_OFFSET - self._staff.getHeight()))
         # ending barline
         #barline = EndBarline(self._staff.getHeight(), color = self._staff.color)
         #barline.blit(surface, (x + self._staff.length, y + self.STAFF_Y_OFFSET - self._staff.getHeight()))
-        self.clef.blit(surface, (x + 20, y))
-        self.keySignature.blit(surface, (x + 80, y), self._staff, self.clef)                                            
+        #self.clef.blit(surface, (x + 20, y))
+        self.clef.blit(surface, (x + 40, y))
+        #self.keySignature.blit(surface, (x + 80, y), self._staff, self.clef)                                            
+        self.keySignature.blit(surface, (x + 160, y), self._staff, self.clef)                                            
         if self.showTimeSignature:
-            self.timeSignature.blit(surface, (x + 120, y + 40))
-        XOFFSET = 35
-        x += 140                    
+            #self.timeSignature.blit(surface, (x + 120, y + 40))
+            self.timeSignature.blit(surface, (x + 240, y + 80))
+        #XOFFSET = 35
+        XOFFSET = 70
+        #x += 140                    
+        x += 280
         time = 0                                    
         for i in self.notes:
             i.blit(surface, x, self._staff, self.clef)

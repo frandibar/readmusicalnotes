@@ -1,15 +1,23 @@
 readMusic To Do list:
 
+funcionalidad:
 - agregar tempo quiz
-- cambiar sonido cuando la respuesta es incorrecta
-- agregar keyboard navigation al setup
 - agregar quiz de acordes
 - agregar bemoles y sostenidos, notas extendidas con puntitos
-- agregar sonido midi
 - agregar entrada midi
-- separar codigo como modelo MVC
 - agregar estadisticas de aciertos
 
+usabilidad:
+- cambiar sonido cuando la respuesta es incorrecta
+- agregar keyboard navigation al setup
+
+codigo:
+- agregar sonido midi
+- separar codigo como modelo MVC
+
+eye candy:
+- agregar efecto lapiz a la correccion
+- agregar fade in y fade out en notesquiz
 
 BUGS List:
 

@@ -1,4 +1,4 @@
-from data import *
+from resources import *
 from engine import Game, Scene
 from menu import Menu
 from sounds import sounds
@@ -21,7 +21,7 @@ DEBUG = False
 class NotesQuiz(Scene):
     notesIndexMenu = ['B', 'A', 'G', 'F', 'E', 'D', 'C'] 
     # these are the sounds to play when an item from the menu is selected
-    menuSounds = ['b3', 'a3', 'g3', 'f3', 'e3', 'd3', 'c3'] 
+    menuSounds = ["b3", "a3", "g3", "f3", "e3", "d3", "c3"] 
         
     WAITING, WRONG, CORRECT, FINISH, TIMEISUP = range(5)   # status values
     CLOCK_TICK = pygame.USEREVENT
@@ -42,13 +42,16 @@ class NotesQuiz(Scene):
         # this stores the letter the user must input
         self._answer = random.choice(score.Note.validNotes)
         note = score.QuarterNote(self._answer, octave)
-        quiz = score.ScoreBuilder(clef, 300, showTimeSignature = False, notesList = [note]).getImage(self.game.screen.get_size())
-        self._quizImg = pygame.transform.scale2x(quiz)
+        #quiz = score.ScoreBuilder(clef, 300, showTimeSignature = False, notesList = [note]).getImage(self.game.screen.get_size())
+        quiz = score.ScoreBuilder(clef, 580, showTimeSignature = False, notesList = [note]).getImage(self.game.screen.get_size())
+        #self._quizImg = pygame.transform.scale2x(quiz)
+        self._quizImg = quiz
 
         # load images
         self._images = {}
         self._images["correct"] = pygame.image.load(CORRECT_IMG).convert_alpha()
-        self._images["wrong"]   = pygame.image.load(WRONG_IMG).convert_alpha()
+        self._images["wrong1"]  = pygame.image.load(WRONG1_IMG).convert_alpha()
+        self._images["wrong2"]  = pygame.image.load(WRONG2_IMG).convert_alpha()
         font = pygame.font.Font(NOTES_FONT, 15)
         self._images["instructions"] = font.render("Use keys up, down, C, D, E, F, G, A, B and Enter", True, Color('black'))
         font = pygame.font.Font(LEGEND_FONT, 30)
@@ -70,9 +73,9 @@ class NotesQuiz(Scene):
         self._menu = Menu(
                  pygame.font.Font(NOTES_FONT, 30),
                  pygame.font.Font(NOTES_FONT, 30),
-                 pygame.font.Font(NOTES_FONT, 30),
+                 pygame.font.Font(NOTES_FONT, 50),
                  ["B si", "A la", "G sol", "F fa", "E mi", "D re", "C do"],
-                 margin = 0,
+                 margin = -20,
                  normalColor    = Color('black'),
                  selectedColor  = Color('dark red'),
                  alternateColor = colors.BROWN,
@@ -80,8 +83,9 @@ class NotesQuiz(Scene):
                  )
 
         # set coordinates
-        self._menuCoords = (700, 100)
-        self._imgCoords = (50, 50)
+        self._menuCoords   = (670, 100)
+        self._imgCoords    = (50, 50)
+        self._answerCoords = (500, 50)
 
         sounds.fadeOut()
 
@@ -124,6 +128,9 @@ class NotesQuiz(Scene):
         #if not self._soundOn:
             #self.game.screen.blit(self._images["soundOn"], (40, self.game.screen.get_height() - self._images["soundOn"].get_height() - 15))
             #self.game.screen.blit(self._images["soundOff"], (25, self.game.screen.get_height() - self._images["soundOff"].get_height() - 5))
+        if self._useTimer: 
+            self._timer.blit(self.game.screen, self.background, self._timerCoords)
+
         
     def event(self, evt):                
         if self._status in [self.CORRECT, self.WRONG, self.TIMEISUP]:
@@ -142,6 +149,7 @@ class NotesQuiz(Scene):
                 if self._menu.setItem((x,y)):
                     self._menu.setItem((x,y))
                     if self._soundOn:
+                        print noteSounds[self.menuSounds[self._menu.selected]]                                     
                         sounds.play(noteSounds[self.menuSounds[self._menu.selected]])
                     self.paint()
             else:                                
@@ -206,7 +214,26 @@ class NotesQuiz(Scene):
         self._showPressKeyMsg = True
         if self._useTimer:
             self._timer.stop()
+
         self.paint()
+        self.animateEvaluation()
+
+    def animateEvaluation(self):
+        if self._status == self.CORRECT:
+            self.game.screen.blit(self._images["correct"], self._answerCoords)
+            for x in range(0, 900):
+                pygame.display.update((x, 0),(x, 700))
+                # TODO: update only image part
+            #for x in range(self._answerCoords[0], self._answerCoords[0] + self._images["correct"].get_width()):
+                #pygame.display.update((x, self._answerCoords[1]),(x, self._images["correct"].get_height() + self._answerCoords[1]))
+                #print x, self._answerCoords[1],x, self._images["correct"].get_height() + self._answerCoords[1]
+        elif self._status == self.WRONG:
+            self.game.screen.blit(self._images["wrong1"], self._answerCoords)
+            for x in range(0, 900):
+                pygame.display.update((x, 0),(x, 700))
+            self.game.screen.blit(self._images["wrong2"], (self._answerCoords[0] + 80, self._answerCoords[1]))
+            for y in range(0, 600):
+                pygame.display.update((0, y),(800, y))
 
 
     def do_action(self, sel):
@@ -215,18 +242,12 @@ class NotesQuiz(Scene):
 
 
     def loop(self):
-        x, y = self._imgCoords                        
-        x += 450
-        y -= 0
         self.paint()
         if self._status == self.WRONG:
-            self.game.screen.blit(self._images["wrong"], (x, y))
+            self.game.screen.blit(self._images["wrong1"], self._answerCoords)
+            self.game.screen.blit(self._images["wrong2"], (self._answerCoords[0] + 80, self._answerCoords[1]))
         elif self._status == self.CORRECT:
-            self.game.screen.blit(self._images["correct"], (x, y))
-
-    def update(self):
-        if self._useTimer: 
-            self._timer.blit(self.game.screen, self.background, self._timerCoords)
+            self.game.screen.blit(self._images["correct"], self._answerCoords)
 
     def start(self):
         self._lastUpdate = self._startTime = time.time()

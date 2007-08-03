@@ -1,4 +1,4 @@
-from data import *
+from resources import *
 from sounds import sounds
 import colors
 
@@ -125,7 +125,7 @@ class FlareTimer(pygame.sprite.Sprite, Timer):
         y0 = y + self.image.get_height() / 2
         x1 = self.rect.center[0]
         xf = x + self.length
-        pygame.draw.line(surface, Color('gray55'), (x0, y0), (xf, y0), 3)
+        pygame.draw.line(surface, Color('gray30'), (x0, y0), (xf, y0), 3)
         pygame.draw.line(surface, colors.BROWN, (x0, y0), (x1, y0), 3)
         self._render.draw(surface)
         self.alarm.blit(surface)

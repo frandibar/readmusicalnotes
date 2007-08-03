@@ -1,4 +1,4 @@
-from data import *
+from resources import *
 from setupoptions import SetupOptions
 
 import os

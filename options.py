@@ -1,5 +1,5 @@
 from engine import Scene
-from data import *
+from resources import *
 from setupoptions import SetupOptions
 from sounds import sounds
 
