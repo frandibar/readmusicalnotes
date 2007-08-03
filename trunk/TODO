@@ -23,4 +23,4 @@ BUGS List:
 
 #1 When setting music off, background music continues
 #2 Flare light does no begin from the beginning, and ends after the grey line
-
+#3 When time is up, note sounds play gong instead of note
