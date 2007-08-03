@@ -24,8 +24,8 @@ class Game:
 
         #self._xySize = pygame.display.list_modes()[1]
         #xySize = pygame.display.list_modes()[0]
-        #self.screen = pygame.display.set_mode((800,600))
-        self.screen = pygame.display.set_mode((800,600), pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode((800,600))
+        #self.screen = pygame.display.set_mode((800,600), pygame.FULLSCREEN)
 
         #if pygame.display.mode_ok(1024, 768, pygame.FULLSCREEN, 32):
             #common.mainScreen = pygame.display.set_mode(1024, 768, pygame.FULLSCREEN, 32)

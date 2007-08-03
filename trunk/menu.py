@@ -54,15 +54,15 @@ class Menu:
             surface.blit(img, (x,y))
             
     def next(self):
-        '''selects next item'''
+        """selects next item"""
         self.selected = (self.selected + 1) % len(self.options)
         
     def prev(self):
-        '''selects previous item'''
+        """selects previous item"""
         self.selected = (self.selected - 1) % len(self.options)     
         
     def setItem(self, coords):
-        '''returns True if coords (x,y) corresponds to an item different from the currently selected one'''
+        """returns True if coords (x,y) corresponds to an item different from the currently selected one"""
         i = self._getItem(coords)
         if i is not None and  i != self.selected:
             self.selected = i
@@ -70,14 +70,14 @@ class Menu:
         return False                                    
     
     def selectItem(self, coords):
-        '''returns index of menu corresponding to coords (x,y), or None'''
+        """returns index of menu corresponding to coords (x,y), or None"""
         i = self._getItem(coords)
         if i is not None:
             self.alternate = i
         return i      
             
     def _getItem(self, (x, y)):
-        '''returns index corresponding to coords (x,y), or None'''
+        """returns index corresponding to coords (x,y), or None"""
         for i in range(len(self.options)):
             img = self._selectedImages[i]
                 

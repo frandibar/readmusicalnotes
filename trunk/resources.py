@@ -3,24 +3,25 @@ from os.path import join
 CONFIG_FILE = "~/.readMusic.config"
 
 # paths
-DATA_PATH   = "data"
-FONTS_PATH  = join(DATA_PATH, "fonts")
-IMAGES_PATH = join(DATA_PATH, "images")
-SOUNDS_PATH = join(DATA_PATH, "sounds")
+RESOURCE_PATH   = "resources"
+FONTS_PATH  = join(RESOURCE_PATH, "fonts")
+IMAGES_PATH = join(RESOURCE_PATH, "images")
+SOUNDS_PATH = join(RESOURCE_PATH, "sounds")
 
 # images
-WRONG_IMG         = join(IMAGES_PATH, "wrong.png")
+WRONG1_IMG        = join(IMAGES_PATH, "wrong1.png")
+WRONG2_IMG        = join(IMAGES_PATH, "wrong2.png")
 CORRECT_IMG       = join(IMAGES_PATH, "correct.png")
 ICON_IMG          = join(IMAGES_PATH, "notes.gif")
 
-TREBLE_CLEF_IMG     = join(IMAGES_PATH, "treble_clef.png")
-BASS_CLEF_IMG       = join(IMAGES_PATH, "bass_clef.png")
+TREBLE_CLEF_IMG     = join(IMAGES_PATH, "2xtreble_clef.png")
+BASS_CLEF_IMG       = join(IMAGES_PATH, "2xbass_clef.png")
 
 WHOLE_IMG             = join(IMAGES_PATH, "whole.png")
 HALF_STEM_UP_IMG      = join(IMAGES_PATH, "half_stem_up.png")
 HALF_STEM_DOWN_IMG    = join(IMAGES_PATH, "half_stem_down.png")
-QUARTER_STEM_UP_IMG   = join(IMAGES_PATH, "quarter_stem_up.png")
-QUARTER_STEM_DOWN_IMG = join(IMAGES_PATH, "quarter_stem_down.png")
+QUARTER_STEM_UP_IMG   = join(IMAGES_PATH, "2xquarter_stem_up.png")
+QUARTER_STEM_DOWN_IMG = join(IMAGES_PATH, "2xquarter_stem_down.png")
 EIGHTH_STEM_UP_IMG    = join(IMAGES_PATH, "eighth_stem_up.png")
 EIGHTH_STEM_DOWN_IMG  = join(IMAGES_PATH, "eighth_stem_down.png")
 SIXTEEN_STEM_UP_IMG   = join(IMAGES_PATH, "sixteen_stem_up.png")

@@ -1,4 +1,4 @@
-from data import *
+from resources import *
 from engine import Game, Scene
 from menu import Menu
 from options import Setup
