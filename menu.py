@@ -1,7 +1,7 @@
 from pygame.color import Color
 
 class Menu:
-    '''Implements a menu with highlighting options'''
+    """Implements a menu with highlighting options"""
     def __init__(self, normalFont, alternateFont, selectedFont, options, margin = 0, normalColor = Color('white'), selectedColor = Color('white'), alternateColor = Color('yellow'), centered = True):
         self.selected = 0
         self.alternate = -1                         
@@ -37,7 +37,7 @@ class Menu:
         return self._options
 
     def blit(self, surface, (center_x, start_y)):
-        '''prints to screen'''
+        """prints to screen"""
         for i in range(len(self.options)):
             if i == self.selected:
                 img = self._selectedImages[i]
