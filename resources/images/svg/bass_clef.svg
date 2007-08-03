@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg6189"
+   sodipodi:version="0.32"
+   inkscape:version="0.45"
+   sodipodi:docbase="/home/francisco/programming/python/readMusic/resources/images/svg"
+   sodipodi:docname="bass_clef.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:modified="TRUE">
+  <defs
+     id="defs6191" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="375"
+     inkscape:cy="541.84883"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="910"
+     inkscape:window-height="623"
+     inkscape:window-x="10"
+     inkscape:window-y="69" />
+  <metadata
+     id="metadata6194">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g5200"
+       transform="matrix(13.836365,0,0,13.836365,-31.896198,-432.50379)"
+       inkscape:export-filename="/home/francisco/Desktop/2xbass_cleff.png"
+       inkscape:export-xdpi="14.99"
+       inkscape:export-ydpi="14.99">
+      <path
+         transform="matrix(0.6938454,0,0,0.6938454,30.446216,36.107445)"
+         sodipodi:end="6.2545398"
+         sodipodi:start="0"
+         d="M 31.221131,17.517199 A 4.1707616,4.1707616 0 1 1 31.21942,17.397741 L 27.050369,17.517199 z"
+         sodipodi:ry="4.1707616"
+         sodipodi:rx="4.1707616"
+         sodipodi:cy="17.517199"
+         sodipodi:cx="27.050369"
+         id="path2239"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.6938454,0,0,0.6938454,30.327049,53.862971)"
+         sodipodi:end="6.2545398"
+         sodipodi:start="0"
+         d="M 31.221131,17.517199 A 4.1707616,4.1707616 0 1 1 31.21942,17.397741 L 27.050369,17.517199 z"
+         sodipodi:ry="4.1707616"
+         sodipodi:rx="4.1707616"
+         sodipodi:cy="17.517199"
+         sodipodi:cx="27.050369"
+         id="path4184"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(1.0677966,0,0,1.0677966,-1.5249031,-5.2836379)"
+         sodipodi:end="6.2704195"
+         sodipodi:start="0"
+         d="M 20.734643,56.841522 A 7.0307126,7.0307126 0 1 1 20.734071,56.751772"
+         sodipodi:ry="7.0307126"
+         sodipodi:rx="7.0307126"
+         sodipodi:cy="56.841522"
+         sodipodi:cx="13.703931"
+         id="path4186"
+         style="fill:#000000;fill-opacity:1"
+         sodipodi:type="arc"
+         sodipodi:open="true" />
+      <path
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 4.7665844,94.020882 C 15.089026,89.31475 24.899863,80.818923 30.495499,72.030443 C 36.091136,63.241963 37.201972,53.59324 32.440601,45.299188 C 28.604146,39.031346 18.377574,37.574697 13.481339,43.281131 C 11.360569,45.752833 10.378251,48.480581 9.0283124,51.881204 C 9.0262559,55.539564 4.2920457,59.560421 5.9909202,50.738408 C 8.0461688,42.566065 17.211172,36.965013 25.072586,37.810666 C 32.933999,38.656319 39.101417,42.429129 41.891541,49.962309 C 44.681665,57.495489 43.032842,67.500212 37.488717,73.9753 C 29.01744,84.429088 17.032486,89.916878 4.7665844,94.020882 z "
+         id="path4212"
+         sodipodi:nodetypes="czcscczzcc" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="800px"
+   height="600px"
+   id="svg5326"
+   sodipodi:version="0.32"
+   inkscape:version="0.45"
+   sodipodi:docbase="/home/francisco/res/svg"
+   sodipodi:docname="curl2.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/francisco/res/svg/curl2.png"
+   inkscape:export-xdpi="99.57"
+   inkscape:export-ydpi="99.57"
+   sodipodi:modified="TRUE">
+  <defs
+     id="defs5328">
+    <marker
+       inkscape:stockid="DiamondS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DiamondS"
+       style="overflow:visible">
+      <path
+         id="path4720"
+         d="M 0,-7.0710768 L -7.0710894,0 L 0,7.0710589 L 7.0710462,0 L 0,-7.0710768 z "
+         style="fill-rule:evenodd;stroke:black;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible">
+      <path
+         id="path4785"
+         style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.97309,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.6"
+     inkscape:cx="393.35097"
+     inkscape:cy="596.81174"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="px"
+     inkscape:window-width="872"
+     inkscape:window-height="619"
+     inkscape:window-x="36"
+     inkscape:window-y="54" />
+  <metadata
+     id="metadata5331">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <path
+       style="opacity:0.3;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 747.21804,49.100935 C 682.86267,71.435283 597.72856,51.816958 530.18117,50.941034 C 491.28171,49.861027 453.03373,56.439778 413.86465,51.160298 C 374.06366,47.344923 333.00844,46.603795 295.09947,61.286586 C 239.07872,79.455355 183.4162,100.80872 124.82438,108.96252 C 94.322481,113.69511 58.773491,85.092943 61.413591,57.370852 C 64.014361,30.061707 102.94495,21.169177 119.55287,42.328424 C 122.62997,49.193921 124.74714,57.469894 119.7701,53.38047 C 113.94646,18.303697 58.785911,34.831037 67.923161,64.255665 C 77.060411,96.037318 100.88131,112.63265 145.36825,102.43604 C 189.8552,89.293149 260.81124,69.693529 318.17331,52.261364 C 352.08985,42.998192 387.54026,44.652049 422.40244,48.243991 C 479.99232,54.177628 516.56747,39.667677 596.33668,51.449937 C 628.73844,55.080134 671.06846,60.448733 694.13716,55.352784 C 717.1421,50.27092 723.73432,51.689416 747.21804,49.100935 z "
+       id="path5334"
+       sodipodi:nodetypes="ccccczcccccsczc"
+       inkscape:export-xdpi="105.03506"
+       inkscape:export-ydpi="105.03506"
+       inkscape:export-filename="/home/francisco/programming/python/readMusic/data/images/curl2.png" />
+  </g>
+</svg>
