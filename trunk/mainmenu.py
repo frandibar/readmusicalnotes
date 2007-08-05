@@ -1,9 +1,9 @@
 from resources import *
 from engine import Game, Scene
+#from help import Help
 from menu import Menu
 from options import Setup
 from notesquiz import NotesQuiz
-from rythmquiz import RythmQuiz
 from sounds import sounds
 
 from pygame.color import Color
@@ -11,8 +11,7 @@ import pygame
 
 
 class MainMenu(Scene):
-#NOTES_QUIZ, RYTHM_QUIZ, SETUP, QUIT = range(4)
-    NOTES_QUIZ, SETUP, QUIT = range(3)
+    NOTES_QUIZ, SETUP, HELP, QUIT = range(4)
     def init(self):
         cur = pygame.cursors.compile(CURSOR_DATA)
         cursorSize = (len(CURSOR_DATA), len(CURSOR_DATA[0]))
@@ -22,15 +21,12 @@ class MainMenu(Scene):
         self._decorationImg2 = pygame.image.load(DECORATION2_IMG).convert_alpha()
         self._background = pygame.image.load(BACKGROUND_IMG).convert()
         self._menu = Menu(
-                 pygame.font.Font(MAIN_MENU_FONT, 50),
+                 ["Notes Quiz", "Options", "Help", "Quit"],
                  pygame.font.Font(MAIN_MENU_FONT, 50),
                  pygame.font.Font(MAIN_MENU_FONT, 70),
-#["Notes Quiz", "Rythm Quiz", "Options", "Quit"],
-                 ["Notes Quiz", "Options", "Quit"],
                  margin = -40,
-                 normalColor    = Color('black'),
-                 selectedColor  = Color('dark red'),
-                 alternateColor = Color('black'),
+                 normalColor    = Color("black"),
+                 selectedColor  = Color("dark red"),
                  centered = True
                  )
 
@@ -52,17 +48,12 @@ class MainMenu(Scene):
             pygame.display.update((self.game.screen.get_width() - x, y2),(self.game.screen.get_width() - x, y2 + self._decorationImg2.get_height()))
             pygame.display.update((x, y1),(x, self._decorationImg1.get_height() + y1))
 
-        self.fadeMenu()
+        self.fadeInMenu()
 
 
-    def fadeMenu(self, fadeIn = True):                                                                                     
-        if fadeIn:
-            s = self.game.screen.copy()
-            self._menu.blit(s, self._menuCoords)
-        else:
-            # fade to black
-            s = pygame.Surface((self.game.screen.get_width(), self.game.screen.get_height())).convert()
-            s.fill(Color('black'))
+    def fadeInMenu(self):                                                                                     
+        s = self.game.screen.copy()
+        self._menu.blit(s, self._menuCoords)
         for i in range(0, 50, 1):
             s.set_alpha(i)
             self.game.screen.blit(s, (0,0))
@@ -110,22 +101,18 @@ class MainMenu(Scene):
                 sounds.play(INTRO_SND)
                 
     def doAction(self, sel):
-        self.fadeMenu(False)
+        self.fadeOut()
         if sel == self.NOTES_QUIZ:
-            self.game.level = 0                                                                                                   
+            self.game.level = 1                                                                                                   
             self.game.score = 0                                                                                                   
             while True:
                 if self.runScene(NotesQuiz(self.game)) not in [NotesQuiz.CORRECT, NotesQuiz.WRONG, NotesQuiz.TIMEISUP]:
                     break                                                                          
                 self.game.level += 1                                                                                                   
-        #elif sel == self.RYTHM_QUIZ:
-            #self.game.level = 0                                                                                                   
-            #while True:
-                #if self.runScene(RythmQuiz(self.game)) not in [RythmQuiz.CORRECT, RythmQuiz.WRONG, RythmQuiz.TIMEISUP]:
-                    #break                                                                          
-                #self.game.level += 1                                                                                                   
         elif sel == self.SETUP:
             self.runScene(Setup(self.game, 0))
+        #elif sel == self.HELP:
+            #self.runScene(Help(self.game))
         elif sel == self.QUIT:
             self.end()
                         

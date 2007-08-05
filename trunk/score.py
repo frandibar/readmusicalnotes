@@ -1,8 +1,7 @@
 from resources import *
 
-from pygame.color import Color
+import pygame.locals
 import pygame
-
 
 
 class Rest:
@@ -10,7 +9,7 @@ class Rest:
         surface.blit(self._image, (x, y))
 
     def blit(self, surface, x, staff, clef):
-        '''blits note to staff on surface'''
+        """blits note to staff on surface"""
         # clef parameter is not needed, added so call for note.blit has same signature           
         ypos = self._calculateYCoord(staff.getCoords())
         surface.blit(self._image, (x, ypos))
@@ -99,14 +98,14 @@ class Note:
         return self
 
     def blit(self, surface, (x,y)):
-        '''blits note to surface on (x,y)'''
+        """blits note to surface on (x,y)"""
         if self.useStemUp:
             surface.blit(self._stemUpImg, (x, y))
         else:                                                 
             surface.blit(self._stemDownImg, (x, y))
 
     def blit(self, surface, x, staff, clef):
-        '''blits note to staff on surface'''
+        """blits note to staff on surface"""
         ypos = self._calculateYCoord(staff.getCoords(), clef)
 
         self.useStemUp = ypos > staff.getCoords()[3]         
@@ -163,7 +162,7 @@ class Note:
                                                                 
 
     def _calculateNotesBetween(self, note):
-        '''returns the number of notes between self and note'''
+        """returns the number of notes between self and note"""
         ret = 0   
         aux = note                                       
         if self.isHigherThan(note):           
@@ -203,7 +202,7 @@ class WholeNote(Note):
         self.useStemUp = True                                                                                         
 
     def blit(self, surface, x, staff, clef):
-        '''blits note to staff on surface'''
+        """blits note to staff on surface"""
         ypos = self._calculateYCoord(staff.getCoords(), clef)
         #surface.blit(self._stemUpImg, (x, ypos - 63))
         surface.blit(self._stemUpImg, (x, ypos - 126))
@@ -254,7 +253,7 @@ class Chord:
 class Staff:
     #GUIDE_LENGTH = 38
     GUIDE_LENGTH = 76
-    def __init__(self, length, width = 2, color = Color('dark red')):
+    def __init__(self, length, width = 2, color = pygame.color.Color("dark red")):
         self.length = length
         self.width = width
         self.color = color
@@ -281,7 +280,7 @@ class Staff:
 
 
 class TimeSignature:
-    def __init__(self, beats = 4, noteValue = 4, color = Color('black')):    
+    def __init__(self, beats = 4, noteValue = 4, color = pygame.color.Color("black")):    
         self.beats = beats
         self.noteValue = noteValue
         self.color = color                                   
@@ -313,7 +312,7 @@ class BassClef(Clef):
 
 
 class Barline:
-    def __init__(self, height, width = 2, color = Color('black')):
+    def __init__(self, height, width = 2, color = pygame.color.Color("black")):
         self.height = height
         self.width = width
         self.color = color
@@ -416,7 +415,7 @@ class KeySignature:
 class ScoreBuilder:
     #STAFF_Y_OFFSET = 113                                                           
     STAFF_Y_OFFSET = 226                                                           
-    def __init__(self, clef, staffLength, keySignature = KeySignature('CM'), showTimeSignature = True, beats = 4, noteValue = 4, notesList = [], color = Color('black')):
+    def __init__(self, clef, staffLength, keySignature = KeySignature('CM'), showTimeSignature = True, beats = 4, noteValue = 4, notesList = [], color = pygame.color.Color("black")):
         self.notes = notesList
         self.clef = clef
         self.color = color                                                                                            

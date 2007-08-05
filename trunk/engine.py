@@ -35,7 +35,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.score = 0
-        self.level = 0
+        self.level = 1
         
     #def toggle_fullscreen(self):
         #if self.fullscreen:
@@ -57,7 +57,7 @@ class SceneExit(Exception):
     pass
     
 class Scene:
-    BG_COLOR = pygame.color.Color('white')
+    BG_COLOR = pygame.color.Color("white")
     
     @property 
     def background(self):
@@ -127,3 +127,21 @@ class Scene:
     def paint(self):
         self.update()
      
+    def fadeIn(self):
+        self.paint()
+        s = self.game.screen.copy()
+        self.game.screen.fill(pygame.color.Color("black"))                                   
+        for i in range(0, 30, 1):
+            s.set_alpha(i)
+            self.game.screen.blit(s, (0,0))
+            pygame.display.flip()
+
+    def fadeOut(self):
+        s = pygame.Surface((self.game.screen.get_width(), self.game.screen.get_height())).convert()
+        s.fill(pygame.color.Color("black"))
+        for i in range(0, 50, 1):
+            s.set_alpha(i)
+            self.game.screen.blit(s, (0,0))
+            pygame.display.flip()
+
+

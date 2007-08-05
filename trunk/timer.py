@@ -7,25 +7,40 @@ import pygame
 import time
 
 class BlinkingText:
-    '''displays a blinking text message'''
-    def __init__(self, text, font, (xpos, ypos) = (0,0), soundToPlay = None, centered = True, fontColor = Color('dark red'), fontBorderColor = Color('black'), delay = 0, blinkTime = 0.5, soundTime = 3):
-        self._text = font.render(text, True, fontColor)
-        self._delay = delay
-        self._blinkTime = blinkTime
-        self._soundTime = soundTime
+    """displays a blinking text message"""
+    def __init__(self, text, font, (x,y) = (0,0), centered = True, fontColor = Color("dark red"), delayBetweenBlinks = 0, blinkDuration = 0.5):
+        self._font = font
+        self._fontColor = fontColor
+        self._text = text
+        self._img = font.render(text, True, fontColor)                                                       
     
         self._isOn = False
         self._start = None
         self._blinkOn = False
         self._lastBlinkTime = None
         self._lastSoundTime = None
-        self._xpos = xpos
-        self._ypos = ypos
-        self._centered = centered
-        self._soundToPlay = soundToPlay
+
+        self.coords = (x,y)
+        self.centered = centered
+
+        self.delayBetweenBlinks = delayBetweenBlinks
+        self.blinkDuration = blinkDuration
+
+        self.soundToPlay = None
+        self.soundDuration = 3
+
+    def setFont(self, font):
+        self._img = font.render(self._text, True, self._color)
+
+    def setFontColor(self, color):
+        self._img = self._font.render(self._text, True, color)
+
+    def setText(self, text):
+        self._img = self._font.render(text, True, self._color)
 
     def turnOn(self):
-        sounds.play(self._soundToPlay)
+        if self.soundToPlay is not None:
+            sounds.play(self.soundToPlay)
         self._start = time.time()
         self._isOn = True
 
@@ -37,29 +52,31 @@ class BlinkingText:
             return
 
         now = time.time()
-        if now - self._start > self._delay:
+        if now - self._start > self.delayBetweenBlinks:
             if self._lastBlinkTime is None:
                 self._lastBlinkTime = time.time()
                 
-            if now - self._lastBlinkTime > self._blinkTime:
+            if now - self._lastBlinkTime > self.blinkDuration:
                 self._blinkOn = not self._blinkOn
                 self._lastBlinkTime = time.time()
                 
             if self._blinkOn:
-                if self._centered:
-                    screen.blit(self._text, (self._xpos - self._text.get_width()/2, self._ypos))
+                if self.centered:
+                    x,y = self.coords
+                    screen.blit(self._img, (x - self._img.get_width() / 2, y))
                 else:
-                    screen.blit(self._text, (self._xpos, self._ypos))
+                    screen.blit(self._img, self.coords)
 
             if self._lastSoundTime is None:
                 self._lastSoundTime = time.time()
                 
-            if now - self._lastSoundTime > self._soundTime:
+            if now - self._lastSoundTime > self.soundDuration:
                 self._lastSoundTime = now
 
 
 class Timer:
     def __init__(self, totalTime, alarm = None):
+        # totalTime is in seconds
         self.alarm = alarm
 
         self._totalTime = totalTime
@@ -99,7 +116,6 @@ class FlareTimer(pygame.sprite.Sprite, Timer):
 
         self.image = pygame.image.load(FLARE_IMG)
         self.rect = self.image.get_rect()                                                 
-        #self.rect.center = (self.image.get_width() / 2, self.image.get_height() / 2)
         self.length = length - (length % totalTime)
 
         self.setPos((x,y))
@@ -125,9 +141,8 @@ class FlareTimer(pygame.sprite.Sprite, Timer):
         y0 = y + self.image.get_height() / 2
         x1 = self.rect.center[0]
         xf = x + self.length
-        pygame.draw.line(surface, Color('gray30'), (x0, y0), (xf, y0), 3)
+        pygame.draw.line(surface, Color("gray30"), (x0, y0), (xf, y0), 3)
         pygame.draw.line(surface, colors.BROWN, (x0, y0), (x1, y0), 3)
         self._render.draw(surface)
         self.alarm.blit(surface)
-        #print x0, x1, xf                                  
 
