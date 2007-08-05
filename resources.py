@@ -9,10 +9,9 @@ IMAGES_PATH = join(RESOURCE_PATH, "images")
 SOUNDS_PATH = join(RESOURCE_PATH, "sounds")
 
 # images
-WRONG1_IMG        = join(IMAGES_PATH, "wrong1.png")
-WRONG2_IMG        = join(IMAGES_PATH, "wrong2.png")
-CORRECT_IMG       = join(IMAGES_PATH, "correct.png")
-ICON_IMG          = join(IMAGES_PATH, "notes.gif")
+WRONG_IMG   = join(IMAGES_PATH, "wrong.png")
+CORRECT_IMG = join(IMAGES_PATH, "correct.png")
+ICON_IMG    = join(IMAGES_PATH, "notes.gif")
 
 TREBLE_CLEF_IMG     = join(IMAGES_PATH, "2xtreble_clef.png")
 BASS_CLEF_IMG       = join(IMAGES_PATH, "2xbass_clef.png")
@@ -37,30 +36,30 @@ FLAT_IMG    = join(IMAGES_PATH, "flat.png")
 SHARP_IMG   = join(IMAGES_PATH, "sharp.png")
 NATURAL_IMG = join(IMAGES_PATH, "natural.png")
 
-SOUND_ON_IMG  = join(IMAGES_PATH, "sound_on.png")
-SOUND_OFF_IMG = join(IMAGES_PATH, "prohibited.png")
+#SOUND_ON_IMG  = join(IMAGES_PATH, "sound_on.png")
+#SOUND_OFF_IMG = join(IMAGES_PATH, "prohibited.png")
 
 BACKGROUND_IMG  = join(IMAGES_PATH, "background.png")
 DECORATION1_IMG = join(IMAGES_PATH, "curl1.png")
 DECORATION2_IMG = join(IMAGES_PATH, "curl2.png")
-BORDER_IMG      = join(IMAGES_PATH, "border.png")
+DECORATION3_IMG = join(IMAGES_PATH, "curl3.png")
 FLARE_IMG       = join(IMAGES_PATH, "flare.png")
+MENU_MARKER_IMG = join(IMAGES_PATH, "marker.png")
 
 # fonts
 MAIN_MENU_FONT = join(FONTS_PATH, "ajile.ttf")
-NOTES_FONT     = join(FONTS_PATH, "gbsn00lp.ttf")
-OPTIONS_FONT   = join(FONTS_PATH, "batang.ttf")
+OPTIONS_FONT   = join(FONTS_PATH, "GenI102.ttf")
+NOTES_FONT     = OPTIONS_FONT
 SCORE_FONT     = join(FONTS_PATH, "SCRIPTIN.ttf")
 LEGEND_FONT    = SCORE_FONT
 
 # sounds
 INTRO_SND    = join(SOUNDS_PATH, "bach_846_prelude1.ogg")
 TICTAC_SND   = join(SOUNDS_PATH, "ticking.wav")
-#TIMEISUP_SND = join(SOUNDS_PATH, "timeisup.wav")
 TIMEISUP_SND = join(SOUNDS_PATH, "tam.wav")
-#MENU_SND     = join(SOUNDS_PATH, "menu.wav")
 MENU_SND     = join(SOUNDS_PATH, "xyloc3.wav")
 ENTER_SND    = join(SOUNDS_PATH, "enter.wav")
+OPTION_SND   = MENU_SND
 
 noteSounds = { "b3": join(SOUNDS_PATH, "b3.ogg"), 
                "a3": join(SOUNDS_PATH, "a3.ogg"),

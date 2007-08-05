@@ -9,15 +9,13 @@ funcionalidad:
 
 usabilidad:
 - cambiar sonido cuando la respuesta es incorrecta
-- agregar keyboard navigation al setup
 
 codigo:
 - agregar sonido midi
 - separar codigo como modelo MVC
 
-eye candy:
-- agregar efecto lapiz a la correccion
-- agregar fade in y fade out en notesquiz
+varios:
+- evitar arrancar nuevamente el la music en main menu
 
 BUGS List:
 

@@ -1,90 +1,138 @@
 from engine import Scene
+from menu import OptionsMenu
 from resources import *
 from setupoptions import SetupOptions
 from sounds import sounds
 
+from pygame.color import Color
 import pygame
 
 DEBUG = True
 
 class Setup(Scene):
-    COL1 = 200                  
-    COL2 = 350                  
-    COL3 = 500                  
+    TREBLE_CLEF, BASS_CLEF, TIMER, SOUNDS, BACK = range(5)
     def init(self, game):
         self.setupOptions = SetupOptions()
-        self._background = pygame.image.load(BACKGROUND_IMG).convert()
-        self._borderImg  = pygame.image.load(BORDER_IMG).convert_alpha()
-        self._fontTitle = pygame.font.Font(OPTIONS_FONT, 50)
-        self._fontText  = pygame.font.Font(OPTIONS_FONT, 30)
+        self._background    = pygame.image.load(BACKGROUND_IMG).convert()
+        self._decorationImg = pygame.image.load(DECORATION3_IMG).convert_alpha()
 
-        # render text options                                                                                            
-        color = pygame.color.Color('dark red')
-        yes = self._fontText.render("yes", True, color)
-        no  = self._fontText.render("no", True, color)
-        off = self._fontText.render("off", True, color)
-        time5  = self._fontText.render("5 sec", True, color)
-        time10 = self._fontText.render("10 sec", True, color)
-        time15 = self._fontText.render("15 sec", True, color)
-        time20 = self._fontText.render("20 sec", True, color)
+        yesNo = ["no", "yes"]
+        timeOpts = ["off", "5 sec", "10 sec", "15 sec", "20 sec"]
+        self._options = ["Treble clef", "Bass clef", "Timer", "Sounds", "Back"]
+        self._values = [yesNo, yesNo, timeOpts, yesNo, None]
+        self._menu = OptionsMenu(
+                 self._options,
+                 self._values,
+                 pygame.font.Font(OPTIONS_FONT, 30),
+                 pygame.font.Font(OPTIONS_FONT, 30),
+                 margin = 0,
+                 normalColor    = Color("black"),
+                 selectedColor  = Color("dark red")
+                 )
 
-        self._yesnoImg = [no, yes]                                                       
-        self._timesImg = [off, time5, time10, time15, time20]                                                                                      
+        self._menu.setMarker(MENU_MARKER_IMG)
+        font = pygame.font.Font(OPTIONS_FONT, 50)
+        self._title = font.render("Options", True, pygame.color.Color("black"))
+
+        self._titleCoords      = (40,55)
+        self._menuCoords       = (350, 200)
+        self._decorationCoords = (10, 100)
+
+        self.load()
+        self.showAnimation()
 
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
-        #self.game.screen.blit(self._borderImg, (0,0))
-        color = pygame.color.Color('dark red')
-        setup  = self._fontTitle.render("Options", True, color)
-        clefs  = self._fontText.render("Clefs", True, color)
-        treble = self._fontText.render("treble:", True, color)
-        bass   = self._fontText.render("bass:", True, color)
-        timer  = self._fontText.render("Timer:", True, color)
-        sound  = self._fontText.render("Sounds:", True, color)
-        back   = self._fontText.render("back", True, color)
-        self.game.screen.blit(setup, (self.game.screen.get_width()/2 - setup.get_width()/2, 70))
-        ypos = 150
-        rowheight = 50                  
-        self.game.screen.blit(clefs, (self.COL1, ypos))
-        ypos += rowheight                                               
-        self.game.screen.blit(treble, (self.COL2, ypos))
-        self.game.screen.blit(self._yesnoImg[self.setupOptions.useTrebleClef], (self.COL3, ypos))
-        ypos += rowheight                                               
-        self.game.screen.blit(bass, (self.COL2, ypos))
-        self.game.screen.blit(self._yesnoImg[self.setupOptions.useBassClef], (self.COL3, ypos))
-        ypos += rowheight                                               
-        self.game.screen.blit(timer, (self.COL1, ypos))
-        self.game.screen.blit(self._timesImg[self.setupOptions.timerIndex], (self.COL3, ypos))
-        ypos += rowheight                                               
-        self.game.screen.blit(sound, (self.COL1, ypos))
-        self.game.screen.blit(self._yesnoImg[self.setupOptions.sounds], (self.COL3, ypos))
-        self.game.screen.blit(back, (self.COL3, ypos + 100))
+        self._menu.blit(self.game.screen, self._menuCoords)
+
+        self.game.screen.blit(self._decorationImg, self._decorationCoords)
+        self.game.screen.blit(self._title, self._titleCoords)
+
+    def showAnimation(self):
+        self.game.screen.blit(self.background, (0,0))
+        pygame.display.flip()
+        self.game.screen.blit(self._decorationImg, self._decorationCoords)
+        for x in range(self._decorationCoords[0], self._decorationCoords[0] + self._decorationImg.get_width(), 1):
+            pygame.display.update((x, self._decorationCoords[1]),(x, self._decorationCoords[1] + self._decorationImg.get_height()))
+
+        self.fadeInMenu()
+
+    def fadeInTitle(self):
+        s = self.game.screen.copy()
+        self._menu.blit(s, self._menuCoords)
+        for i in range(0, 50, 1):
+            s.set_alpha(i)
+            self.game.screen.blit(s, (0,0))
+            pygame.display.flip()
+
+    def fadeInMenu(self):                                                                                     
+        s = self.game.screen.copy()
+        self._menu.blit(s, self._menuCoords)
+        for i in range(0, 50, 1):
+            s.set_alpha(i)
+            self.game.screen.blit(s, (0,0))
+            pygame.display.flip()
 
     def event(self, evt):
-        if evt.type == pygame.KEYDOWN:
-            self.setupOptions.save()
-            self.end()
-        elif evt.type == pygame.MOUSEBUTTONUP:
+        if evt.type in [pygame.MOUSEMOTION, pygame.MOUSEBUTTONUP]:
             x, y = pygame.mouse.get_pos()
-            if DEBUG: print x, y                                         
-            if self.COL3 <= x <= self.COL3 + 100:
-                sounds.play(MENU_SND)                                       
-                if 200 <= y <= 250:
-                    # disallow treble and bass both set to no                                                                                                                                                
-                    if not (self.setupOptions.useTrebleClef == self.setupOptions.YES and self.setupOptions.useBassClef == self.setupOptions.NO):
-                        self.setupOptions.useTrebleClef = (self.setupOptions.useTrebleClef + 1) % len(self._yesnoImg)
-                elif 250 < y <= 300:
-                    if not (self.setupOptions.useTrebleClef == self.setupOptions.NO and self.setupOptions.useBassClef == self.setupOptions.YES):
-                        self.setupOptions.useBassClef = (self.setupOptions.useBassClef + 1) % len(self._yesnoImg)
-                elif 300 < y <= 350:
-                    self.setupOptions.timerIndex = (self.setupOptions.timerIndex + 1) % len(self._timesImg)
-                elif 350 < y <= 400:
-                    self.setupOptions.sounds = (self.setupOptions.sounds + 1) % len(self._yesnoImg)
-                    sounds.mute = self.setupOptions.sounds == self.setupOptions.NO
-                elif 450 < y <= 500:
-                    self.setupOptions.save()
-                    self.end()                                    
-                self.paint()                                                                          
+            x -= self.game.screen.get_width() / 2
+            y -= (self.game.screen.get_height() - self._menu.get_height()) / 2
+            if evt.type == pygame.MOUSEMOTION:
+                if self._menu.setItem((x,y)):
+                    sounds.play(MENU_SND)
+                    self.paint()
+            else:
+                # MOUSEBUTTONUP, user clicked on menu
+                sel = self._menu.selectItem((x,y))
+                if sel is not None:
+                    sounds.play(OPTION_SND)
+                    self.doAction(sel)
+        elif evt.type == pygame.KEYDOWN:
+            if evt.key == pygame.K_ESCAPE:
+                self.exit()
+            elif evt.key == pygame.K_DOWN:
+                self._menu.next()
+                sounds.play(MENU_SND)
+                self.paint()
+            elif evt.key == pygame.K_UP:
+                self._menu.prev()
+                sounds.play(MENU_SND)
+                self.paint()
+            elif evt.key == pygame.K_LEFT:
+                sounds.play(OPTION_SND)
+                self.doAction(self._menu.selected, pygame.K_LEFT)
+            elif evt.key == pygame.K_RIGHT:
+                sounds.play(OPTION_SND)
+                self.doAction(self._menu.selected, pygame.K_RIGHT)
+            elif evt.key in [pygame.K_RETURN, pygame.K_SPACE]:
+                sounds.play(OPTION_SND)
+                self.doAction(self._menu.selected)
+                
+    def exit(self):
+        self.fadeOut()
+        self.end()
 
+    def doAction(self, sel, dir = pygame.K_RIGHT):
+        if self._menu.getOption(sel) == self._options[self.BACK]:
+            self.setupOptions.save()                                                
+            self.exit()                                                                                    
+        else:                          
+            self._menu.changeOption(sel, dir)
+            option = self._menu.getOption(sel)                                             
+            i = self._menu.getValueIndex(sel)
+            if option == self._options[self.TREBLE_CLEF]:
+                self.setupOptions.useTrebleClef = i
+            elif option == self._options[self.BASS_CLEF]:
+                self.setupOptions.useBassClef = i
+            elif option == self._options[self.TIMER]:
+                self.setupOptions.timerIndex = i
+            elif option == self._options[self.SOUNDS]:
+                self.setupOptions.sounds = i
+            self.paint()
 
-
+    def load(self):
+        self._menu.setValueIndex(self.TREBLE_CLEF, self.setupOptions.useTrebleClef)
+        self._menu.setValueIndex(self.BASS_CLEF, self.setupOptions.useBassClef)
+        self._menu.setValueIndex(self.TIMER, self.setupOptions.timerIndex)
+        self._menu.setValueIndex(self.SOUNDS, self.setupOptions.sounds)

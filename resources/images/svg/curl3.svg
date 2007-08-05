@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="800px"
+   height="600px"
+   id="svg2614"
+   sodipodi:version="0.32"
+   inkscape:version="0.45"
+   sodipodi:docbase="/home/francisco/programming/python/readMusic/resources/images/svg"
+   sodipodi:docname="curl3.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/francisco/programming/python/readMusic/resources/images/curl3.png"
+   inkscape:export-xdpi="106.64375"
+   inkscape:export-ydpi="106.64375"
+   sodipodi:modified="TRUE">
+  <defs
+     id="defs2616" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.5900468"
+     inkscape:cx="439.49772"
+     inkscape:cy="97.350933"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="px"
+     inkscape:window-width="872"
+     inkscape:window-height="619"
+     inkscape:window-x="0"
+     inkscape:window-y="25" />
+  <metadata
+     id="metadata2619">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <path
+       style="opacity:1;fill:#8b0000;fill-opacity:1;fill-rule:nonzero;stroke:#8b0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 11.968721,183.62297 C 47.353539,181.20109 80.789764,186.47709 116.11303,180.37644 C 138.07019,176.58424 176.38413,190.14848 208.8277,183.28296 C 235.95599,172.8162 271.12546,183.5263 268.48021,216.45999 C 265.37416,255.13081 265.35104,400.82863 266.70213,436.2736 C 267.67306,461.74545 251.07526,506.20353 272.97501,522.04339 C 298.14216,540.24652 331.37369,528.20834 361.28254,529.60758 C 425.18222,532.59704 491.21603,540.40772 554.58639,529.68531 C 575.45588,526.15415 602.78257,495.3951 589.10915,470.00152 C 572.9944,440.07402 534.99021,459.89619 536.76333,484.26606 C 537.62187,496.0659 543.14765,511.47183 537.87183,502.75949 C 526.87681,484.60259 538.61922,454.48602 563.52088,450.52747 C 594.5035,446.94713 604.71884,487.98472 588.26209,511.08303 C 567.05998,536.82468 535.51933,536.92677 505.29846,538.08784 C 432.99871,537.07541 362.50641,535.01602 290.222,533.04166 C 259.60925,527.75302 258.35884,499.43859 259.82892,477.10329 C 260.9383,460.2481 261.54781,408.39968 262.13871,355.80405 C 262.43416,329.50624 264.71317,305.676 264.90291,283.45915 C 265.09265,261.24229 263.19311,240.6388 264.02562,231.4675 C 266.19936,207.52065 266.92391,182.41646 233.47386,182.00674 C 209.65045,181.71493 183.02743,189.48098 157.78257,185.46972 C 132.79112,182.68953 124.38558,180.6862 97.752685,184.73352 C 65.148155,189.68832 28.027321,188.48696 11.968721,183.62297 z "
+       id="path2622"
+       sodipodi:nodetypes="cscssssssssccccssssscsc"
+       clip-path="none"
+       inkscape:export-filename="/home/francisco/programming/python/readMusic/resources/images/curl3.png"
+       inkscape:export-xdpi="414.47"
+       inkscape:export-ydpi="414.47" />
+  </g>
+</svg>

@@ -9,7 +9,7 @@ DEBUG = False
 
 class Sounds:
     AMBIENT_VOLUME = 0.5
-    TICTAC_VOLUME  = 0.3
+    TICTAC_VOLUME  = 0.1
 
     def init(self):
         self.mute = SetupOptions().sounds == SetupOptions().NO
@@ -30,7 +30,11 @@ class Sounds:
         for s in [TICTAC_SND]:
             self._channelSounds(s, self._channels["tictac"], -1)
 
-        for s in [ENTER_SND, MENU_SND, TIMEISUP_SND]:
+        for s in [TIMEISUP_SND]:
+            self._channelSounds(s, self._channels["tictac"])
+
+        #for s in [ENTER_SND, MENU_SND, TIMEISUP_SND]:
+        for s in [ENTER_SND, MENU_SND]:
             self._looseSounds(s)
 
         for s in noteSounds.values():
@@ -49,7 +53,6 @@ class Sounds:
         self.init()
 
     def muteSound(self):
-        #pygame.mixer.quit()
         pygame.mixer.stop()
 
     def muteChannel(self, channel):
