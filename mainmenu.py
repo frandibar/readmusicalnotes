@@ -11,7 +11,9 @@ import pygame
 
 
 class MainMenu(Scene):
-    NOTES_QUIZ, SETUP, HELP, QUIT = range(4)
+    #NOTES_QUIZ, SETUP, HELP, QUIT = range(4)
+    NOTES_QUIZ, SETUP, QUIT = range(3)
+    FRAMERATE = 100
     def init(self):
         cur = pygame.cursors.compile(CURSOR_DATA)
         cursorSize = (len(CURSOR_DATA), len(CURSOR_DATA[0]))
@@ -21,7 +23,8 @@ class MainMenu(Scene):
         self._decorationImg2 = pygame.image.load(DECORATION2_IMG).convert_alpha()
         self._background = pygame.image.load(BACKGROUND_IMG).convert()
         self._menu = Menu(
-                 ["Notes Quiz", "Options", "Help", "Quit"],
+                 #["Notes Quiz", "Options", "Help", "Quit"],
+                 ["Notes Quiz", "Options", "Quit"],
                  pygame.font.Font(MAIN_MENU_FONT, 50),
                  pygame.font.Font(MAIN_MENU_FONT, 70),
                  margin = -40,
@@ -34,19 +37,27 @@ class MainMenu(Scene):
         y = (self.game.screen.get_height() - self._menu.get_height()) / 2
         self._menuCoords = (x, y)
 
+        self._decoImg1Coords = (10, 20)
+        self._decoImg2Coords = (10, 500)
+
+        self._clock = pygame.time.Clock()
         self.showAnimation()
         sounds.play(INTRO_SND)
         
     def showAnimation(self):
         self.game.screen.blit(self.background, (0,0))
         pygame.display.flip()
-        y1 = 20
-        y2 = 500               
-        self.game.screen.blit(self._decorationImg1, (10, y1))
-        self.game.screen.blit(self._decorationImg2, (10, y2))
-        for x in range(0, self._decorationImg1.get_width(), 1):
-            pygame.display.update((self.game.screen.get_width() - x, y2),(self.game.screen.get_width() - x, y2 + self._decorationImg2.get_height()))
-            pygame.display.update((x, y1),(x, self._decorationImg1.get_height() + y1))
+        self.game.screen.blit(self._decorationImg1, self._decoImg1Coords)
+        self.game.screen.blit(self._decorationImg2, self._decoImg2Coords)
+        y1o = self._decoImg1Coords[1]
+        y2o = self._decoImg2Coords[1]
+        for x in range(0, self.game.screen.get_width(), 5):
+            y1f = y1o + self._decorationImg1.get_height()
+            pygame.display.update((x, y1o), (x, y1f))
+            x2 = self.game.screen.get_width() - x
+            y2f = y2o + self._decorationImg2.get_height()
+            pygame.display.update((x2, y2o),(x2, y2f))
+            self._clock.tick(self.FRAMERATE)                                                                                      
 
         self.fadeInMenu()
 
@@ -58,14 +69,13 @@ class MainMenu(Scene):
             s.set_alpha(i)
             self.game.screen.blit(s, (0,0))
             pygame.display.flip()
+            self._clock.tick(self.FRAMERATE)                                                                                      
 
 
     def paint(self):
-        y1 = 20
-        y2 = 500               
         self.game.screen.blit(self.background, (0,0))
-        self.game.screen.blit(self._decorationImg1, (10, y1))
-        self.game.screen.blit(self._decorationImg2, (10, y2))
+        self.game.screen.blit(self._decorationImg1, self._decoImg1Coords)
+        self.game.screen.blit(self._decorationImg2, self._decoImg2Coords)
         self._menu.blit(self.game.screen, self._menuCoords)
         
     def event(self, evt):

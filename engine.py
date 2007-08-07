@@ -3,7 +3,7 @@ from sounds import sounds
 import pygame
 import sys
 
-DEBUG = False
+DEBUG = True
 
 class Game:
     def __init__(self, framerate = 30, title = None, icon = None):
@@ -87,32 +87,27 @@ class Scene:
         
     def run(self):
         if DEBUG: print "Entering Scene:", str(self)
-        self.game.screen.blit(self.background, (0,0))
-        for s in self.subscenes: 
-            s.paint()
-        self.paint()
-        pygame.display.flip()
+        #self.game.screen.blit(self.background, (0,0))
+        #for s in self.subscenes: s.paint()
+        #self.paint()
+        #pygame.display.flip()
         while True:
             self.game.tick()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT: 
-                    sys.exit()
-                else:
-                    try:
-                        self.event(event)
-                    except SceneExit:
-                        return self.return_value
-                    
             try:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT: 
+                        sys.exit()
+                    else:
+                        self.event(event)
+                        
                 self.loop()
-                for s in self.subscenes: 
-                    s.loop()
+                for s in self.subscenes: s.loop()
+
+                for s in self.subscenes: s.update()
+                self.update()
             except SceneExit:
                 return self.return_value
 
-            for s in self.subscenes: 
-                s.update()
-            self.update()
             pygame.display.flip()
         
     def event(self, evt):

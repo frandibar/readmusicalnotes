@@ -11,7 +11,7 @@ def main():
     if os.path.dirname(__file__):
         os.chdir(os.path.dirname(__file__))
 
-    g = engine.Game(framerate = 20, title = "read Music!", icon = resources.ICON_IMG)
+    g = engine.Game(framerate = 30, title = "read Music!", icon = resources.ICON_IMG)
     g.run(MainMenu(g))
     
 
