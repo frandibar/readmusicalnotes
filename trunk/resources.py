@@ -55,6 +55,7 @@ LEGEND_FONT    = SCORE_FONT
 
 # sounds
 INTRO_SND    = join(SOUNDS_PATH, "bach_846_prelude1.ogg")
+INTRO_SND    = join(SOUNDS_PATH, "tam.wav")
 TICTAC_SND   = join(SOUNDS_PATH, "ticking.wav")
 TIMEISUP_SND = join(SOUNDS_PATH, "tam.wav")
 MENU_SND     = join(SOUNDS_PATH, "xyloc3.wav")

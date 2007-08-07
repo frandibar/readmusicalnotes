@@ -71,5 +71,6 @@ class Sounds:
         setattr(self, s, sound.play)
 
 
+if not pygame.mixer: print "Warning, sound disabled."
 sounds = Sounds()
 
