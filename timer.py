@@ -39,10 +39,13 @@ class BlinkingText:
         self._img = self._font.render(text, True, self._color)
 
     def turnOn(self):
-        if self.soundToPlay is not None:
-            sounds.play(self.soundToPlay)
+        if self._isOn:
+            return
+
         self._start = time.time()
         self._isOn = True
+        if self.soundToPlay is not None:
+            sounds.play(self.soundToPlay)
 
     def turnOff(self):
         self._isOn = False
@@ -103,9 +106,9 @@ class Timer:
 
     def stop(self, playAlarm = False):
         self._isRunning = False        
+        sounds.muteChannel("tictac")
         if playAlarm:
             self.alarm.turnOn()
-        sounds.muteChannel("tictac")
 
 
 class FlareTimer(pygame.sprite.Sprite, Timer):
@@ -116,31 +119,33 @@ class FlareTimer(pygame.sprite.Sprite, Timer):
 
         self.image = pygame.image.load(FLARE_IMG)
         self.rect = self.image.get_rect()                                                 
-        self.length = length - (length % totalTime)
+        self._length = length - (length % totalTime)
 
+        self._startCoords = (x,y)
         self.setPos((x,y))
         self._render = pygame.sprite.RenderClear(self)
+        self._speed = (self._length / totalTime, 0)
+        print self._length, self._speed[0], self._length % self._speed[0], self._length / self._speed[0]
         
     def setPos(self, (x,y)):
         self.rect.left = x
         self.rect.top = y
 
     def update(self, ms):
-        if not self.timeIsUp():
-            step = ms / 1000.0
-            inc = self.length / self._totalTime * step
-            self._timeLeft -= step
-            self.rect.move_ip((inc, 0))
-        elif self.alarm is not None:
-            self.alarm.turnOn()                                        
+        print self._timeLeft
+        elapsed = ms / 1000.0   # elapsed time in seconds
+        xdist = self._speed[0] * elapsed
+        ydist = self._speed[1] * elapsed
+        self._timeLeft -= elapsed
+        self.rect.move_ip((xdist, ydist))
 
-
-    def blit(self, surface, background, (x, y)):
+    def blit(self, surface, background):
         self._render.clear(surface, background)
-        x0 = x + self.image.get_width() / 2
-        y0 = y + self.image.get_height() / 2
+        x0, y0 = self._startCoords
+        x0 += self.image.get_width() / 2
+        y0 += self.image.get_height() / 2
         x1 = self.rect.center[0]
-        xf = x + self.length
+        xf = x0 + self._length
         pygame.draw.line(surface, Color("gray30"), (x0, y0), (xf, y0), 3)
         pygame.draw.line(surface, colors.BROWN, (x0, y0), (x1, y0), 3)
         self._render.draw(surface)

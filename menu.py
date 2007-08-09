@@ -188,8 +188,6 @@ class OptionsMenu(Menu):
                 img = self._normalValuesImages[i][self._currentValues[i]]
                     
                 dy = self._lineStep * i - img.get_height()/2
-                #if 0 <= x <= self._selectedImages[i].get_width() + self.COL2_OFFSET + img.get_width():
-                print self._width
                 if 0 <= x <= self._width:
                     if dy + 10 <= y <= dy + img.get_height() - 10:
                         return i

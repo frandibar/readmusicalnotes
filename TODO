@@ -9,16 +9,18 @@ functionality:
 
 usabilidad:
 - change sound on wrong answer
+- add images in options
 
 codigo:
 - add midi sound
 
-varios:
+other:
 - avoid restarting music in mainmenu
 - support more languages (spanish)
-- allow selecting with mouse from 2nd column in options    
 
-FIX SOUNDS!
+optimization:
+- refresh only needed part of screen instead of calling paint in menus
+
 
 BUGS List:
 
