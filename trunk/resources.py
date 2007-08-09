@@ -1,6 +1,8 @@
 from os.path import join
 
-CONFIG_FILE = "~/.readMusic.config"
+CONFIG_FILE = ".readMusic.config"
+DEBUG = False
+ANIMATION_FR = 100
 
 # paths
 RESOURCE_PATH   = "resources"

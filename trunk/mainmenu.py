@@ -3,17 +3,16 @@ from engine import Game, Scene
 #from help import Help
 from menu import Menu
 from options import Setup
+from setupoptions import SetupOptions
 from notesquiz import NotesQuiz
 from sounds import sounds
 
 from pygame.color import Color
 import pygame
 
-
 class MainMenu(Scene):
     #NOTES_QUIZ, SETUP, HELP, QUIT = range(4)
     NOTES_QUIZ, SETUP, QUIT = range(3)
-    FRAMERATE = 100
     def init(self):
         cur = pygame.cursors.compile(CURSOR_DATA)
         cursorSize = (len(CURSOR_DATA), len(CURSOR_DATA[0]))
@@ -41,12 +40,16 @@ class MainMenu(Scene):
         self._decoImg2Coords = (10, 500)
 
         self._clock = pygame.time.Clock()
-        self.showAnimation()
         sounds.play(INTRO_SND)
+
+        if SetupOptions().softTransitions == SetupOptions.YES:
+            self.showAnimation()
+        else:
+            self.paint()
         
     def showAnimation(self):
-        self.game.screen.blit(self.background, (0,0))
-        pygame.display.flip()
+        if SetupOptions().softTransitions == SetupOptions.NO: return
+        self.fadeIn()
         self.game.screen.blit(self._decorationImg1, self._decoImg1Coords)
         self.game.screen.blit(self._decorationImg2, self._decoImg2Coords)
         y1o = self._decoImg1Coords[1]
@@ -57,19 +60,19 @@ class MainMenu(Scene):
             x2 = self.game.screen.get_width() - x
             y2f = y2o + self._decorationImg2.get_height()
             pygame.display.update((x2, y2o),(x2, y2f))
-            self._clock.tick(self.FRAMERATE)                                                                                      
+            self._clock.tick(ANIMATION_FR)                                                                                      
 
         self.fadeInMenu()
 
-
     def fadeInMenu(self):                                                                                     
+        if SetupOptions().softTransitions == SetupOptions.NO: return
         s = self.game.screen.copy()
         self._menu.blit(s, self._menuCoords)
         for i in range(0, 50, 1):
             s.set_alpha(i)
             self.game.screen.blit(s, (0,0))
             pygame.display.flip()
-            self._clock.tick(self.FRAMERATE)                                                                                      
+            self._clock.tick(ANIMATION_FR)                                                                                  
 
 
     def paint(self):
@@ -81,8 +84,8 @@ class MainMenu(Scene):
     def event(self, evt):
         if evt.type in [pygame.MOUSEMOTION, pygame.MOUSEBUTTONUP]:
             x, y = pygame.mouse.get_pos()
-            x -= self.game.screen.get_width() / 2
-            y -= (self.game.screen.get_height() - self._menu.get_height()) / 2
+            x -= self._menuCoords[0]                                         
+            y -= self._menuCoords[1]                                         
             if evt.type == pygame.MOUSEMOTION:
                 if self._menu.setItem((x,y)):
                     sounds.play(MENU_SND)
@@ -125,4 +128,5 @@ class MainMenu(Scene):
             #self.runScene(Help(self.game))
         elif sel == self.QUIT:
             self.end()
+        self.showAnimation()                                                                                                                                       
                         

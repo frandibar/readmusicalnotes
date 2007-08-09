@@ -7,12 +7,8 @@ from sounds import sounds
 from pygame.color import Color
 import pygame
 
-DEBUG = True
-
 class Setup(Scene):
-    TREBLE_CLEF, BASS_CLEF, TIMER, SOUNDS, BACK = range(5)
-    ANIMATING, FADING, NORMAL = range(3)
-    FRAMERATE = 100                                        
+    TREBLE_CLEF, BASS_CLEF, TIMER, SOUNDS, SOFT_TRANSITIONS, BACK = range(6)
     def init(self, game):
         self.setupOptions = SetupOptions()
         self._background    = pygame.image.load(BACKGROUND_IMG).convert()
@@ -20,29 +16,32 @@ class Setup(Scene):
 
         yesNoOpts = ["no", "yes"]
         timeOpts = ["off", "5 sec", "10 sec", "15 sec", "20 sec"]
-        self._options = ["Treble clef", "Bass clef", "Timer", "Sounds", "Back"]
-        self._values = [yesNoOpts, yesNoOpts, timeOpts, yesNoOpts, None]
+        self._options = ["Treble clef", "Bass clef", "Timer", "Sounds", "Soft transitions", "Back"]
+        self._values = [yesNoOpts, yesNoOpts, timeOpts, yesNoOpts, yesNoOpts, None]
         self._menu = OptionsMenu(
                  self._options,
                  self._values,
                  pygame.font.Font(OPTIONS_FONT, 30),
                  pygame.font.Font(OPTIONS_FONT, 30),
                  margin = 0,
-                 normalColor    = Color("black"),
-                 selectedColor  = Color("dark red")
+                 normalColor   = Color("black"),
+                 selectedColor = Color("dark red")
                  )
 
         self._menu.setMarker(MENU_MARKER_IMG)
         font = pygame.font.Font(OPTIONS_FONT, 50)
         self._title = font.render("Options", True, pygame.color.Color("black"))
 
-        self._titleCoords      = (40,55)
+        self._titleCoords      = (40, 53)
         self._menuCoords       = (350, 200)
         self._decorationCoords = (10, 100)
 
         self._clock = pygame.time.Clock()
         self.loadOptionValues()
-        self.showAnimation()
+        if self.setupOptions.softTransitions == SetupOptions.YES:
+            self.showAnimation()
+        else:
+            self.paint()
 
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
@@ -51,39 +50,32 @@ class Setup(Scene):
         self._menu.blit(self.game.screen, self._menuCoords)
 
     def showAnimation(self):
+        if self.setupOptions.softTransitions == SetupOptions.NO: return
         self.game.screen.blit(self.background, (0,0))
-        pygame.display.flip()
+        self.fadeIn()
         self.game.screen.blit(self._decorationImg, self._decorationCoords)
         for x in range(self._decorationCoords[0], self._decorationCoords[0] + self._decorationImg.get_width(), 5):
             pygame.display.update((x, self._decorationCoords[1]),(x, self._decorationCoords[1] + self._decorationImg.get_height()))
-            self._clock.tick(self.FRAMERATE)
+            self._clock.tick(ANIMATION_FR)
 
-        self.fadeInTitle()
         self.fadeInMenu()
 
-    def fadeInTitle(self):
-        self.game.screen.blit(self._title, self._titleCoords)
-        s = self.game.screen.copy()
-        for i in range(0, 50, 1):
-            s.set_alpha(i)
-            self.game.screen.blit(s, (0,0))
-            pygame.display.flip()
-            self._clock.tick(self.FRAMERATE)
-
     def fadeInMenu(self):                                                                                     
+        if self.setupOptions.softTransitions == SetupOptions.NO: return
         s = self.game.screen.copy()
+        s.blit(self._title, self._titleCoords)
         self._menu.blit(s, self._menuCoords)
         for i in range(0, 50, 1):
             s.set_alpha(i)
             self.game.screen.blit(s, (0,0))
             pygame.display.flip()
-            self._clock.tick(self.FRAMERATE)
+            self._clock.tick(ANIMATION_FR)
 
     def event(self, evt):
         if evt.type in [pygame.MOUSEMOTION, pygame.MOUSEBUTTONUP]:
             x, y = pygame.mouse.get_pos()
-            x -= self.game.screen.get_width() / 2
-            y -= (self.game.screen.get_height() - self._menu.get_height()) / 2
+            x -= self._menuCoords[0]                                                  
+            y -= self._menuCoords[1]
             if evt.type == pygame.MOUSEMOTION:
                 if self._menu.setItem((x,y)):
                     sounds.play(MENU_SND)
@@ -132,6 +124,8 @@ class Setup(Scene):
                 self.setupOptions.timerIndex = i
             elif option == self._options[self.SOUNDS]:
                 self.setupOptions.sounds = i
+            elif option == self._options[self.SOFT_TRANSITIONS]:
+                self.setupOptions.softTransitions = i
             self.paint()
 
     def loadOptionValues(self):
@@ -139,3 +133,5 @@ class Setup(Scene):
         self._menu.setValueIndex(self.BASS_CLEF, self.setupOptions.useBassClef)
         self._menu.setValueIndex(self.TIMER, self.setupOptions.timerIndex)
         self._menu.setValueIndex(self.SOUNDS, self.setupOptions.sounds)
+        self._menu.setValueIndex(self.SOFT_TRANSITIONS, self.setupOptions.softTransitions)
+
