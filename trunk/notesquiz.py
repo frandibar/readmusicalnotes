@@ -22,6 +22,7 @@ class NotesQuiz(Scene):
         
     WAITING, WRONG, CORRECT, FINISH, TIMEISUP = range(5)   # status values
     CLOCK_TICK = pygame.USEREVENT
+    UPDATE_MS = 150
 
     def init(self):
         # select a random note
@@ -82,7 +83,7 @@ class NotesQuiz(Scene):
         self._useTimer = self._setupOptions.timerIndex != self._setupOptions.OFF
         if self._useTimer:
             self._timerCoords = (50, 450)
-            pygame.time.set_timer(self.CLOCK_TICK, 100)        
+            pygame.time.set_timer(self.CLOCK_TICK, self.UPDATE_MS)        
             font = pygame.font.Font(LEGEND_FONT, 50) 
             alarm = timer.BlinkingText("Time is up!", font, (400, 350))                                                                                      
             alarm.soundToPlay = TIMEISUP_SND
@@ -105,6 +106,10 @@ class NotesQuiz(Scene):
 
         self._menu.blit(self.game.screen, self._menuCoords)
         # show messages
+        if self._useTimer and self._timer.timeIsUp():
+            self._showPressKeyMsg = True
+            self._status = self.TIMEISUP
+
         if self._showPressKeyMsg:
             self.game.screen.blit(self._images["pressKey"], ((self.game.screen.get_width() - self._images["pressKey"].get_width())/2, self.game.screen.get_height() - self._images["pressKey"].get_height()))
 
@@ -114,13 +119,13 @@ class NotesQuiz(Scene):
             #self.game.screen.blit(self._images["soundOn"], (40, self.game.screen.get_height() - self._images["soundOn"].get_height() - 15))
             #self.game.screen.blit(self._images["soundOff"], (25, self.game.screen.get_height() - self._images["soundOff"].get_height() - 5))
         if self._useTimer: 
-            self._timer.blit(self.game.screen, self.background, self._timerCoords)
+            self._timer.blit(self.game.screen, self.background)
 
         
-    def update(self):
-        if self._useTimer and self._timer.timeIsUp():
-            self._showPressKeyMsg = True
-            self._status = self.TIMEISUP
+    #def update(self):
+        #if self._useTimer and self._timer.timeIsUp():
+            #self._showPressKeyMsg = True
+            #self._status = self.TIMEISUP
 
     def event(self, evt):                
         if self._status in [self.CORRECT, self.WRONG, self.TIMEISUP]:
@@ -186,8 +191,8 @@ class NotesQuiz(Scene):
 
         elif evt.type == self.CLOCK_TICK:
             if self._timer.isRunning():
-                self._timer.update(100)
-                pygame.time.set_timer(self.CLOCK_TICK, 100)
+                self._timer.update(self.UPDATE_MS)
+                pygame.time.set_timer(self.CLOCK_TICK, self.UPDATE_MS)
                 
 
     def evaluate(self, guess):

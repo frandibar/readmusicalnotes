@@ -74,7 +74,6 @@ class MainMenu(Scene):
             pygame.display.flip()
             self._clock.tick(ANIMATION_FR)                                                                                  
 
-
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
         self.game.screen.blit(self._decorationImg1, self._decoImg1Coords)
@@ -94,26 +93,25 @@ class MainMenu(Scene):
                 # MOUSEBUTTONUP, user clicked on menu
                 sel = self._menu.selectItem((x,y))
                 if sel is not None:
-                    sounds.play(ENTER_SND)
                     self.doAction(sel)
         elif evt.type == pygame.KEYDOWN:
             if evt.key == pygame.K_ESCAPE:
+                self.fadeOut()
                 self.end()
             elif evt.key == pygame.K_DOWN:
                 self._menu.next()
                 sounds.play(MENU_SND)
-                self.paint()
+                self.paint()  # TODO: refresh only menu part of screen
             elif evt.key == pygame.K_UP:
                 self._menu.prev()
                 sounds.play(MENU_SND)
                 self.paint()
-            elif evt.key in [pygame.K_RETURN, pygame.K_SPACE]:
+            elif evt.key in [pygame.K_RETURN, pygame.K_SPACE, pygame.K_LEFT, pygame.K_RIGHT]:
                 sel = self._menu.selected
-                sounds.play(ENTER_SND)
                 self.doAction(sel)
-                sounds.play(INTRO_SND)
                 
     def doAction(self, sel):
+        sounds.play(ENTER_SND)
         self.fadeOut()
         if sel == self.NOTES_QUIZ:
             self.game.level = 1                                                                                                   

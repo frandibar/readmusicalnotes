@@ -21,8 +21,8 @@ class Sounds:
         self._channels = {}
         self._channels["ambient"] = pygame.mixer.Channel(1)
         self._channels["tictac"]  = pygame.mixer.Channel(2)
-        self._channels["ambient"].set_volume(self.AMBIENT_VOLUME)
-        self._channels["tictac"].set_volume(self.TICTAC_VOLUME)
+        #self._channels["ambient"].set_volume(self.AMBIENT_VOLUME)
+        #self._channels["tictac"].set_volume(self.TICTAC_VOLUME)
 
         for s in [INTRO_SND]:
             self._channelSounds(s, self._channels["ambient"], -1)  # -1 to loop forever
