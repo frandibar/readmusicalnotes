@@ -1,21 +1,24 @@
 readMusic To Do list:
 
-funcionalidad:
-- agregar tempo quiz
-- agregar quiz de acordes
+functionality:
+- add tempo quiz
+- add chord quiz
+- add midi input
+- add statistics
 - agregar bemoles y sostenidos, notas extendidas con puntitos
-- agregar entrada midi
-- agregar estadisticas de aciertos
 
 usabilidad:
-- cambiar sonido cuando la respuesta es incorrecta
+- change sound on wrong answer
 
 codigo:
-- agregar sonido midi
-- separar codigo como modelo MVC
+- add midi sound
 
 varios:
-- evitar arrancar nuevamente el la music en main menu
+- avoid restarting music in mainmenu
+- support more languages (spanish)
+- allow selecting with mouse from 2nd column in options    
+
+FIX SOUNDS!
 
 BUGS List:
 

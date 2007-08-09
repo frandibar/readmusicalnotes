@@ -55,9 +55,8 @@ class Menu:
         for i in range(len(self._options)):
             if i == self.selected:
                 img = self._selectedImages[i]
-            elif i == self.alternate:
-                if len(self._alternateImages) > i:
-                    img = self._alternateImages[i]                                     
+            elif i == self.alternate and len(self._alternateImages) > i:
+                img = self._alternateImages[i]                                     
             else:                                     
                 img = self._normalImages[i]
 
@@ -69,8 +68,8 @@ class Menu:
             surface.blit(img, (x,y))
             # blit marker ?
             if i == self.selected and self.useMarker and self._markerImg is not None:
-                #surface.blit(self._markerImg, (x - self._markerImg.get_width(), y + (self._lineStep - self._markerImg.get_height() / 2)))
-                surface.blit(self._markerImg, (x - self._markerImg.get_width() - 10, y + 10))
+                y = start_y + self._lineStep * i - self._markerImg.get_height()/2
+                surface.blit(self._markerImg, (x - self._markerImg.get_width() - 10, y))
             
     def next(self):
         """selects next item"""
@@ -111,6 +110,7 @@ class Menu:
 
 class OptionsMenu(Menu):
     """Implements a menu with highlighting options and with another column that holds different values"""
+    COL2_OFFSET = 50
     def __init__(self, options, values, normalFont, selectedFont, margin = 0, normalColor = Color("white"), selectedColor = Color("white")):
         Menu.__init__(self, options, normalFont, selectedFont, margin, normalColor, selectedColor, False)
 
@@ -120,8 +120,9 @@ class OptionsMenu(Menu):
         
         self._currentValues = len(options) * [0]
         self._values = values
-
+        self._col1width = self._width
         # generate images of text items and fill _selectedImages and _normalImages lists
+        width = 0
         for opts in values:
             if opts is not None:
                 selOpts = []
@@ -129,17 +130,19 @@ class OptionsMenu(Menu):
                 for text in opts:
                     selOpts.append(selectedFont.render(text, True, selectedColor))
                     normalOpts.append(normalFont.render(text, True, normalColor))
+                    width = max(max(selOpts[-1].get_width(), normalOpts[-1].get_width()), width)
                 self._selectedValuesImages.append(selOpts)
                 self._normalValuesImages.append(normalOpts)
             else:
                 self._selectedValuesImages.append(None)
                 self._normalValuesImages.append(None)
+        self._width += width + self.COL2_OFFSET
 
     def blit(self, surface, (x,y)):
         """prints to screen"""
         Menu.blit(self, surface, (x,y))
         # blit second column                                       
-        x += self._width + 50                                 
+        x += self._col1width + self.COL2_OFFSET
         for i in range(len(self._options)):
             try:
                 if i == self.selected:
@@ -166,4 +169,32 @@ class OptionsMenu(Menu):
     def setValueIndex(self, option, index):
         """sets the index corresponding to the value for option"""
         self._currentValues[option] = index        
+
+    def selectItem(self, coords):
+        """returns index of menu corresponding to coords (x,y), or None"""
+        i = self._getItem(coords)
+        if i is not None:
+            self.alternate = i
+        return i      
+            
+    def _getItem(self, (x, y)):
+        """returns index corresponding to coords (x,y), or None"""
+        item = Menu._getItem(self, (x,y))
+        if item is not None:
+            return item
+
+        for i in range(len(self._options)):
+            try:
+                img = self._normalValuesImages[i][self._currentValues[i]]
+                    
+                dy = self._lineStep * i - img.get_height()/2
+                #if 0 <= x <= self._selectedImages[i].get_width() + self.COL2_OFFSET + img.get_width():
+                print self._width
+                if 0 <= x <= self._width:
+                    if dy + 10 <= y <= dy + img.get_height() - 10:
+                        return i
+            except Exception:
+                # ignore if no values for option                             
+                pass                             
+        return None
 

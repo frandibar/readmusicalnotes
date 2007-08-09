@@ -1,9 +1,9 @@
 from sounds import sounds
+from resources import DEBUG
+from setupoptions import SetupOptions
 
 import pygame
 import sys
-
-DEBUG = True
 
 class Game:
     def __init__(self, framerate = 30, title = None, icon = None):
@@ -122,21 +122,28 @@ class Scene:
     def paint(self):
         self.update()
      
-    def fadeIn(self):
-        self.paint()
+    def fadeIn(self, doPaint = False):
+        if SetupOptions().softTransitions == SetupOptions.NO: return
+        if doPaint:
+            self.paint()
+        else:                        
+            self.game.screen.blit(self.background, (0,0))
         s = self.game.screen.copy()
-        self.game.screen.fill(pygame.color.Color("black"))                                   
-        for i in range(0, 30, 1):
+        self.game.screen.fill(pygame.color.Color("black"))
+        for i in range(0, 50, 1):
             s.set_alpha(i)
             self.game.screen.blit(s, (0,0))
             pygame.display.flip()
+            self.game.tick()                                 
 
     def fadeOut(self):
-        s = pygame.Surface((self.game.screen.get_width(), self.game.screen.get_height())).convert()
+        if SetupOptions().softTransitions == SetupOptions.NO: return
+        s = pygame.Surface(self.game.screen.get_size()).convert()
         s.fill(pygame.color.Color("black"))
         for i in range(0, 50, 1):
             s.set_alpha(i)
             self.game.screen.blit(s, (0,0))
             pygame.display.flip()
+            self.game.tick()                                 
 
 

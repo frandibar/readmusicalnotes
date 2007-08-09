@@ -15,9 +15,6 @@ import time
 
 from pygame.color import Color
 
-DEBUG = False
-
-
 class NotesQuiz(Scene):
     notesIndexMenu = ['B', 'A', 'G', 'F', 'E', 'D', 'C'] 
     # these are the sounds to play when an item from the menu is selected
@@ -60,7 +57,6 @@ class NotesQuiz(Scene):
         #self._images["soundOff"]  = pygame.image.load(SOUND_OFF_IMG).convert_alpha()
 
         self._showPressKeyMsg  = False
-
         self.background = pygame.image.load(BACKGROUND_IMG).convert()
 
         # menu
@@ -94,7 +90,7 @@ class NotesQuiz(Scene):
 
         self._status = self.WAITING
         self._soundOn = self._setupOptions.sounds == self._setupOptions.YES
-        self.fadeIn()
+        self.fadeIn(True)
         self.start()
 
     def paint(self):
@@ -109,9 +105,6 @@ class NotesQuiz(Scene):
 
         self._menu.blit(self.game.screen, self._menuCoords)
         # show messages
-        if self._useTimer and self._timer.timeIsUp():
-            self._showPressKeyMsg = True
-            self._status = self.TIMEISUP
         if self._showPressKeyMsg:
             self.game.screen.blit(self._images["pressKey"], ((self.game.screen.get_width() - self._images["pressKey"].get_width())/2, self.game.screen.get_height() - self._images["pressKey"].get_height()))
 
@@ -124,6 +117,11 @@ class NotesQuiz(Scene):
             self._timer.blit(self.game.screen, self.background, self._timerCoords)
 
         
+    def update(self):
+        if self._useTimer and self._timer.timeIsUp():
+            self._showPressKeyMsg = True
+            self._status = self.TIMEISUP
+
     def event(self, evt):                
         if self._status in [self.CORRECT, self.WRONG, self.TIMEISUP]:
             if (evt.type == pygame.KEYDOWN and evt.key != pygame.K_ESCAPE) or evt.type == pygame.MOUSEBUTTONUP:
