@@ -1,8 +1,10 @@
 from os.path import join
 
+# global constants
 CONFIG_FILE = ".readMusic.config"
 DEBUG = False
 ANIMATION_FR = 100
+FOREVER = -1
 
 # paths
 RESOURCE_PATH   = "resources"
@@ -17,6 +19,15 @@ ICON_IMG    = join(IMAGES_PATH, "notes.gif")
 
 TREBLE_CLEF_IMG     = join(IMAGES_PATH, "2xtreble_clef.png")
 BASS_CLEF_IMG       = join(IMAGES_PATH, "2xbass_clef.png")
+
+TREBLE_CLEF_SEL_IMG   = join(IMAGES_PATH, "treble_clef.png")
+TREBLE_CLEF_UNSEL_IMG = join(IMAGES_PATH, "flat.png")
+BASS_CLEF_SEL_IMG     = join(IMAGES_PATH, "bass_clef.png")
+BASS_CLEF_UNSEL_IMG   = join(IMAGES_PATH, "flat.png")
+SOUND_SEL_IMG         = join(IMAGES_PATH, "half_stem_up.png")
+SOUND_UNSEL_IMG       = join(IMAGES_PATH, "flat.png")
+TIMER_SEL_IMG         = join(IMAGES_PATH, "half_stem_up.png")
+TIMER_UNSEL_IMG       = join(IMAGES_PATH, "flat.png")
 
 WHOLE_IMG             = join(IMAGES_PATH, "whole.png")
 HALF_STEM_UP_IMG      = join(IMAGES_PATH, "half_stem_up.png")
@@ -57,7 +68,6 @@ LEGEND_FONT    = SCORE_FONT
 
 # sounds
 INTRO_SND    = join(SOUNDS_PATH, "bach_846_prelude1.ogg")
-INTRO_SND    = join(SOUNDS_PATH, "tam.wav")
 TICTAC_SND   = join(SOUNDS_PATH, "ticking.wav")
 TIMEISUP_SND = join(SOUNDS_PATH, "tam.wav")
 MENU_SND     = join(SOUNDS_PATH, "xyloc3.wav")

@@ -99,14 +99,14 @@ class Timer:
     def start(self):
         self._isRunning = True        
         self._timeLeft = self._totalTime
-        sounds.play(TICTAC_SND)
+        sounds.play(TICTAC_SND, FOREVER)
 
     def isRunning(self):
         return self._isRunning
 
     def stop(self, playAlarm = False):
         self._isRunning = False        
-        sounds.muteChannel("tictac")
+        sounds.stop(TICTAC_SND)
         if playAlarm:
             self.alarm.turnOn()
 
@@ -124,20 +124,19 @@ class FlareTimer(pygame.sprite.Sprite, Timer):
         self._startCoords = (x,y)
         self.setPos((x,y))
         self._render = pygame.sprite.RenderClear(self)
-        self._speed = (self._length / totalTime, 0)
-        print self._length, self._speed[0], self._length % self._speed[0], self._length / self._speed[0]
+        self._speed = (self._length / float(totalTime), 0)
         
     def setPos(self, (x,y)):
         self.rect.left = x
         self.rect.top = y
 
     def update(self, ms):
-        print self._timeLeft
-        elapsed = ms / 1000.0   # elapsed time in seconds
-        xdist = self._speed[0] * elapsed
-        ydist = self._speed[1] * elapsed
+        elapsed = ms / 1000.0        # elapsed time in seconds
         self._timeLeft -= elapsed
-        self.rect.move_ip((xdist, ydist))
+        xdist = ((self._totalTime - self._timeLeft) * self._length) / self._totalTime
+        xdist += self._startCoords[0]
+        ydist = self._startCoords[1]
+        self.setPos((xdist, ydist))
 
     def blit(self, surface, background):
         self._render.clear(surface, background)
@@ -147,7 +146,7 @@ class FlareTimer(pygame.sprite.Sprite, Timer):
         x1 = self.rect.center[0]
         xf = x0 + self._length
         pygame.draw.line(surface, Color("gray30"), (x0, y0), (xf, y0), 3)
-        pygame.draw.line(surface, colors.BROWN, (x0, y0), (x1, y0), 3)
+        pygame.draw.line(surface, colors.OCRE, (x0, y0), (x1, y0), 3)
         self._render.draw(surface)
         self.alarm.blit(surface)
 
