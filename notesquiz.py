@@ -1,6 +1,8 @@
 from resources import *
 from engine import Game, Scene
+from language import *
 from menu import Menu
+from setupoptions import setupOptions
 from sounds import sounds
 import timer
 import colors
@@ -22,15 +24,14 @@ class NotesQuiz(Scene):
         
     WAITING, WRONG, CORRECT, FINISH, TIMEISUP = range(5)   # status values
     CLOCK_TICK = pygame.USEREVENT
-    UPDATE_MS = 150
+    UPDATE_MS = 100
 
     def init(self):
         # select a random note
         # start choosing a clef
         clefs = []
-        self._setupOptions = options.SetupOptions()
-        if self._setupOptions.useTrebleClef == self._setupOptions.YES: clefs.append(score.TrebleClef())
-        if self._setupOptions.useBassClef == self._setupOptions.YES: clefs.append(score.BassClef())
+        if setupOptions.useTrebleClef == setupOptions.YES: clefs.append(score.TrebleClef())
+        if setupOptions.useBassClef == setupOptions.YES: clefs.append(score.BassClef())
         clef = random.choice(clefs)
         # select the octaves according to the clef
         if clef.__class__ == score.TrebleClef:
@@ -48,7 +49,7 @@ class NotesQuiz(Scene):
         self._images["correct"] = pygame.image.load(CORRECT_IMG).convert_alpha()
         self._images["wrong"]  = pygame.image.load(WRONG_IMG).convert_alpha()
         font = pygame.font.Font(LEGEND_FONT, 30)
-        self._images["pressKey"] = font.render("Press any key to continue", True, Color("black"))
+        self._images["pressKey"] = font.render(dict[T_PRESS_KEY][setupOptions.language], True, Color("black"))
         OVERLAY_HEIGHT = 70
         self._images["overlay"] = pygame.Surface((self.game.screen.get_width(), OVERLAY_HEIGHT)).convert()
         self._images["overlay"].fill(Color("dark red"))
@@ -61,8 +62,9 @@ class NotesQuiz(Scene):
         self.background = pygame.image.load(BACKGROUND_IMG).convert()
 
         # menu
+        notesOpts = [dict[T_SI], dict[T_LA], dict[T_SOL], dict[T_FA], dict[T_MI], dict[T_RE], dict[T_DO]]
         self._menu = Menu(
-                 ["B si", "A la", "G sol", "F fa", "E mi", "D re", "C do"],
+                 notesOpts,
                  pygame.font.Font(NOTES_FONT, 30),
                  pygame.font.Font(NOTES_FONT, 50),
                  margin = -20,
@@ -71,7 +73,7 @@ class NotesQuiz(Scene):
                  centered = False
                  )
 
-        self._menu.setAlternateFont(pygame.font.Font(NOTES_FONT, 30), colors.BROWN)
+        self._menu.setAlternateFont(pygame.font.Font(NOTES_FONT, 30), colors.OCRE)
 
         # set coordinates
         self._menuCoords   = (670, 150)
@@ -80,17 +82,17 @@ class NotesQuiz(Scene):
 
         sounds.fadeOut()
 
-        self._useTimer = self._setupOptions.timerIndex != self._setupOptions.OFF
+        self._useTimer = setupOptions.timerIndex != setupOptions.OFF
         if self._useTimer:
             self._timerCoords = (50, 450)
             pygame.time.set_timer(self.CLOCK_TICK, self.UPDATE_MS)        
             font = pygame.font.Font(LEGEND_FONT, 50) 
-            alarm = timer.BlinkingText("Time is up!", font, (400, 350))                                                                                      
+            alarm = timer.BlinkingText(dict[T_TIMEISUP][setupOptions.language], font, (400, 350))                                                                                      
             alarm.soundToPlay = TIMEISUP_SND
-            self._timer = timer.FlareTimer(self._setupOptions.getTimerSec(), alarm, self._timerCoords, SCORE_LENGTH)
+            self._timer = timer.FlareTimer(setupOptions.getTimerSec(), alarm, self._timerCoords, SCORE_LENGTH)
 
         self._status = self.WAITING
-        self._soundOn = self._setupOptions.sounds == self._setupOptions.YES
+        self._soundOn = setupOptions.sounds == setupOptions.YES
         self.fadeIn(True)
         self.start()
 
@@ -99,7 +101,7 @@ class NotesQuiz(Scene):
         self.game.screen.blit(self._quizImg, self._imgCoords)
         # show score
         font = pygame.font.Font(SCORE_FONT, 40)
-        title = font.render("Notes Quiz #" + str(self.game.level), True, Color("black"))
+        title = font.render(dict[T_NOTES_QUIZ][setupOptions.language] + " #" + str(self.game.level), True, Color("black"))
         self.game.screen.blit(title, ((self.game.screen.get_width() - title.get_width()) / 2, -10))
         ok = font.render(str(self.game.score), True, Color("black"))
         self.game.screen.blit(ok, (self.game.screen.get_width() - ok.get_width() - 50, self.game.screen.get_height() - ok.get_height()*0.9))
@@ -127,12 +129,15 @@ class NotesQuiz(Scene):
             #self._showPressKeyMsg = True
             #self._status = self.TIMEISUP
 
+    def exit(self):
+        sounds.fadeOut()                                                                                                               
+        self.fadeOut()                                                                                                                                               
+        self.end(self._status)
+
     def event(self, evt):                
         if self._status in [self.CORRECT, self.WRONG, self.TIMEISUP]:
             if (evt.type == pygame.KEYDOWN and evt.key != pygame.K_ESCAPE) or evt.type == pygame.MOUSEBUTTONUP:
-                sounds.fadeOut()                                                                                                               
-                self.fadeOut()                                                                                                                                               
-                self.end(self._status)
+                self.exit()                                                                                                               
                 return                                    
 
         if evt.type == pygame.QUIT: 
@@ -157,13 +162,13 @@ class NotesQuiz(Scene):
                     #x, y = pygame.mouse.get_pos()
                     #if 25 <= x <= 75 and 570 <= y <= 615:
                         #self._soundOn = not self._soundOn
-                        #if not self._soundOn: sounds.muteSound()
+                        #if not self._soundOn: sounds.turnOff()
                         #else: sounds.turnOn()
                         #self.paint()
                         
         elif evt.type == pygame.KEYDOWN:
             if evt.key == pygame.K_ESCAPE:
-                sounds.muteSound()                                                                                                               
+                sounds.fadeOut()                                                                                                               
                 self.fadeOut()                                                                                                                                               
                 self.end(self.FINISH)
             elif evt.key == pygame.K_DOWN:

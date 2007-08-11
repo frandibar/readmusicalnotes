@@ -1,10 +1,11 @@
 from resources import *
 from engine import Game, Scene
 #from help import Help
+from language import *
 from menu import Menu
 from options import Setup
-from setupoptions import SetupOptions
 from notesquiz import NotesQuiz
+from setupoptions import SetupOptions
 from sounds import sounds
 
 from pygame.color import Color
@@ -22,8 +23,7 @@ class MainMenu(Scene):
         self._decorationImg2 = pygame.image.load(DECORATION2_IMG).convert_alpha()
         self._background = pygame.image.load(BACKGROUND_IMG).convert()
         self._menu = Menu(
-                 #["Notes Quiz", "Options", "Help", "Quit"],
-                 ["Notes Quiz", "Options", "Quit"],
+                 [dict[T_NOTES_QUIZ], dict[T_OPTIONS], dict[T_QUIT]],
                  pygame.font.Font(MAIN_MENU_FONT, 50),
                  pygame.font.Font(MAIN_MENU_FONT, 70),
                  margin = -40,
@@ -40,7 +40,7 @@ class MainMenu(Scene):
         self._decoImg2Coords = (10, 500)
 
         self._clock = pygame.time.Clock()
-        sounds.play(INTRO_SND)
+        sounds.play(INTRO_SND, FOREVER)
 
         if SetupOptions().softTransitions == SetupOptions.YES:
             self.showAnimation()
@@ -117,9 +117,11 @@ class MainMenu(Scene):
             self.game.level = 1                                                                                                   
             self.game.score = 0                                                                                                   
             while True:
+                sounds.pauseChannel()                       
                 if self.runScene(NotesQuiz(self.game)) not in [NotesQuiz.CORRECT, NotesQuiz.WRONG, NotesQuiz.TIMEISUP]:
                     break                                                                          
                 self.game.level += 1                                                                                                   
+                sounds.unpauseChannel()                       
         elif sel == self.SETUP:
             self.runScene(Setup(self.game, 0))
         #elif sel == self.HELP:

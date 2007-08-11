@@ -1,11 +1,13 @@
 from resources import CONFIG_FILE
 import cfg
+import language
 
 import os
 
 class SetupOptions:
     NO, YES = range(2)
     OFF, SEC5, SEC10, SEC15, SEC20 = range(5)
+
     def __init__(self):
         self.load()
 
@@ -19,8 +21,9 @@ class SetupOptions:
         self.timerIndex      = cfg.get_int("notesquiz/timerIndex")
         self.useTrebleClef   = cfg.get_int("notesquiz/useTrebleClef")
         self.useBassClef     = cfg.get_int("notesquiz/useBassClef")
-        self.sounds          = cfg.get_int("notesquiz/sounds")
-        self.softTransitions = cfg.get_int("notesquiz/softTransitions")
+        self.sounds          = cfg.get_int("general/sounds")
+        self.softTransitions = cfg.get_int("general/softTransitions")
+        self.language        = cfg.get_int("general/language")
         cfg.sync()
 
     def setDefaults(self):
@@ -29,6 +32,7 @@ class SetupOptions:
         self.useBassClef     = self.YES
         self.sounds          = self.YES
         self.softTransitions = self.YES
+        self.language        = language.ENGLISH
         self.save()                                                                 
 
     def save(self):
@@ -36,10 +40,14 @@ class SetupOptions:
         cfg.set_int("notesquiz/timerIndex", self.timerIndex)
         cfg.set_int("notesquiz/useTrebleClef", self.useTrebleClef)
         cfg.set_int("notesquiz/useBassClef", self.useBassClef)
-        cfg.set_int("notesquiz/sounds", self.sounds)
-        cfg.set_int("notesquiz/softTransitions", self.softTransitions)
+        cfg.set_int("general/sounds", self.sounds)
+        cfg.set_int("general/softTransitions", self.softTransitions)
+        cfg.set_int("general/language", self.language)
         cfg.sync()
 
     def getTimerSec(self):
         return self.timerIndex * 5
 
+
+# export global variable
+setupOptions = SetupOptions()        

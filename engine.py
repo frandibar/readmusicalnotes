@@ -1,6 +1,6 @@
 from sounds import sounds
 from resources import DEBUG
-from setupoptions import SetupOptions
+from setupoptions import setupOptions, SetupOptions
 
 import pygame
 import sys
@@ -11,7 +11,7 @@ class Game:
         try:
             sounds.init()
         except Exception, e:
-            print str(e)
+            print "Error: ", str(e)
             print "Could not initialize sounds: running with no sound."
 
         self.framerate = framerate   
@@ -123,7 +123,7 @@ class Scene:
         self.update()
      
     def fadeIn(self, doPaint = False):
-        if SetupOptions().softTransitions == SetupOptions.NO: return
+        if setupOptions.softTransitions == SetupOptions.NO: return
         if doPaint:
             self.paint()
         else:                        
@@ -137,7 +137,7 @@ class Scene:
             self.game.tick()                                 
 
     def fadeOut(self):
-        if SetupOptions().softTransitions == SetupOptions.NO: return
+        if setupOptions.softTransitions == SetupOptions.NO: return
         s = pygame.Surface(self.game.screen.get_size()).convert()
         s.fill(pygame.color.Color("black"))
         for i in range(0, 50, 1):
