@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 from pygame.color import Color
 from setupoptions import setupOptions
 import language
@@ -37,7 +38,7 @@ class Menu:
         self._markerImg = None
 
     def getOption(self, i):
-        return self._options[i]
+        return self._options[i][setupOptions.language]
 
     def setMarker(self, img):
         self.useMarker = True

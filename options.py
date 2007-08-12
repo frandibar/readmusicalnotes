@@ -35,9 +35,6 @@ class Setup(Scene):
         self._menu.addIcons(iconsOn, iconsOff)
         self._menu.setMarker(MENU_MARKER_IMG)
 
-        font = pygame.font.Font(OPTIONS_FONT, 50)
-        self._title = font.render(dict[T_OPTIONS][setupOptions.language], True, pygame.color.Color("black"))
-
         self._titleCoords      = (40, 53)
         self._menuCoords       = (350, 200)
         self._decorationCoords = (10, 100)
@@ -52,7 +49,9 @@ class Setup(Scene):
     def paint(self):
         self.game.screen.blit(self.background, (0,0))
         self.game.screen.blit(self._decorationImg, self._decorationCoords)
-        self.game.screen.blit(self._title, self._titleCoords)
+        font = pygame.font.Font(OPTIONS_FONT, 50)
+        title = font.render(dict[T_OPTIONS][setupOptions.language], True, pygame.color.Color("black"))
+        self.game.screen.blit(title, self._titleCoords)
         self._menu.blit(self.game.screen, self._menuCoords)
 
     def showAnimation(self):
@@ -116,27 +115,28 @@ class Setup(Scene):
         self.end()
 
     def doAction(self, sel, dir = pygame.K_RIGHT):
-        if self._menu.getOption(sel) == self._options[self.BACK]:
+        l = setupOptions.language
+        if self._menu.getOption(sel) == self._options[self.BACK][l]:
             self.exit()                                                                                    
         else:                          
             self._menu.changeOption(sel, dir)
             option = self._menu.getOption(sel)                                             
             i = self._menu.getValueIndex(sel)
-            if option == self._options[self.TREBLE_CLEF]:
+            if option == self._options[self.TREBLE_CLEF][l]:
                 setupOptions.useTrebleClef = i
-            elif option == self._options[self.BASS_CLEF]:
+            elif option == self._options[self.BASS_CLEF][l]:
                 setupOptions.useBassClef = i
-            elif option == self._options[self.TIMER]:
+            elif option == self._options[self.TIMER][l]:
                 setupOptions.timerIndex = i
-            elif option == self._options[self.SOUNDS]:
+            elif option == self._options[self.SOUNDS][l]:
                 setupOptions.sounds = i
                 if i == SetupOptions.NO:
                     sounds.turnOff()                                        
                 else:
                     sounds.turnOn()                    
-            elif option == self._options[self.SOFT_TRANSITIONS]:
+            elif option == self._options[self.SOFT_TRANSITIONS][l]:
                 setupOptions.softTransitions = i
-            elif option == self._options[self.LANGUAGE]:
+            elif option == self._options[self.LANGUAGE][l]:
                 setupOptions.language = i
             self.paint()
                         
