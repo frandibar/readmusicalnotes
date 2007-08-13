@@ -18,6 +18,7 @@ class Setup(Scene):
         yesNoOpts = [dict[T_NO], dict[T_YES]]
         timeOpts = [dict[T_OFF], dict[T_5SEC], dict[T_10SEC], dict[T_15SEC], dict[T_20SEC]]
         self._options = [dict[T_TREBLE_CLEF], dict[T_BASS_CLEF], dict[T_TIMER], dict[T_SOUNDS], dict[T_SOFT_TRANSITIONS], dict[T_LANGUAGE], dict[T_BACK]]
+        self._explanations = [None, None, None, None, dict[T_EXPLAIN_SOFT_TRANSITIONS], None, None]
         languages = [dict[T_ENGLISH], dict[T_SPANISH]]
         self._values = [yesNoOpts, yesNoOpts, timeOpts, yesNoOpts, yesNoOpts, languages, None]
         self._menu = OptionsMenu(
@@ -30,14 +31,15 @@ class Setup(Scene):
                  selectedColor = Color("dark red")
                  )
 
-        iconsOn  = [TREBLE_CLEF_SEL_IMG, BASS_CLEF_SEL_IMG, TIMER_SEL_IMG, SOUND_SEL_IMG, None, None, None]
-        iconsOff = [TREBLE_CLEF_UNSEL_IMG, BASS_CLEF_UNSEL_IMG, TIMER_UNSEL_IMG, SOUND_UNSEL_IMG, None, None, None]
+        iconsOn  = [TREBLE_CLEF_SEL_IMG, BASS_CLEF_SEL_IMG, TIMER_SEL_IMG, SOUND_SEL_IMG, None, LANGUAGE_SEL_IMG, None]
+        iconsOff = [TREBLE_CLEF_UNSEL_IMG, BASS_CLEF_UNSEL_IMG, TIMER_UNSEL_IMG, SOUND_UNSEL_IMG, None, LANGUAGE_UNSEL_IMG, None]
         self._menu.addIcons(iconsOn, iconsOff)
         self._menu.setMarker(MENU_MARKER_IMG)
 
         self._titleCoords      = (40, 53)
         self._menuCoords       = (350, 200)
         self._decorationCoords = (10, 100)
+        self._explanationCoords    = (10, 250)
 
         self._clock = pygame.time.Clock()
         self.loadOptionValues()
@@ -52,6 +54,10 @@ class Setup(Scene):
         font = pygame.font.Font(OPTIONS_FONT, 50)
         title = font.render(dict[T_OPTIONS][setupOptions.language], True, pygame.color.Color("black"))
         self.game.screen.blit(title, self._titleCoords)
+        if self._explanations[self._menu.selected] is not None:
+            font = pygame.font.Font(OPTIONS_FONT, 22)
+            explanation = font.render(self._explanations[self._menu.selected][setupOptions.language], True, pygame.color.Color("black"))
+            self.game.screen.blit(explanation, self._explanationCoords)
         self._menu.blit(self.game.screen, self._menuCoords)
 
     def showAnimation(self):
@@ -68,7 +74,9 @@ class Setup(Scene):
     def fadeInMenu(self):                                                                                     
         if setupOptions.softTransitions == SetupOptions.NO: return
         s = self.game.screen.copy()
-        s.blit(self._title, self._titleCoords)
+        font = pygame.font.Font(OPTIONS_FONT, 50)
+        title = font.render(dict[T_OPTIONS][setupOptions.language], True, pygame.color.Color("black"))
+        s.blit(title, self._titleCoords)
         self._menu.blit(s, self._menuCoords)
         for i in range(0, 50, 1):
             s.set_alpha(i)

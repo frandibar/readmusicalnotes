@@ -1,6 +1,5 @@
 from resources import *
 from engine import Game, Scene
-#from help import Help
 from language import *
 from menu import Menu
 from options import Setup
@@ -12,7 +11,6 @@ from pygame.color import Color
 import pygame
 
 class MainMenu(Scene):
-    #NOTES_QUIZ, SETUP, HELP, QUIT = range(4)
     NOTES_QUIZ, SETUP, QUIT = range(3)
     def init(self):
         cur = pygame.cursors.compile(CURSOR_DATA)
@@ -116,17 +114,15 @@ class MainMenu(Scene):
         if sel == self.NOTES_QUIZ:
             self.game.level = 1                                                                                                   
             self.game.score = 0                                                                                                   
+            sounds.pauseChannel()                       
             while True:
-                sounds.pauseChannel()                       
                 if self.runScene(NotesQuiz(self.game)) not in [NotesQuiz.CORRECT, NotesQuiz.WRONG, NotesQuiz.TIMEISUP]:
                     break                                                                          
                 self.game.level += 1                                                                                                   
-                sounds.unpauseChannel()                       
+            sounds.unpauseChannel()
+            sounds.play(INTRO_SND, FOREVER) # TODO: previous line not working, start again
         elif sel == self.SETUP:
             self.runScene(Setup(self.game, 0))
-        #elif sel == self.HELP:
-            #self.runScene(Help(self.game))
         elif sel == self.QUIT:
             self.end()
         self.showAnimation()                                                                                                                                       
-                        
