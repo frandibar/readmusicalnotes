@@ -25,3 +25,4 @@ BUGS List:
 
 #1 background music does not unpause after notesquiz in main menu
 #2 when using soft transitions, timer does not start from 0 (after the fade effect ends)
+#3 spanish explanation for soft transitions in options, exceeds limits

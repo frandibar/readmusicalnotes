@@ -1,7 +1,8 @@
 from os.path import join
+from gethomedir import get_home_dir
 
 # global constants
-CONFIG_FILE = ".readMusic.config"
+CONFIG_FILE = get_home_dir() + "/.readMusic.config"
 DEBUG = False
 ANIMATION_FR = 100
 FOREVER = -1
