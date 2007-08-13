@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="800px"
+   height="600px"
+   id="svg2178"
+   sodipodi:version="0.32"
+   inkscape:version="0.45"
+   sodipodi:docbase="/home/francisco/programming/python/readMusic/resources/images/svg"
+   sodipodi:docname="bubble.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/francisco/programming/python/readMusic/resources/images/bubble_on.png"
+   inkscape:export-xdpi="61.503746"
+   inkscape:export-ydpi="61.503746"
+   sodipodi:modified="TRUE">
+  <defs
+     id="defs2180" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.6"
+     inkscape:cx="309.167"
+     inkscape:cy="435.49679"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="px"
+     inkscape:window-width="872"
+     inkscape:window-height="619"
+     inkscape:window-x="5"
+     inkscape:window-y="69" />
+  <metadata
+     id="metadata2183">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <path
+       id="path3180"
+       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#b47800;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;stroke-dasharray:none"
+       d="M 175.09882,135.6425 C 176.25523,138.68833 179.90489,148.98911 179.90489,148.98911 C 184.79217,146.87735 188.13135,144.42525 191.0516,139.50954 C 194.63257,139.15094 198.89926,139.11809 204.66513,139.07987 C 227.72864,138.92701 246.13019,131.46914 245.74004,122.43284 C 245.35279,113.46375 226.63466,106.29062 203.73976,106.33754 L 203.25153,106.33966 C 180.18803,106.49253 161.78647,113.9504 162.17662,122.98669 C 162.27416,125.24577 163.53699,127.39069 165.73674,129.33494 C 167.9365,131.2792 171.25362,134.18606 175.09882,135.6425 z "
+       sodipodi:nodetypes="cccssccsss"
+       inkscape:export-filename="/home/francisco/programming/python/readMusic/resources/images/bubble_off.png"
+       inkscape:export-xdpi="67.029129"
+       inkscape:export-ydpi="67.029129" />
+  </g>
+</svg>
