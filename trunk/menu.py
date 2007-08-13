@@ -1,4 +1,3 @@
-# -*- coding: latin-1 -*-
 from pygame.color import Color
 from setupoptions import setupOptions
 import language
@@ -121,7 +120,7 @@ class Menu:
 
 class OptionsMenu(Menu):
     """Implements a menu with highlighting options and with another column that holds different values"""
-    COL_OFFSET = 50
+    COL_OFFSET = 20
     def __init__(self, options, values, normalFont, selectedFont, margin = 0, normalColor = Color("white"), selectedColor = Color("white")):
         Menu.__init__(self, options, normalFont, selectedFont, margin, normalColor, selectedColor, False)
 
@@ -203,7 +202,7 @@ class OptionsMenu(Menu):
                         img = self._selectedIcons[i]
                     else:
                         img = self._unselectedIcons[i]
-                    surface.blit(img, (x + self._col2width + self.COL_OFFSET, yf))
+                    surface.blit(img, (x + self._col2width + self.COL_OFFSET - img.get_width()/2, yf))
             except Exception, e:
                 # ignore when img is None                                
                 pass                                
@@ -242,7 +241,7 @@ class OptionsMenu(Menu):
 
         for i in range(len(self._options)):
             try:
-                img = self._normalValuesImages[i][self._currentValues[i]]
+                img = self._normalValuesImages[i][self._currentValues[i]][setupOptions.language]
                     
                 dy = self._lineStep * i - img.get_height()/2
                 if 0 <= x <= self._width:

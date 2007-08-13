@@ -12,6 +12,7 @@ class Sounds:
     def init(self):
         pygame.mixer.pre_init(44100, -16, False)
         pygame.mixer.init()
+        #pygame.mixer.set_num_channels(1)
 
         self._mute = setupOptions.sounds == SetupOptions.NO
         self._looseSounds = {}
@@ -21,8 +22,7 @@ class Sounds:
         for s in noteSounds.values():
             self._looseSounds[s] = pygame.mixer.Sound(s)
 
-        self._channels = {}
-        self._channels[1] = pygame.mixer.Channel(1)
+        self._channels = [pygame.mixer.Channel(0)]
 
         self._channelSounds = {}
         for s in [INTRO_SND]:
@@ -30,17 +30,18 @@ class Sounds:
 
     def play(self, sound, loops = 0):
         """'sound' is a path to the sound file"""
-        if self._mute: return
-        if sound in self._looseSounds:
+        if sound in self._looseSounds and not self._mute:
             self._looseSounds[sound].play(loops)
         elif sound in self._channelSounds:
             #for i in self._channels.get_keys():                                          
-            self._channels[1].play(self._channelSounds[sound], loops)                                          
+            self._channels[0].play(self._channelSounds[sound], loops)                                          
+            if loops == FOREVER and self._mute:
+                self._channels[0].pause()
 
-    def pauseChannel(self, channel = 1):
+    def pauseChannel(self, channel = 0):
         self._channels[channel].pause()
 
-    def unpauseChannel(self, channel = 1):
+    def unpauseChannel(self, channel = 0):
         self._channels[channel].unpause()
 
     def stop(self, sound):
@@ -53,10 +54,11 @@ class Sounds:
 
     def turnOn(self):
         self._mute = False
+        pygame.mixer.unpause()
 
     def turnOff(self):
         self._mute = True
-        pygame.mixer.stop()
+        pygame.mixer.pause()
 
 
 if not pygame.mixer: print "Warning, sound disabled."

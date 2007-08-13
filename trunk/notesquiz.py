@@ -80,8 +80,6 @@ class NotesQuiz(Scene):
         self._imgCoords    = (50, 100)
         self._answerCoords = (500, 70)
 
-        sounds.fadeOut()
-
         self._useTimer = setupOptions.timerIndex != setupOptions.OFF
         if self._useTimer:
             self._timerCoords = (50, 450)
@@ -130,7 +128,7 @@ class NotesQuiz(Scene):
             #self._status = self.TIMEISUP
 
     def exit(self):
-        sounds.fadeOut()                                                                                                               
+        #sounds.fadeOut()                                                                                                               
         self.fadeOut()                                                                                                                                               
         self.end(self._status)
 
