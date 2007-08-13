@@ -16,7 +16,7 @@ SOUNDS_PATH = join(RESOURCE_PATH, "sounds")
 # images
 WRONG_IMG    = join(IMAGES_PATH, "wrong.png")
 CORRECT_IMG  = join(IMAGES_PATH, "correct.png")
-ICON_IMG     = join(IMAGES_PATH, "notes.gif")
+ICON_IMG     = join(IMAGES_PATH, "notes.png")
 
 TREBLE_CLEF_IMG     = join(IMAGES_PATH, "2xtreble_clef.png")
 BASS_CLEF_IMG       = join(IMAGES_PATH, "2xbass_clef.png")
