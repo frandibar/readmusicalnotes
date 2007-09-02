@@ -1,0 +1,15 @@
+readMusic changelog:
+
+version 0.3 - ?
+
+- fixed: crash when sound initialization failed. Now it's able to run with no sounds
+- added: fullscreen option
+
+version 0.2 - Aug 07
+- first releasable version
+
+version 0.1 - Jul 07
+- lots of improvements, not released
+
+version 0.0 - Jun 07
+- initial version, not released
