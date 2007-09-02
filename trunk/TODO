@@ -16,9 +16,14 @@ usability:
 - show icon beside score
 - show correct answer
 - play sound when mouse over score
+- add back link in notesquiz
+- add more screen size options
 
 optimization:
 - refresh only needed part of screen instead of calling paint in menus
+
+other:
+- normalize sound volumes
 
 
 BUGS List:

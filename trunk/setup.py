@@ -38,7 +38,7 @@ setup(
       data_files   = resource_files(),
 #     options      = {"py2exe": options},
 #     zipfile      = None, # append zip-archive to the executable
-      windows      = [{"script"         : "readMusic.py"#, 
+      windows      = [{"script"         : "src/readMusic.py"#, 
 #                      "icon_resources" : [(1, icon)]
                       }]
 )
