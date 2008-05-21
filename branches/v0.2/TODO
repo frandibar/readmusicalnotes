@@ -1,0 +1,33 @@
+readMusic To Do list:
+
+functionality:
+- add statistics
+- allow choosing notes for quiz
+- add tempo quiz
+- add chord quiz
+- add midi input
+- add note accidents (flats and sharps)
+- add midi sound
+
+usability:
+- change sound on wrong answer
+- add images in options
+- add help
+- show icon beside score
+- show correct answer
+- play sound when mouse over score
+- add back link in notesquiz
+- add more screen size options
+
+optimization:
+- refresh only needed part of screen instead of calling paint in menus
+
+other:
+- normalize sound volumes
+
+
+BUGS List:
+
+#1 background music does not unpause after notesquiz in main menu
+#2 when using soft transitions, timer does not start from 0 (after the fade effect ends)
+#3 spanish explanation for soft transitions in options, exceeds limits

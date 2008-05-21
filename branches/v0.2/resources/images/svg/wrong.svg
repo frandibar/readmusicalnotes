@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2229"
+   sodipodi:version="0.32"
+   inkscape:version="0.45"
+   width="81"
+   height="120"
+   version="1.0"
+   sodipodi:docbase="/home/francisco/programming/python/readMusic/resources/images/svg"
+   sodipodi:docname="wrong.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/francisco/programming/python/readMusic/resources/images/correct.png"
+   inkscape:export-xdpi="92.309998"
+   inkscape:export-ydpi="92.309998"
+   sodipodi:modified="TRUE">
+  <metadata
+     id="metadata2234">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs2232" />
+  <sodipodi:namedview
+     inkscape:window-height="619"
+     inkscape:window-width="872"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="4.7965411"
+     inkscape:cx="40.5"
+     inkscape:cy="46.842212"
+     inkscape:window-x="5"
+     inkscape:window-y="47"
+     inkscape:current-layer="svg2229" />
+  <path
+     style="fill:#a30000;fill-opacity:1"
+     d="M 25.323459,99.671717 C 49.774866,64.12607 76.940303,47.549741 75.889955,52.294426 C 75.944786,53.570993 62.35628,62.769927 50.569474,74.917838 C 39.63465,86.187669 31.859592,97.029681 26.259835,105.78863 C 23.73339,107.70529 22.080818,104.38565 25.323459,99.671717 z "
+     id="path3701"
+     inkscape:export-filename="/home/francisco/programming/python/readMusic/resources/images/wrong.png"
+     inkscape:export-xdpi="210.08"
+     inkscape:export-ydpi="210.08"
+     sodipodi:nodetypes="ccscs"
+     inkscape:transform-center-x="-6.0035377"
+     inkscape:transform-center-y="-0.64359829" />
+  <path
+     style="fill:#a30000;fill-opacity:1"
+     d="M 62.877748,103.92458 C 45.004886,73.634073 23.851338,58.616331 24.436986,62.534283 C 24.320148,63.569318 34.850085,71.81918 43.747933,82.365265 C 52.002622,92.149052 57.711911,101.40609 61.770079,108.84601 C 63.71618,110.5477 65.247971,107.94159 62.877748,103.92458 z "
+     id="path3257"
+     inkscape:export-filename="/home/francisco/programming/python/readMusic/resources/images/wrong.png"
+     inkscape:export-xdpi="210.08"
+     inkscape:export-ydpi="210.08"
+     sodipodi:nodetypes="ccscs"
+     inkscape:transform-center-y="8.1319472"
+     inkscape:transform-center-x="-2.6127367" />
+</svg>

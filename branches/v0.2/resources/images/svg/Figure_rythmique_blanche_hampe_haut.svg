@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="14.566"
+   height="41.919998"
+   id="svg1463"
+   sodipodi:version="0.32"
+   inkscape:version="0.45"
+   sodipodi:docname="Figure_rythmique_blanche_hampe_haut.svg"
+   sodipodi:docbase="/home/francisco/Desktop/svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:modified="true">
+  <metadata
+     id="metadata6877">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:window-height="768"
+     inkscape:window-width="1024"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="27.461114"
+     inkscape:cx="7.283"
+     inkscape:cy="15.875118"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:current-layer="svg1463" />
+  <defs
+     id="defs1466" />
+  <g
+     id="g7850">
+    <path
+       d="M 10.14576,40.67127 C 13.5416,38.8513 15.35104,35.55672 14.23798,33.07831 C 13.05072,30.43467 8.97097,29.68859 5.1314,31.41294 C 1.29184,33.1373 -0.86076,36.68234 0.3265,39.32597 C 1.51377,41.96961 5.59351,42.71569 9.43308,40.99134 C 9.67305,40.88357 9.91936,40.7926 10.14576,40.67127 z M 9.03603,38.42911 C 8.7948,38.55344 8.55055,38.64714 8.29484,38.76198 C 5.02177,40.23192 1.86063,40.30105 1.23873,38.91629 C 0.61683,37.53153 2.76851,35.21467 6.04158,33.74472 C 9.31466,32.27478 12.4758,32.20565 13.09769,33.59041 C 13.67101,34.86699 11.88256,36.96202 9.03603,38.42911 z "
+       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path10999" />
+    <path
+       d="M 13.887506,34.730602 L 13.887506,0.75815432"
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:1.35811627;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path11001" />
+  </g>
+</svg>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="24.886"
+   height="49.174999"
+   id="svg1622"
+   sodipodi:version="0.32"
+   inkscape:version="0.45"
+   sodipodi:docname="Figure_rythmique_triple_croche_hampe_haut.svg"
+   sodipodi:docbase="/home/francisco/Desktop/svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:modified="true">
+  <metadata
+     id="metadata20701">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:window-height="619"
+     inkscape:window-width="872"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="8.2765634"
+     inkscape:cx="12.443"
+     inkscape:cy="24.5875"
+     inkscape:window-x="0"
+     inkscape:window-y="47"
+     inkscape:current-layer="svg1622" />
+  <defs
+     id="defs1625" />
+  <g
+     id="g21677">
+    <path
+       d="M 4.6616762,38.98798 C 1.2658362,40.80795 -0.54360382,44.10253 0.56945618,46.58094 C 1.7567162,49.22458 5.8364662,49.97066 9.6760362,48.24631 C 13.515596,46.52195 15.668196,42.97691 14.480936,40.33328 C 13.293666,37.68964 9.2139262,36.94356 5.3743562,38.66791 C 5.1343862,38.77568 4.8880762,38.86665 4.6616762,38.98798 z "
+       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+       id="path16453" />
+    <path
+       d="M 14.03753,41.76249 L 14.03753,0.7503"
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path16455" />
+    <path
+       d="M 14.03288,9.13476 C 13.47038,15.44726 18.87543,17.7085 21.53288,20.63476 C 24.05884,23.41623 24.98155,26.62448 24.87836,29.63036 C 24.85081,30.43293 24.63293,33.91047 22.26391,37.39708 C 25.43183,28.64997 22.48238,25.13902 19.60095,22.3455 C 16.11101,18.96204 13.51483,15.77332 14.03288,9.13476 z "
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="path16457" />
+    <path
+       d="M 13.29942,13.91877 C 12.73692,20.23127 18.14197,22.49251 20.79942,25.41877 C 23.32538,28.20024 24.24809,31.40849 24.1449,34.41437 C 24.11735,35.21694 23.89947,38.69448 21.53045,42.18109 C 24.69837,33.43398 21.74892,29.92303 18.86749,27.12951 C 15.37755,23.74605 12.78137,20.55733 13.29942,13.91877 z "
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="path16462" />
+    <path
+       d="M 13.81364,2.18658 C 13.25114,8.49908 18.65619,10.76032 21.31364,13.68658 C 23.8396,16.46805 24.76231,19.6763 24.65912,22.68218 C 24.63157,23.48475 24.41369,26.96229 22.04467,30.4489 C 25.21259,21.70179 22.26314,18.19084 19.38171,15.39732 C 15.89177,12.01386 13.29559,8.82514 13.81364,2.18658 z "
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="path16504" />
+  </g>
+</svg>

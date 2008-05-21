@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2229"
+   sodipodi:version="0.32"
+   inkscape:version="0.45"
+   width="81"
+   height="120"
+   version="1.0"
+   sodipodi:docbase="/home/francisco/programming/python/readMusic/resources/images/svg"
+   sodipodi:docname="check.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/francisco/programming/python/readMusic/resources/images/correct.png"
+   inkscape:export-xdpi="92.309998"
+   inkscape:export-ydpi="92.309998"
+   sodipodi:modified="TRUE">
+  <metadata
+     id="metadata2234">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs2232" />
+  <sodipodi:namedview
+     inkscape:window-height="619"
+     inkscape:window-width="872"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="9.5930821"
+     inkscape:cx="40.5"
+     inkscape:cy="46.842212"
+     inkscape:window-x="5"
+     inkscape:window-y="47"
+     inkscape:current-layer="svg2229" />
+  <path
+     style="fill:#6a8804;fill-opacity:1"
+     d="M 16.790188,96.599586 C 14.517755,93.33592 23.611219,99.337371 30.979069,106.6245 C 54.192338,67.428984 79.784838,46.790544 79.164539,51.868019 C 79.351184,53.199973 66.045006,64.213253 54.924987,78.13394 C 44.608751,91.048405 37.351334,105.69665 32.370722,115.44042 C 25.074752,106.5151 23.344007,103.71526 16.790188,96.599586 z "
+     id="path3701"
+     inkscape:export-filename="/home/francisco/programming/python/readMusic/data/images/correct.png"
+     inkscape:export-xdpi="210.08"
+     inkscape:export-ydpi="210.08"
+     sodipodi:nodetypes="cccscc" />
+</svg>
